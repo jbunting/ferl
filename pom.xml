@@ -4,7 +4,7 @@
   <groupId>edu.wvu.ferl</groupId>
   <artifactId>ferl</artifactId>
   <packaging>jar</packaging>
-  <version>0.1-alpha-1</version>
+  <version>0.1-SNAPSHOT</version>
   <name>Script Based (JSR223) Rules Engine</name>
   <url>http://maven.apache.org</url>
   <build>
