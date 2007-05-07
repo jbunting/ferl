@@ -77,6 +77,7 @@
           <groupId>javax.script</groupId>
           <artifactId>jsr223</artifactId>
           <version>1.0</version>
+          <scope>provided</scope>
         </dependency>
       </dependencies>
     </profile>
