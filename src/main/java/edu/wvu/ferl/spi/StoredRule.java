@@ -61,12 +61,12 @@ public class StoredRule {
     this.description = description;
   }
 
-  public Map getProperties() {
-    return properties;
+  public Object getProperty(Object key) {
+    return properties.get(key);
   }
 
-  public void setProperties(Map properties) {
-    this.properties = properties;
+  public void setProperty(Object key, Object value) {
+    this.properties.put(key, value);
   }
 
   public String getUri() {
