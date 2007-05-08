@@ -19,6 +19,8 @@ import javax.rules.ObjectFilter;
 import javax.rules.RuleRuntime;
 import javax.rules.StatelessRuleSession;
 import javax.script.ScriptContext;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.PredicateUtils;
 
 /**
  *
@@ -41,8 +43,14 @@ public class StatelessRuleSessionImpl extends AbstractRuleSession implements Sta
     return hook.getCurrentList();
   }
 
+  /**
+   * @todo actually use the objectfilter
+   */
   public List executeRules(List list, ObjectFilter objectFilter) throws InvalidRuleSessionException, RemoteException {
-    return this.executeRules(list);
+    List outList = this.executeRules(list);
+    CollectionUtils.transform(outList, new ObjectFilterTransformer(objectFilter));
+    CollectionUtils.filter(outList, PredicateUtils.notNullPredicate());
+    return outList;
   }
   
   private static class StatelessExecuteRulesHook implements ExecuteRulesHook {
