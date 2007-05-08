@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : providerSchema.xsd
+    Created on : May 8, 2007, 11:59 AM
+    Author     : jbunting
+    Description:
+        Purpose of XML Schema document follows.
+-->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:ns="http://xml.netbeans.org/examples/targetNS"
+            targetNamespace="http://xml.netbeans.org/examples/targetNS"
+            xmlns="http://xml.netbeans.org/examples/targetNS"
+            elementFormDefault="qualified">
+
+   <!-- 
+      TODO design your XML schema here.
+      XML Schema Primer: http://www.w3.org/TR/xmlschema-0/
+      Structures recommendation: http://www.w3.org/TR/xmlschema-1/
+      Datatypes recommendation: http://www.w3.org/TR/xmlschema-2/
+
+      Example: there is an <address-book> element specified.
+               The <address-book> can contain multiple <item> elements
+               with unique <name> values.
+               Notice that <mobile> element is specified as a restriction of xsd:string
+               and must match the pattern: three digits followed by a hypen followed 
+               by six digits.
+   -->
+
+  <xsd:element name="rule-execution-set">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="name" type="xsd:string"/>
+        <xsd:element name="description" type="xsd:string"/>
+        <xsd:element name="property" minOccurs="0" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:attribute name="key" type="xsd:string"/>
+            <xsd:attribute name="value" type="xsd:string"/>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element name="rule">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="name" type="xsd:string"/>
+                <xsd:element name="description" type="xsd:string"/>
+                <xsd:element name="language" type="xsd:string"/>
+                <xsd:element name="script" type="xsd:string"/>
+                <xsd:element name="property" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:complexType>
+                    <xsd:attribute name="key" type="xsd:string"/>
+                    <xsd:attribute name="value" type="xsd:string"/>
+                  </xsd:complexType>
+                </xsd:element>
+              </xsd:sequence>
+              <xsd:attribute name="uri" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="rule-ref">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="property" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:complexType>
+                    <xsd:attribute name="key" type="xsd:string"/>
+                    <xsd:attribute name="value" type="xsd:string"/>
+                  </xsd:complexType>
+                </xsd:element>
+              </xsd:sequence>
+              <xsd:attribute name="uri" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:sequence>
+      <xsd:attribute name="uri" type="xsd:string"/>
+    </xsd:complexType>
+  </xsd:element>     
+</xsd:schema>
