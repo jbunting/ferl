@@ -10,6 +10,8 @@
 package edu.wvu.ferl.admin;
 
 import edu.wvu.ferl.ScriptRuleServiceProvider;
+import edu.wvu.ferl.spi.RuleStore;
+import edu.wvu.ferl.spi.StoredRuleExecutionSet;
 import java.rmi.RemoteException;
 import java.util.Map;
 import javax.rules.admin.LocalRuleExecutionSetProvider;
@@ -18,6 +20,7 @@ import javax.rules.admin.RuleExecutionSet;
 import javax.rules.admin.RuleExecutionSetDeregistrationException;
 import javax.rules.admin.RuleExecutionSetProvider;
 import javax.rules.admin.RuleExecutionSetRegisterException;
+import org.apache.commons.lang.IllegalClassException;
 import org.apache.commons.lang.NotImplementedException;
 
 /**
@@ -26,20 +29,29 @@ import org.apache.commons.lang.NotImplementedException;
  */
 public class RuleAdministratorImpl implements RuleAdministrator {
   
+  ScriptRuleServiceProvider serviceProvider;
+  
   /** Creates a new instance of RuleAdministrator */
   public RuleAdministratorImpl(ScriptRuleServiceProvider serviceProvider) {
+    this.serviceProvider = serviceProvider;
   }
 
   public RuleExecutionSetProvider getRuleExecutionSetProvider(Map map) throws RemoteException {
-    throw new NotImplementedException();
+    return RuleExecutionSetProviderImpl.getInstance();
   }
 
   public LocalRuleExecutionSetProvider getLocalRuleExecutionSetProvider(Map map) throws RemoteException {
-    throw new NotImplementedException();
+    return RuleExecutionSetProviderImpl.getInstance();
   }
 
   public void registerRuleExecutionSet(String string, RuleExecutionSet ruleExecutionSet, Map map) throws RuleExecutionSetRegisterException, RemoteException {
-    throw new NotImplementedException();
+    if(!(ruleExecutionSet instanceof RuleExecutionSetImpl)) {
+      throw new IllegalClassException("Only RuleExecutionSets created by this RuleAdministrator can be registered...");
+    }
+    RuleExecutionSetImpl ruleExecutionSetImpl = (RuleExecutionSetImpl) ruleExecutionSet;
+    //RuleStore ruleStore = serviceProvider.getRuleRuntimeImpl().getRuleStore();
+    StoredRuleExecutionSet storedRuleExecutionSet = new StoredRuleExecutionSet();
+    
   }
 
   public void deregisterRuleExecutionSet(String string, Map map) throws RuleExecutionSetDeregistrationException, RemoteException {

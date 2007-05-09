@@ -57,11 +57,12 @@ class RuleReference implements RuleDescriptor {
     return storedRule.getDescription();
   }
 
-  public Object getProperty(Object object) {
-    return storedRule.getProperty(object);
+  public Object getProperty(Object key) {
+    return storedRule.getProperty(key);
   }
 
-  public void setProperty(Object object, Object object0) {
+  public void setProperty(Object key, Object value) {
+    throw new UnsupportedOperationException("You can't set a property on a reference....silly...");
   }
   
 }

@@ -38,8 +38,19 @@ import org.apache.commons.digester.Digester;
  */
 public class RuleExecutionSetProviderImpl implements RuleExecutionSetProvider, LocalRuleExecutionSetProvider {
   
+  private static RuleExecutionSetProviderImpl provider = null;
+  
   /** Creates a new instance of RuleExecutionSetProviderImpl */
-  public RuleExecutionSetProviderImpl() {
+  private RuleExecutionSetProviderImpl() {
+  }
+
+  public static RuleExecutionSetProviderImpl getInstance() {
+    synchronized(RuleExecutionSetProviderImpl.class) {
+      if(provider == null) {
+        provider = new RuleExecutionSetProviderImpl();
+      }
+    }
+    return provider;
   }
 
   public RuleExecutionSet createRuleExecutionSet(Element element, Map map) throws RuleExecutionSetCreateException, RemoteException {

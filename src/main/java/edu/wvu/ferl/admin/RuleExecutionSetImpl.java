@@ -12,12 +12,13 @@ package edu.wvu.ferl.admin;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.rules.admin.RuleExecutionSet;
 
 /**
  *
  * @author jbunting
  */
-public class RuleExecutionSetImpl {
+public class RuleExecutionSetImpl implements RuleExecutionSet {
   
   private String uri;
   private String name;
@@ -29,6 +30,10 @@ public class RuleExecutionSetImpl {
   /** Creates a new instance of RuleExecutionSetImpl */
   public RuleExecutionSetImpl(String uri) {
     this.uri = uri;
+  }
+  
+  public String getUri() {
+    return uri;
   }
 
   public String getName() {
@@ -51,12 +56,23 @@ public class RuleExecutionSetImpl {
     return ruleDescriptors;
   }
 
-  public Map<Object, Object> getProperties() {
-    return properties;
+  public Object getProperty(Object key) {
+    return this.properties.get(key);
   }
 
-  public void setProperties(Map<Object, Object> properties) {
-    this.properties = properties;
+  public void setProperty(Object key, Object value) {
+    this.properties.put(key, value);
+  }
+
+  public void setDefaultObjectFilter(String string) {
+  }
+
+  public String getDefaultObjectFilter() {
+    return null;
+  }
+
+  public List getRules() {
+    return null;
   }
   
 }
