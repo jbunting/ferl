@@ -5,7 +5,8 @@
   <artifactId>ferl</artifactId>
   <packaging>jar</packaging>
   <version>0.1-SNAPSHOT</version>
-  <name>Script Based (JSR223) Rules Engine</name>
+  <name>ferl</name>
+  <description>Script Based (JSR223) Rules Engine</description>
   <url>http://maven.apache.org</url>
   <build>
     <plugins>

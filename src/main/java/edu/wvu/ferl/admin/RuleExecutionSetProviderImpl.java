@@ -22,15 +22,17 @@ import javax.rules.admin.RuleExecutionSetProvider;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamSource;
+import org.apache.commons.digester.AbstractObjectCreationFactory;
 import org.w3c.dom.Element;
 import org.apache.commons.digester.Digester;
+import org.apache.commons.digester.Rule;
+import org.apache.commons.lang.StringUtils;
+import org.xml.sax.Attributes;
 
 /**
  *
@@ -38,19 +40,13 @@ import org.apache.commons.digester.Digester;
  */
 public class RuleExecutionSetProviderImpl implements RuleExecutionSetProvider, LocalRuleExecutionSetProvider {
   
-  private static RuleExecutionSetProviderImpl provider = null;
+  private RuleAdministratorImpl administrator;
+  private ProviderRuleSet providerRuleSet;
   
   /** Creates a new instance of RuleExecutionSetProviderImpl */
-  private RuleExecutionSetProviderImpl() {
-  }
-
-  public static RuleExecutionSetProviderImpl getInstance() {
-    synchronized(RuleExecutionSetProviderImpl.class) {
-      if(provider == null) {
-        provider = new RuleExecutionSetProviderImpl();
-      }
-    }
-    return provider;
+  public RuleExecutionSetProviderImpl(RuleAdministratorImpl administrator) {
+    this.administrator = administrator;
+    providerRuleSet = new ProviderRuleSet(administrator);
   }
 
   public RuleExecutionSet createRuleExecutionSet(Element element, Map map) throws RuleExecutionSetCreateException, RemoteException {
@@ -83,9 +79,8 @@ public class RuleExecutionSetProviderImpl implements RuleExecutionSetProvider, L
   public RuleExecutionSet createRuleExecutionSet(Source source, Map map) throws RuleExecutionSetCreateException {
     Digester digester = new Digester();
     
-    // add my object creation stuff here...
-    digester.addObjectCreate("rule-execution-set", RuleExecutionSetImpl.class);
-
+    digester.addRuleSet(providerRuleSet);
+    
     Result result = new SAXResult(digester);
     
     try {
