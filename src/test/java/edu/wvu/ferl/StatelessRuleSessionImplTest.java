@@ -45,8 +45,9 @@ public class StatelessRuleSessionImplTest extends MockObjectTestCase {
     set.setUri("ruleset");
     StoredRule rule = new StoredRule();
     rule.setUri("rule");
-    rule.setLanguage("groovy");
-    rule.setScript("return \"" + expectedString + "\"");
+    rule.setLanguage("javascript");
+    rule.setScript("data.add( \"" + expectedString + "\"); println('whee');");
+//    rule.setScript("data.add(\"" + expectedString + "\");");
     set.setRuleUris(Collections.singletonList("rule"));
     
     RuleStore store = new DefaultRuleStore();
@@ -58,14 +59,17 @@ public class StatelessRuleSessionImplTest extends MockObjectTestCase {
     List list = new ArrayList();
     StatelessRuleSessionImpl instance = new StatelessRuleSessionImpl(set, new HashMap(), ruleRuntime);
     
+    System.out.println("Running first test...");
     List result = instance.executeRules(list);
     
     System.out.println(result);
 
     assertEquals(expectedString, result.get(0));
     
+    list.clear();
     StatelessRuleSessionImpl instance2 = new StatelessRuleSessionImpl(set, new HashMap(), ruleRuntime);
     
+    System.out.println("Running second test...");
     List result2 = instance.executeRules(list);
     
     System.out.println(result);

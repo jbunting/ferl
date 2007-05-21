@@ -37,11 +37,11 @@ public class RuleAdministratorImpl implements RuleAdministrator {
   }
 
   public RuleExecutionSetProvider getRuleExecutionSetProvider(Map map) throws RemoteException {
-    return RuleExecutionSetProviderImpl.getInstance();
+    return new RuleExecutionSetProviderImpl(this);
   }
 
   public LocalRuleExecutionSetProvider getLocalRuleExecutionSetProvider(Map map) throws RemoteException {
-    return RuleExecutionSetProviderImpl.getInstance();
+    return new RuleExecutionSetProviderImpl(this);
   }
 
   public void registerRuleExecutionSet(String string, RuleExecutionSet ruleExecutionSet, Map map) throws RuleExecutionSetRegisterException, RemoteException {
