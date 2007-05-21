@@ -64,12 +64,12 @@
       <version>2.2</version>
       <scope>compile</scope>
     </dependency>
-    <dependency>
+    <!--dependency>
       <groupId>com.sun.script</groupId>
       <artifactId>groovy-engine</artifactId>
       <version>1.0</version>
       <scope>test</scope>
-    </dependency>
+    </dependency-->
     <dependency>
       <groupId>commons-collections</groupId>
       <artifactId>commons-collections</artifactId>
