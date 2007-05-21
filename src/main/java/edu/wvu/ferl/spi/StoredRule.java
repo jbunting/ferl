@@ -9,8 +9,8 @@
 
 package edu.wvu.ferl.spi;
 
+import java.util.Collections;
 import java.util.Map;
-import javax.script.CompiledScript;
 
 /**
  *
@@ -24,16 +24,20 @@ public class StoredRule {
   private String language;
   private String script;
   private Map<Object, Object> properties;
+  private Map<Object, Object> unmodifiableProperties;
   
+  private boolean allowCollectionsModifications = false;
+
   /** Creates a new instance of StoredRule */
-  public StoredRule() {
+  public StoredRule(String uri, String name, String description, String language, String script, Map<Object, Object> properties) {
+    
   }
 
   public String getLanguage() {
     return language;
   }
 
-  public void setLanguage(String language) {
+  protected void setLanguage(String language) {
     this.language = language;
   }
 
@@ -41,7 +45,7 @@ public class StoredRule {
     return script;
   }
 
-  public void setScript(String script) {
+  protected void setScript(String script) {
     this.script = script;
   }
 
@@ -49,7 +53,7 @@ public class StoredRule {
     return name;
   }
 
-  public void setName(String name) {
+  protected void setName(String name) {
     this.name = name;
   }
 
@@ -57,24 +61,29 @@ public class StoredRule {
     return description;
   }
 
-  public void setDescription(String description) {
+  protected void setDescription(String description) {
     this.description = description;
-  }
-
-  public Object getProperty(Object key) {
-    return properties.get(key);
-  }
-
-  public void setProperty(Object key, Object value) {
-    this.properties.put(key, value);
   }
 
   public String getUri() {
     return uri;
   }
 
-  public void setUri(String uri) {
+  protected void setUri(String uri) {
     this.uri = uri;
+  }
+
+  public Map<Object, Object> getProperties() {
+    if(allowCollectionsModifications) {
+      return properties;
+    } else {
+      return unmodifiableProperties;
+    }
+  }
+
+  protected void setProperties(Map<Object, Object> properties) {
+    this.properties = properties;
+    this.unmodifiableProperties = Collections.unmodifiableMap(properties);
   }
   
 }
