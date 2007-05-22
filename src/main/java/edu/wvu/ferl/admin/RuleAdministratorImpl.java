@@ -50,7 +50,7 @@ public class RuleAdministratorImpl implements RuleAdministrator {
     }
     RuleExecutionSetImpl ruleExecutionSetImpl = (RuleExecutionSetImpl) ruleExecutionSet;
     //RuleStore ruleStore = serviceProvider.getRuleRuntimeImpl().getRuleStore();
-    StoredRuleExecutionSet storedRuleExecutionSet = new StoredRuleExecutionSet();
+    //StoredRuleExecutionSet storedRuleExecutionSet = new StoredRuleExecutionSet();
     
   }
 

@@ -17,6 +17,7 @@ import edu.wvu.ferl.spi.StoredRuleExecutionSet;
 import java.rmi.RemoteException;
 import java.util.Map;
 import javax.rules.InvalidRuleSessionException;
+import javax.rules.RuleExecutionException;
 import javax.rules.RuleExecutionSetMetadata;
 import javax.rules.RuleSession;
 import javax.script.Compilable;
@@ -58,6 +59,9 @@ public abstract class AbstractRuleSession implements RuleSession {
     hook.populateScriptContext(context);
     for(String ruleUri: this.storedRuleExecutionSet.getRuleUris()) {
       StoredRule rule = this.ruleRuntime.getRuleStore().lookupRule(ruleUri);
+      if(rule == null) {
+        throw new InvalidRuleSessionException("Cannot locate rule by uri: " + ruleUri);
+      }
       hook.handleOutput(context, determineStrategy(rule.getLanguage()).evaluateRule(rule, context, scriptEngineManager));
     }
   }

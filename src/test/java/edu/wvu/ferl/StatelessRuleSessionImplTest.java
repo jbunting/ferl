@@ -12,10 +12,10 @@ import edu.wvu.ferl.spi.RuleStore;
 import edu.wvu.ferl.spi.StoredRule;
 import edu.wvu.ferl.spi.StoredRuleExecutionSet;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
 
 /**
@@ -41,14 +41,21 @@ public class StatelessRuleSessionImplTest extends MockObjectTestCase {
     System.out.println("executeRules");
     
     String expectedString = "Hi";
-    StoredRuleExecutionSet set = new StoredRuleExecutionSet();
-    set.setUri("ruleset");
-    StoredRule rule = new StoredRule();
-    rule.setUri("rule");
-    rule.setLanguage("javascript");
-    rule.setScript("data.add( \"" + expectedString + "\"); println('whee');");
-//    rule.setScript("data.add(\"" + expectedString + "\");");
-    set.setRuleUris(Collections.singletonList("rule"));
+    StoredRuleExecutionSet set = new StoredRuleExecutionSet(
+            "ruleset", 
+            "ruleset", 
+            "this is a ruleset", 
+            Arrays.asList("rule"),
+            Collections.EMPTY_MAP,
+            null);
+
+    StoredRule rule = new StoredRule(
+            "rule", 
+            "rule", 
+            "this is a rule", 
+            "javascript", 
+            "data.add( \"" + expectedString + "\"); println('whee');",
+            Collections.EMPTY_MAP);
     
     RuleStore store = new DefaultRuleStore();
     store.storeRule(rule);

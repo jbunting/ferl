@@ -36,7 +36,6 @@ class RuleDetailedDescriptor implements RuleDescriptor {
   }
 
   public void generateRule(StoredRuleExecutionSet set, RuleStore ruleStore) throws ConfigurationException {
-    StoredRule storedRule = new StoredRule();
     
     this.checkForNull(getUri(), "uri");
     this.checkForNull(getName(), "name");
@@ -44,11 +43,12 @@ class RuleDetailedDescriptor implements RuleDescriptor {
     this.checkForNull(getLanguage(), "language");
     this.checkForNull(getScript(), "script");
     
-    storedRule.setUri(getUri());
-    storedRule.setName(getName());
-    storedRule.setDescription(getDescription());
-    storedRule.setLanguage(getLanguage());
-    storedRule.setScript(getScript());
+    StoredRule storedRule = new StoredRule(getUri(),
+                                           getName(),
+                                           getDescription(),
+                                           getLanguage(),
+                                           getScript(),
+                                           properties);
   }
 
   public String getUri() {

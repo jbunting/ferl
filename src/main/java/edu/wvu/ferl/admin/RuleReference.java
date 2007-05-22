@@ -58,7 +58,7 @@ class RuleReference implements RuleDescriptor {
   }
 
   public Object getProperty(Object key) {
-    return storedRule.getProperty(key);
+    return storedRule.getProperties().get(key);
   }
 
   public void setProperty(Object key, Object value) {

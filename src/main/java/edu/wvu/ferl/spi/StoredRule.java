@@ -30,7 +30,12 @@ public class StoredRule {
 
   /** Creates a new instance of StoredRule */
   public StoredRule(String uri, String name, String description, String language, String script, Map<Object, Object> properties) {
-    
+    this.setUri(uri);
+    this.setName(name);
+    this.setDescription(description);
+    this.setLanguage(language);
+    this.setScript(script);
+    this.setProperties(properties);
   }
 
   public String getLanguage() {
