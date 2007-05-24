@@ -13,20 +13,19 @@ import edu.wvu.ferl.admin.RuleAdministratorImpl;
 import edu.wvu.ferl.spi.DefaultRuleStore;
 import javax.rules.ConfigurationException;
 import javax.rules.RuleRuntime;
-import javax.rules.RuleServiceProvider;
 import javax.rules.admin.RuleAdministrator;
 
 /**
  *
  * @author jbunting
  */
-public class ScriptRuleServiceProvider extends RuleServiceProvider {
+public class RuleServiceProvider extends javax.rules.RuleServiceProvider {
   
   private RuleRuntimeImpl ruleRuntime;
   private RuleAdministratorImpl ruleAdministrator;
   
   /** Creates a new instance of ScriptRulesServiceProvider */
-  public ScriptRuleServiceProvider() {
+  public RuleServiceProvider() {
   }
 
   public RuleRuntime getRuleRuntime() throws ConfigurationException {

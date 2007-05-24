@@ -9,7 +9,7 @@
 
 package edu.wvu.ferl.admin;
 
-import edu.wvu.ferl.ScriptRuleServiceProvider;
+import edu.wvu.ferl.RuleServiceProvider;
 import edu.wvu.ferl.spi.RuleStore;
 import edu.wvu.ferl.spi.StoredRuleExecutionSet;
 import java.rmi.RemoteException;
@@ -29,10 +29,10 @@ import org.apache.commons.lang.NotImplementedException;
  */
 public class RuleAdministratorImpl implements RuleAdministrator {
   
-  ScriptRuleServiceProvider serviceProvider;
+  RuleServiceProvider serviceProvider;
   
   /** Creates a new instance of RuleAdministrator */
-  public RuleAdministratorImpl(ScriptRuleServiceProvider serviceProvider) {
+  public RuleAdministratorImpl(RuleServiceProvider serviceProvider) {
     this.serviceProvider = serviceProvider;
   }
 

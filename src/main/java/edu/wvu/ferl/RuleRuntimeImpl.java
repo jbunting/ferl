@@ -30,14 +30,14 @@ import javax.rules.RuleSessionTypeUnsupportedException;
  */
 public class RuleRuntimeImpl implements RuleRuntime {
   
-  private ScriptRuleServiceProvider serviceProvider;
+  private RuleServiceProvider serviceProvider;
   private RuleStore ruleStore;
   
   protected Map<String, RuleEvalStrategy> strategies = new HashMap<String, RuleEvalStrategy>();
   protected CompiledScriptCache compiledScriptCache = new DefaultCompiledScriptCache();
 
   /** Creates a new instance of RuleRuntime */
-  public RuleRuntimeImpl(ScriptRuleServiceProvider serviceProvider, RuleStore ruleStore) {
+  public RuleRuntimeImpl(RuleServiceProvider serviceProvider, RuleStore ruleStore) {
     this.serviceProvider = serviceProvider;
     this.ruleStore = ruleStore;
   }
