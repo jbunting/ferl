@@ -24,7 +24,7 @@ public class HandleImpl implements Handle {
   }
  
   public boolean equals(Object other) {
-    return object == other;
+    return object == ((HandleImpl)other).object;
   }
 
   public int hashCode() {

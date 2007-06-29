@@ -26,7 +26,11 @@ public class ObjectFilterTransformer implements Transformer {
   }
 
   public Object transform(Object object) {
-    return objectFilter.filter(object);
+    if(objectFilter != null) {
+      return objectFilter.filter(object);
+    } else {
+      return object;
+    }
   }
   
   
