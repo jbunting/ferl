@@ -12,6 +12,7 @@ package edu.wvu.ferl.admin;
 import edu.wvu.ferl.spi.RuleStore;
 import edu.wvu.ferl.spi.StoredRule;
 import edu.wvu.ferl.spi.StoredRuleExecutionSet;
+import edu.wvu.ferl.spi.StoredRuleImpl;
 import java.util.HashMap;
 import java.util.Map;
 import javax.rules.ConfigurationException;
@@ -43,7 +44,7 @@ class RuleDetailedDescriptor implements RuleDescriptor {
     this.checkForNull(getLanguage(), "language");
     this.checkForNull(getScript(), "script");
     
-    StoredRule storedRule = new StoredRule(getUri(),
+    StoredRule storedRule = new StoredRuleImpl(getUri(),
                                            getName(),
                                            getDescription(),
                                            getLanguage(),

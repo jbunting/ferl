@@ -11,6 +11,8 @@ import edu.wvu.ferl.spi.DefaultRuleStore;
 import edu.wvu.ferl.spi.RuleStore;
 import edu.wvu.ferl.spi.StoredRule;
 import edu.wvu.ferl.spi.StoredRuleExecutionSet;
+import edu.wvu.ferl.spi.StoredRuleExecutionSetImpl;
+import edu.wvu.ferl.spi.StoredRuleImpl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -41,7 +43,7 @@ public class StatelessRuleSessionImplTest extends MockObjectTestCase {
     System.out.println("executeRules");
     
     String expectedString = "Hi";
-    StoredRuleExecutionSet set = new StoredRuleExecutionSet(
+    StoredRuleExecutionSet set = new StoredRuleExecutionSetImpl(
             "ruleset", 
             "ruleset", 
             "this is a ruleset", 
@@ -49,7 +51,7 @@ public class StatelessRuleSessionImplTest extends MockObjectTestCase {
             Collections.EMPTY_MAP,
             null);
 
-    StoredRule rule = new StoredRule(
+    StoredRule rule = new StoredRuleImpl(
             "rule", 
             "rule", 
             "this is a rule", 

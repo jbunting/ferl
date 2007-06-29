@@ -31,7 +31,7 @@ public class DefaultRuleStore implements RuleStore {
   }
 
   public void storeRuleSet(StoredRuleExecutionSet storedRuleExecutionSet) {
-    storedRuleExecutionSets.put(storedRuleExecutionSet.getName(), storedRuleExecutionSet);
+    storedRuleExecutionSets.put(storedRuleExecutionSet.getUri(), new StoredRuleExecutionSetImpl(storedRuleExecutionSet));
   }
 
   public void removeRuleSet(String uri) {
@@ -47,7 +47,7 @@ public class DefaultRuleStore implements RuleStore {
   }
 
   public void storeRule(StoredRule storedRule) {
-    storedRules.put(storedRule.getUri(), storedRule);
+    storedRules.put(storedRule.getUri(), new StoredRuleImpl(storedRule));
   }
 
   public void removeRule(String uri) {
