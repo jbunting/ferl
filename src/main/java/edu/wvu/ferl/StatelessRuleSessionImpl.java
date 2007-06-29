@@ -34,10 +34,12 @@ public class StatelessRuleSessionImpl extends AbstractRuleSession implements Sta
   }
 
   public int getType() throws RemoteException, InvalidRuleSessionException {
+    checkRelease();
     return RuleRuntime.STATELESS_SESSION_TYPE;
   }
 
   public List executeRules(List list) throws InvalidRuleSessionException, RemoteException {
+    checkRelease();
     StatelessExecuteRulesHook hook = new StatelessExecuteRulesHook(list);
     super.executeRules(hook);
     return hook.getCurrentList();
@@ -47,6 +49,7 @@ public class StatelessRuleSessionImpl extends AbstractRuleSession implements Sta
    * @todo actually use the objectfilter
    */
   public List executeRules(List list, ObjectFilter objectFilter) throws InvalidRuleSessionException, RemoteException {
+    checkRelease();
     List outList = this.executeRules(list);
     CollectionUtils.transform(outList, new ObjectFilterTransformer(objectFilter));
     CollectionUtils.filter(outList, PredicateUtils.notNullPredicate());

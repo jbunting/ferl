@@ -38,6 +38,8 @@ public abstract class AbstractRuleSession implements RuleSession {
   protected Map properties;
   protected ScriptEngineManager scriptEngineManager;
   
+  protected boolean isReleased = false;
+  
   /** Creates a new instance of AbstractRuleSession */
   public AbstractRuleSession(StoredRuleExecutionSet storedRuleExecutionSet, Map properties, RuleRuntimeImpl ruleRuntime) {
     this.storedRuleExecutionSet = storedRuleExecutionSet;
@@ -47,11 +49,19 @@ public abstract class AbstractRuleSession implements RuleSession {
   }
 
   public RuleExecutionSetMetadata getRuleExecutionSetMetadata() throws InvalidRuleSessionException, RemoteException {
+    checkRelease();
     return new RuleExecutionSetMetadataImpl(this.storedRuleExecutionSet);
   }
 
   public void release() throws RemoteException, InvalidRuleSessionException {
-    // don't really know what to do here...
+    checkRelease();
+    isReleased = true;
+  }
+  
+  public void checkRelease() throws InvalidRuleSessionException {
+    if(isReleased) {
+      throw new InvalidRuleSessionException("This RuleSession has already been released...you must acquire a new one from the RuleRuntime.");
+    }
   }
   
   protected void executeRules(ExecuteRulesHook hook) throws InvalidRuleSessionException, RemoteException {

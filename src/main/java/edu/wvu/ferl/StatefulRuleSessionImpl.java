@@ -42,20 +42,24 @@ public class StatefulRuleSessionImpl extends AbstractRuleSession implements Stat
   }
 
   public int getType() throws RemoteException, InvalidRuleSessionException {
+    checkRelease();
     return RuleRuntime.STATEFUL_SESSION_TYPE;
   }
 
   public boolean containsObject(Handle handle) throws RemoteException, InvalidRuleSessionException, InvalidHandleException {
+    checkRelease();
     return state.containsKey(handle);
   }
 
   public Handle addObject(Object object) throws RemoteException, InvalidRuleSessionException {
+    checkRelease();
     HandleImpl handle = new HandleImpl(object);
     state.put(handle, object);
     return handle;
   }
 
   public List addObjects(List list) throws RemoteException, InvalidRuleSessionException {
+    checkRelease();
     List handles = new ArrayList();
     for(Object object: list) {
       handles.add(this.addObject(object));
@@ -64,36 +68,44 @@ public class StatefulRuleSessionImpl extends AbstractRuleSession implements Stat
   }
 
   public void updateObject(Handle handle, Object object) throws RemoteException, InvalidRuleSessionException, InvalidHandleException {
+    checkRelease();
     state.put(handle, object);
   }
 
   public void removeObject(Handle handle) throws RemoteException, InvalidHandleException, InvalidRuleSessionException {
+    checkRelease();
     state.remove(handle);
   }
 
   public List getObjects() throws RemoteException, InvalidRuleSessionException {
+    checkRelease();
     return Collections.unmodifiableList(new ArrayList(state.values()));
   }
 
   public List getHandles() throws RemoteException, InvalidRuleSessionException {
+    checkRelease();
     return Collections.unmodifiableList(new ArrayList(state.keySet()));
   }
 
   public List getObjects(final ObjectFilter objectFilter) throws RemoteException, InvalidRuleSessionException {
+    checkRelease();
     List outputList = PredicatedList.decorate(new ArrayList(state.size()), PredicateUtils.notNullPredicate());
     CollectionUtils.collect(state.values(), new ObjectFilterTransformer(objectFilter), outputList);
     return Collections.unmodifiableList(outputList);
   }
 
   public void executeRules() throws RemoteException, InvalidRuleSessionException {
+    checkRelease();
     super.executeRules(new StatefulExecuteRulesHook(state));
   }
 
   public void reset() throws RemoteException, InvalidRuleSessionException {
+    checkRelease();
     state.clear();
   }
 
   public Object getObject(Handle handle) throws RemoteException, InvalidHandleException, InvalidRuleSessionException {
+    checkRelease();
     return state.get(handle);
   }
   
