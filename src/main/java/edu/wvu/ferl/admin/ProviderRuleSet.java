@@ -41,14 +41,15 @@ public class ProviderRuleSet implements RuleSet {
     digester.addRule("rule-execution-set", new RuleExecutionSetCreationRule());
     digester.addRule("rule", new RuleDetailedDescriptorCreationRule());
     digester.addRule("rule-ref", new RuleReferenceCreationRule());
+    digester.addSetNext("rule", "addRuleDescriptor");
+    digester.addSetNext("rule-ref", "addRuleDescriptor");
     digester.addBeanPropertySetter("name");
     digester.addBeanPropertySetter("description");
     digester.addBeanPropertySetter("language");
     digester.addBeanPropertySetter("script");
-    digester.addCallMethod("property", "setProperty");
+    digester.addCallMethod("property", "setProperty", 2);
     digester.addCallParam("property", 0, "key");
     digester.addCallParam("property", 1, "value");
-    digester.addBeanPropertySetter("property");
   }
   
   private abstract class UriBasedObjectCreationRule extends Rule {

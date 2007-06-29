@@ -10,8 +10,10 @@
 package edu.wvu.ferl.admin;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import javax.rules.admin.Rule;
 import javax.rules.admin.RuleExecutionSet;
 
 /**
@@ -23,6 +25,7 @@ public class RuleExecutionSetImpl implements RuleExecutionSet {
   private String uri;
   private String name;
   private String description;
+  private String defaultObjectFilter;
 
   private List<RuleDescriptor> ruleDescriptors = new ArrayList<RuleDescriptor>();
   private Map<Object, Object> properties;
@@ -53,7 +56,11 @@ public class RuleExecutionSetImpl implements RuleExecutionSet {
   }
 
   public List<RuleDescriptor> getRuleDescriptors() {
-    return ruleDescriptors;
+    return Collections.unmodifiableList(ruleDescriptors);
+  }
+  
+  public void addRuleDescriptor(RuleDescriptor ruleDescriptor) {
+    ruleDescriptors.add(ruleDescriptor);
   }
 
   public Object getProperty(Object key) {
@@ -64,15 +71,16 @@ public class RuleExecutionSetImpl implements RuleExecutionSet {
     this.properties.put(key, value);
   }
 
-  public void setDefaultObjectFilter(String string) {
+  public void setDefaultObjectFilter(String defaultObjectFilter) {
+    this.defaultObjectFilter = defaultObjectFilter;
   }
 
   public String getDefaultObjectFilter() {
-    return null;
+    return defaultObjectFilter;
   }
 
   public List getRules() {
-    return null;
+    return Collections.unmodifiableList(ruleDescriptors);
   }
   
 }
