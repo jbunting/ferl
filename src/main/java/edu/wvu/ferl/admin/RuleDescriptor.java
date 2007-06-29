@@ -19,5 +19,5 @@ import javax.rules.admin.Rule;
  * @author jbunting
  */
 interface RuleDescriptor extends Rule {
-  public void generateRule(StoredRuleExecutionSet set) throws ConfigurationException;
+  public String generateRule(RuleStore ruleStore) throws ConfigurationException;
 }

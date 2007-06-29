@@ -40,13 +40,11 @@ class RuleReference implements RuleDescriptor {
     this.uri = uri;
   }
 
-  public void generateRule(StoredRuleExecutionSet set, RuleStore ruleStore) throws ConfigurationException {
+  public String generateRule(RuleStore ruleStore) throws ConfigurationException {
     if(ruleStore.lookupRule(this.getUri()) == null) {
+      throw new ConfigurationException("No Rule Exists at " + this.getUri());
     }
-    set.getRuleUris().add(this.getUri());
-  }
-
-  public void generateRule(StoredRuleExecutionSet set) throws ConfigurationException {
+    return this.getUri();
   }
 
   public String getName() {

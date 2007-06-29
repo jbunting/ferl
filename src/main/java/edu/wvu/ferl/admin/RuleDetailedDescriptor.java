@@ -12,6 +12,7 @@ package edu.wvu.ferl.admin;
 import edu.wvu.ferl.spi.RuleStore;
 import edu.wvu.ferl.spi.StoredRule;
 import edu.wvu.ferl.spi.StoredRuleExecutionSet;
+import edu.wvu.ferl.spi.StoredRuleExecutionSetImpl;
 import edu.wvu.ferl.spi.StoredRuleImpl;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +37,7 @@ class RuleDetailedDescriptor implements RuleDescriptor {
     this.setUri(uri);
   }
 
-  public void generateRule(StoredRuleExecutionSet set, RuleStore ruleStore) throws ConfigurationException {
+  public String generateRule(RuleStore ruleStore) throws ConfigurationException {
     
     this.checkForNull(getUri(), "uri");
     this.checkForNull(getName(), "name");
@@ -50,6 +51,8 @@ class RuleDetailedDescriptor implements RuleDescriptor {
                                            getLanguage(),
                                            getScript(),
                                            properties);
+    ruleStore.storeRule(storedRule);
+    return this.getUri();
   }
 
   public String getUri() {
@@ -96,9 +99,6 @@ class RuleDetailedDescriptor implements RuleDescriptor {
     if(StringUtils.isBlank(input)) {
       throw new ConfigurationException(field + " cannot be empty...");
     }
-  }
-
-  public void generateRule(StoredRuleExecutionSet set) throws ConfigurationException {
   }
 
   public Object getProperty(Object key) {

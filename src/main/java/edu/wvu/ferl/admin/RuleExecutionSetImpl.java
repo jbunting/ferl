@@ -70,6 +70,14 @@ public class RuleExecutionSetImpl implements RuleExecutionSet {
   public void setProperty(Object key, Object value) {
     this.properties.put(key, value);
   }
+  
+  public void addAllProperties(Map<?, ?> map) {
+    this.properties.putAll(map);
+  }
+  
+  public Map getProperties() {
+    return Collections.unmodifiableMap(properties);
+  }
 
   public void setDefaultObjectFilter(String defaultObjectFilter) {
     this.defaultObjectFilter = defaultObjectFilter;

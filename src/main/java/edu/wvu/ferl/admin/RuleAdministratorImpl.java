@@ -12,8 +12,13 @@ package edu.wvu.ferl.admin;
 import edu.wvu.ferl.RuleServiceProvider;
 import edu.wvu.ferl.spi.RuleStore;
 import edu.wvu.ferl.spi.StoredRuleExecutionSet;
+import edu.wvu.ferl.spi.StoredRuleExecutionSetImpl;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import javax.rules.ConfigurationException;
 import javax.rules.admin.LocalRuleExecutionSetProvider;
 import javax.rules.admin.RuleAdministrator;
 import javax.rules.admin.RuleExecutionSet;
@@ -44,18 +49,43 @@ public class RuleAdministratorImpl implements RuleAdministrator {
     return new RuleExecutionSetProviderImpl(this);
   }
 
-  public void registerRuleExecutionSet(String string, RuleExecutionSet ruleExecutionSet, Map map) throws RuleExecutionSetRegisterException, RemoteException {
+  public void registerRuleExecutionSet(String uri, RuleExecutionSet ruleExecutionSet, Map properties) throws RuleExecutionSetRegisterException, RemoteException {
     if(!(ruleExecutionSet instanceof RuleExecutionSetImpl)) {
       throw new IllegalClassException("Only RuleExecutionSets created by this RuleAdministrator can be registered...");
     }
     RuleExecutionSetImpl ruleExecutionSetImpl = (RuleExecutionSetImpl) ruleExecutionSet;
-    //RuleStore ruleStore = serviceProvider.getRuleRuntimeImpl().getRuleStore();
-    //StoredRuleExecutionSet storedRuleExecutionSet = new StoredRuleExecutionSet();
-    
+
+    try {
+      RuleStore ruleStore = serviceProvider.getRuleRuntimeImpl().getRuleStore();
+      List<String> ruleUris = new ArrayList<String>();
+      for(RuleDescriptor ruleDescriptor: ruleExecutionSetImpl.getRuleDescriptors()) {
+        ruleUris.add(ruleDescriptor.generateRule(ruleStore));
+      }
+      ruleStore.storeRuleSet(this.createStoredRuleExecutionSet(uri == null ? ruleExecutionSet.getName() : uri, ruleExecutionSetImpl, ruleUris, properties));
+    } catch (ConfigurationException ex) {
+      throw new RuleExecutionSetRegisterException("Error registering the RuleExecutionSet...", ex);
+    }
   }
 
-  public void deregisterRuleExecutionSet(String string, Map map) throws RuleExecutionSetDeregistrationException, RemoteException {
-    throw new NotImplementedException();
+  public void deregisterRuleExecutionSet(String uri, Map map) throws RuleExecutionSetDeregistrationException, RemoteException {
+      try {
+        RuleStore ruleStore = serviceProvider.getRuleRuntimeImpl().getRuleStore();
+        ruleStore.removeRuleSet(uri);
+      } catch (ConfigurationException ex) {
+      throw new RuleExecutionSetDeregistrationException("Error registering the RuleExecutionSet...", ex);
+      }
   }
   
+  protected StoredRuleExecutionSet createStoredRuleExecutionSet(String uri, RuleExecutionSetImpl ruleExecutionSetImpl, List<String> ruleUris, Map properties) {
+    Map localProperties = new HashMap(ruleExecutionSetImpl.getProperties());
+    localProperties.putAll(properties);
+    StoredRuleExecutionSet storedRuleExecutionSet = new StoredRuleExecutionSetImpl(uri, 
+            ruleExecutionSetImpl.getName(),
+            ruleExecutionSetImpl.getDescription(),
+            ruleUris,
+            localProperties,
+            ruleExecutionSetImpl.getDefaultObjectFilter());
+            
+    return storedRuleExecutionSet;
+  }
 }

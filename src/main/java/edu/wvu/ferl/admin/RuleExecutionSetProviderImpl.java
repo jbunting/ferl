@@ -15,6 +15,7 @@ import java.io.Reader;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.rules.admin.LocalRuleExecutionSetProvider;
 import javax.rules.admin.RuleExecutionSet;
 import javax.rules.admin.RuleExecutionSetCreateException;
@@ -27,12 +28,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamSource;
-import org.apache.commons.digester.AbstractObjectCreationFactory;
 import org.w3c.dom.Element;
 import org.apache.commons.digester.Digester;
-import org.apache.commons.digester.Rule;
-import org.apache.commons.lang.StringUtils;
-import org.xml.sax.Attributes;
 
 /**
  *
@@ -76,7 +73,7 @@ public class RuleExecutionSetProviderImpl implements RuleExecutionSetProvider, L
     throw new UnsupportedOperationException("Does not support the object method...");
   }
   
-  public RuleExecutionSet createRuleExecutionSet(Source source, Map map) throws RuleExecutionSetCreateException {
+  public RuleExecutionSet createRuleExecutionSet(Source source, Map<?, ?> properties) throws RuleExecutionSetCreateException {
     Digester digester = new Digester();
     
     digester.addRuleSet(providerRuleSet);
@@ -90,6 +87,11 @@ public class RuleExecutionSetProviderImpl implements RuleExecutionSetProvider, L
       transformer.transform(source, result);
     } catch (TransformerException ex) {
       throw new RuleExecutionSetCreateException("Could not process xml...", ex);
+    }
+    
+    RuleExecutionSetImpl ruleExecutionSetImpl = (RuleExecutionSetImpl) digester.getRoot();
+    if(properties != null) {
+      ruleExecutionSetImpl.addAllProperties(properties);
     }
     
     return (RuleExecutionSet) digester.getRoot();
