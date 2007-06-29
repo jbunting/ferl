@@ -21,6 +21,7 @@ import javax.rules.StatelessRuleSession;
 import javax.script.ScriptContext;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.PredicateUtils;
+import org.apache.commons.lang.StringUtils;
 
 /**
  *
@@ -51,8 +52,13 @@ public class StatelessRuleSessionImpl extends AbstractRuleSession implements Sta
   public List executeRules(List list, ObjectFilter objectFilter) throws InvalidRuleSessionException, RemoteException {
     checkRelease();
     List outList = this.executeRules(list);
-    CollectionUtils.transform(outList, new ObjectFilterTransformer(objectFilter));
-    CollectionUtils.filter(outList, PredicateUtils.notNullPredicate());
+    if(objectFilter == null && !StringUtils.isBlank(storedRuleExecutionSet.getDefaultObjectFilter())) {
+      objectFilter = this.ruleRuntime.getRuleServiceProvider().instantiate(ObjectFilter.class, storedRuleExecutionSet.getDefaultObjectFilter());
+    }
+    if(objectFilter != null) {
+      CollectionUtils.transform(outList, new ObjectFilterTransformer(objectFilter));
+      CollectionUtils.filter(outList, PredicateUtils.notNullPredicate());
+    }
     return outList;
   }
   

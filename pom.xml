@@ -54,6 +54,11 @@
   </build>
   <dependencies>
     <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.1</version>
+    </dependency>
+    <dependency>
       <groupId>javax.rules</groupId>
       <artifactId>jsr94</artifactId>
       <version>1.0</version>

@@ -66,4 +66,8 @@ public class RuleRuntimeImpl implements RuleRuntime {
   public RuleStore getRuleStore() {
     return ruleStore;
   }
+  
+  public RuleServiceProvider getRuleServiceProvider() {
+    return serviceProvider;
+  }
 }
