@@ -32,14 +32,15 @@ public class RuleRuntimeImpl implements RuleRuntime {
   
   private RuleServiceProvider serviceProvider;
   private RuleStore ruleStore;
+  private CompiledScriptCache compiledScriptCache;
   
   protected Map<String, RuleEvalStrategy> strategies = new HashMap<String, RuleEvalStrategy>();
-  protected CompiledScriptCache compiledScriptCache = new DefaultCompiledScriptCache();
 
   /** Creates a new instance of RuleRuntime */
-  public RuleRuntimeImpl(RuleServiceProvider serviceProvider, RuleStore ruleStore) {
+  public RuleRuntimeImpl(RuleServiceProvider serviceProvider, RuleStore ruleStore, CompiledScriptCache compiledScriptCache) {
     this.serviceProvider = serviceProvider;
     this.ruleStore = ruleStore;
+    this.compiledScriptCache = compiledScriptCache;
   }
 
   public RuleSession createRuleSession(String uri, Map properties, int i) 
@@ -69,5 +70,9 @@ public class RuleRuntimeImpl implements RuleRuntime {
   
   public RuleServiceProvider getRuleServiceProvider() {
     return serviceProvider;
+  }
+  
+  public CompiledScriptCache getCompiledScriptCache() {
+    return compiledScriptCache;
   }
 }

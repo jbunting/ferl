@@ -10,6 +10,8 @@
 package edu.wvu.ferl;
 
 import edu.wvu.ferl.admin.RuleAdministratorImpl;
+import edu.wvu.ferl.eval.CompiledScriptCache;
+import edu.wvu.ferl.eval.DefaultCompiledScriptCache;
 import edu.wvu.ferl.spi.impl.DefaultRuleStore;
 import edu.wvu.ferl.spi.RuleStore;
 import java.util.ArrayList;
@@ -32,8 +34,6 @@ public class RuleServiceProvider extends javax.rules.RuleServiceProvider {
   
   public static final String REGISTRATION_URI = "edu.wvu.ferl.RuleServiceProvider";
   
-  private ClassLoader classLoader;
-
   static {
     try {
       RuleServiceProviderManager.registerRuleServiceProvider(REGISTRATION_URI, RuleServiceProvider.class);
@@ -45,6 +45,9 @@ public class RuleServiceProvider extends javax.rules.RuleServiceProvider {
   private RuleRuntimeImpl ruleRuntime;
   private RuleAdministratorImpl ruleAdministrator;
   private RuleStore ruleStore;
+  private CompiledScriptCache compiledScriptCache;
+  private ClassLoader classLoader;
+  
   
   /** Creates a new instance of ScriptRulesServiceProvider */
   public RuleServiceProvider() {
@@ -62,7 +65,7 @@ public class RuleServiceProvider extends javax.rules.RuleServiceProvider {
   public RuleRuntimeImpl getRuleRuntimeImpl() throws ConfigurationException {
     synchronized(this) {
       if(ruleRuntime == null) {
-        ruleRuntime = new RuleRuntimeImpl(this, this.getRuleStore());
+        ruleRuntime = new RuleRuntimeImpl(this, this.getRuleStore(), this.getCompiledScriptCache());
       }
     }
     return ruleRuntime;
@@ -93,14 +96,17 @@ public class RuleServiceProvider extends javax.rules.RuleServiceProvider {
   }
 
   public void setRuleStore(RuleStore ruleStore) {
-    synchronized(this) {
-      if(this.ruleStore != null) {
-        throw new IllegalStateException("RuleStore cannot be changed once set!");
+    if(this.ruleStore == null) {
+      synchronized(this) {
+        if(this.ruleStore == null) {
+          this.ruleStore = ruleStore;
+          return;
+        }
       }
-      this.ruleStore = ruleStore;
     }
+    throw new IllegalStateException("RuleStore cannot be changed once set!");
   }
-
+  
   public <T> T instantiate(Class<T> interfaceClass, String className) throws InvalidRuleSessionException {
     Class<?> clazz = null;
     
@@ -143,5 +149,28 @@ public class RuleServiceProvider extends javax.rules.RuleServiceProvider {
       list.add(this.getClass().getClassLoader());
     }
     return list;
+  }
+
+  public CompiledScriptCache getCompiledScriptCache() {
+    if(compiledScriptCache == null) {
+      synchronized(this) {
+        if(compiledScriptCache == null) {
+          this.compiledScriptCache = new DefaultCompiledScriptCache();
+        }
+      }
+    }
+    return compiledScriptCache;
+  }
+
+  public void setCompiledScriptCache(CompiledScriptCache compiledScriptCache) {
+    if(compiledScriptCache == null) {
+      synchronized(this) {
+        if(compiledScriptCache == null) {
+          this.compiledScriptCache = compiledScriptCache;
+          return;
+        }
+      }
+    }
+    throw new IllegalStateException("CompiledScriptCache cannot be changed once set!");
   }
 }
