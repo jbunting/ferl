@@ -26,25 +26,38 @@ public class DefaultCompiledScriptCache implements CompiledScriptCache {
   }
 
   public void storeCompiledScript(String ruleName, String script, CompiledScript compiledScript) {
-    scriptStore.put(ruleName, new CompiledItem(script, compiledScript));
+    synchronized(this) {
+      scriptStore.put(ruleName, new CompiledItem(script, compiledScript));
+    }
   }
 
   public CompiledScript retrieveCompiledScript(String ruleName, String script) {
-    CompiledItem item = scriptStore.get(ruleName);
-    if(item != null && item.script.equals(script)) {
-      return item.compiledScript;
-    } else {
-      return null;
+    synchronized(this) {
+      CompiledItem item = scriptStore.get(ruleName);
+      if(item != null && item.matches(script)) {
+        return item.getCompiledScript();
+      } else {
+        scriptStore.remove(ruleName);
+        return null;
+      }
     }
   }
   
   private class CompiledItem {
-    public String script;
-    public CompiledScript compiledScript;
+    private String script;
+    private CompiledScript compiledScript;
     
     public CompiledItem(String script, CompiledScript compiledScript) {
       this.script = script;
       this.compiledScript = compiledScript;
+    }
+    
+    public boolean matches(String script) {
+      return this.script.equals(script);
+    }
+    
+    public CompiledScript getCompiledScript() {
+      return this.compiledScript;
     }
   }
 }

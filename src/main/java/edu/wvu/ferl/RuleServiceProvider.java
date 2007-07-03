@@ -10,13 +10,12 @@
 package edu.wvu.ferl;
 
 import edu.wvu.ferl.admin.RuleAdministratorImpl;
-import edu.wvu.ferl.spi.DefaultRuleStore;
+import edu.wvu.ferl.spi.impl.DefaultRuleStore;
 import edu.wvu.ferl.spi.RuleStore;
 import java.util.ArrayList;
 import java.util.List;
 import javax.rules.ConfigurationException;
 import javax.rules.InvalidRuleSessionException;
-import javax.rules.RuleExecutionException;
 import javax.rules.RuleRuntime;
 import javax.rules.RuleServiceProviderManager;
 import javax.rules.admin.RuleAdministrator;
@@ -81,7 +80,7 @@ public class RuleServiceProvider extends javax.rules.RuleServiceProvider {
     }
     return ruleAdministrator;
   }
-
+  
   public RuleStore getRuleStore() {
     if(ruleStore == null) {
       synchronized(this) {
@@ -94,7 +93,12 @@ public class RuleServiceProvider extends javax.rules.RuleServiceProvider {
   }
 
   public void setRuleStore(RuleStore ruleStore) {
-    this.ruleStore = ruleStore;
+    synchronized(this) {
+      if(this.ruleStore != null) {
+        throw new IllegalStateException("RuleStore cannot be changed once set!");
+      }
+      this.ruleStore = ruleStore;
+    }
   }
 
   public <T> T instantiate(Class<T> interfaceClass, String className) throws InvalidRuleSessionException {
@@ -114,15 +118,16 @@ public class RuleServiceProvider extends javax.rules.RuleServiceProvider {
       throw new InvalidRuleSessionException("Could not load the implementation of " + interfaceClass.getClass().getName(), new ClassNotFoundException("No class could be located named " + className));
     }
     if(interfaceClass.isAssignableFrom(clazz)) {
-      
-    }
-    Class<? extends T> typedClazz = (Class<? extends T>) clazz;
-    try {
-      return typedClazz.newInstance();
-    } catch (RuntimeException ex) {
-      throw ex;
-    } catch (Exception ex) {
-      throw new InvalidRuleSessionException("Could not instantiate " + typedClazz.getName(), ex);
+      Class<? extends T> typedClazz = (Class<? extends T>) clazz;
+      try {
+        return typedClazz.newInstance();
+      } catch (RuntimeException ex) {
+        throw ex;
+      } catch (Exception ex) {
+        throw new InvalidRuleSessionException("Could not instantiate " + typedClazz.getName(), ex);
+      }
+    } else {
+      throw new IllegalArgumentException(className + " is not an instance of " + interfaceClass.getClass().getName());
     }
   }
   

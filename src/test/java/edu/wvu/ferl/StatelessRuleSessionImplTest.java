@@ -7,12 +7,12 @@
 
 package edu.wvu.ferl;
 
-import edu.wvu.ferl.spi.DefaultRuleStore;
+import edu.wvu.ferl.spi.impl.DefaultRuleStore;
 import edu.wvu.ferl.spi.RuleStore;
 import edu.wvu.ferl.spi.StoredRule;
 import edu.wvu.ferl.spi.StoredRuleExecutionSet;
-import edu.wvu.ferl.spi.StoredRuleExecutionSetImpl;
-import edu.wvu.ferl.spi.StoredRuleImpl;
+import edu.wvu.ferl.spi.impl.StoredRuleExecutionSetImpl;
+import edu.wvu.ferl.spi.impl.StoredRuleImpl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;

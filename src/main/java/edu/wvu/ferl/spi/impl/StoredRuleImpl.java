@@ -7,8 +7,9 @@
  * and open the template in the editor.
  */
 
-package edu.wvu.ferl.spi;
+package edu.wvu.ferl.spi.impl;
 
+import edu.wvu.ferl.spi.*;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;

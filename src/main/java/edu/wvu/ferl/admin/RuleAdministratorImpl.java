@@ -12,7 +12,7 @@ package edu.wvu.ferl.admin;
 import edu.wvu.ferl.RuleServiceProvider;
 import edu.wvu.ferl.spi.RuleStore;
 import edu.wvu.ferl.spi.StoredRuleExecutionSet;
-import edu.wvu.ferl.spi.StoredRuleExecutionSetImpl;
+import edu.wvu.ferl.spi.impl.StoredRuleExecutionSetImpl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
