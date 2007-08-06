@@ -7,6 +7,7 @@
 
 package edu.wvu.ferl;
 
+import edu.wvu.ferl.eval.DefaultCompiledScriptCache;
 import edu.wvu.ferl.spi.impl.DefaultRuleStore;
 import edu.wvu.ferl.spi.RuleStore;
 import edu.wvu.ferl.spi.StoredRule;
@@ -63,7 +64,7 @@ public class StatelessRuleSessionImplTest extends MockObjectTestCase {
     store.storeRule(rule);
     store.storeRuleSet(set);
     
-    RuleRuntimeImpl ruleRuntime = new RuleRuntimeImpl(null, store);
+    RuleRuntimeImpl ruleRuntime = new RuleRuntimeImpl(null, store, new DefaultCompiledScriptCache());
     
     List list = new ArrayList();
     StatelessRuleSessionImpl instance = new StatelessRuleSessionImpl(set, new HashMap(), ruleRuntime);

@@ -5,10 +5,10 @@
  * Created on June 29, 2007, 9:57 PM
  */
 
-package edu.wvu.ferl.spi;
+package edu.wvu.ferl.spi.impl;
 
+import edu.wvu.ferl.spi.*;
 import junit.framework.*;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 

@@ -96,7 +96,7 @@ public abstract class AbstractRuleSession implements RuleSession {
       if(strategy == null) {
         ScriptEngine engine = scriptEngineManager.getEngineByName(language);
         if(engine instanceof Compilable) {
-          strategy = new CompiledRuleEvalStrategy(ruleRuntime.compiledScriptCache);
+          strategy = new CompiledRuleEvalStrategy(ruleRuntime.getCompiledScriptCache());
         } else {
           strategy = new SimpleRuleEvalStrategy();
         }
