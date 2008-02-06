@@ -21,7 +21,7 @@ public class DefaultCacheFactory implements CacheFactory {
    * @param valueType
    * @return
    */
-  public <K, V> Cache<K, V> createCacheSpace(CacheItemValidator<? super K, ? super V> cacheItemValidator,
+  public <K, V> Cache<K, V> createCache(CacheItemValidator<? super K, ? super V> cacheItemValidator,
                                              CacheItemLoader<? super K, ? extends V> cacheItemLoader,
                                              Class<K> keyType,
                                              Class<V> valueType) {

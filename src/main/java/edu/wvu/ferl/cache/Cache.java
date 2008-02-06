@@ -5,7 +5,7 @@ package edu.wvu.ferl.cache;
  * meant to retrieve the current instance and test that it is valid.  If it does not exist, or is not valid, then
  * it loads the proper value.  It should use a {@link CacheItemValidator} for checking the value, and then use 
  * {@link CacheItemLoader} to load the new value.  Instance of {@code Cache} should be created using
- * {@link CacheFactory#createCacheSpace}.
+ * {@link CacheFactory#createCache}.
  * User: jbunting
  * Date: Feb 5, 2008
  * Time: 11:07:01 AM

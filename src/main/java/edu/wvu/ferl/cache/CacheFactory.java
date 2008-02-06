@@ -16,7 +16,7 @@ public interface CacheFactory {
    * @param valueType the type used for the value of this cache
    * @return the new {@link Cache}
    */
-  public <K, V> Cache<K, V> createCacheSpace(CacheItemValidator<? super K, ? super V> validator, 
+  public <K, V> Cache<K, V> createCache(CacheItemValidator<? super K, ? super V> validator,
                                              CacheItemLoader<? super K, ? extends V> cacheItemLoader,
                                              Class<K> keyType,
                                              Class<V> valueType);

@@ -27,13 +27,13 @@ public class RuleEvaluator {
 
   public RuleEvaluator(RuleRuntimeImpl ruleRuntime) {
     this.ruleRuntime = ruleRuntime;
-    scriptCache = ruleRuntime.getRuleServiceProvider().getCacheFactory().createCacheSpace(
+    scriptCache = ruleRuntime.getRuleServiceProvider().getCacheFactory().createCache(
             new ScriptCacheItemValidator(ruleRuntime.getRuleStore()),
             new ScriptCacheItemLoader(new ScriptLoader(ruleRuntime.getRuleStore(), scriptEngineManager)),
             String.class,
             ScriptCompilation.class);
 
-    strategyCache = ruleRuntime.getRuleServiceProvider().getCacheFactory().createCacheSpace(
+    strategyCache = ruleRuntime.getRuleServiceProvider().getCacheFactory().createCache(
             CacheItemValidator.TRUE,
             new StrategyCacheItemLoader(new StrategyDeterminer(scriptEngineManager, scriptCache)),
             String.class,
