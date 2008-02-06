@@ -50,6 +50,14 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>edu/wvu/ferl/runtime/**/*.java</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -80,6 +88,11 @@
       <artifactId>commons-collections</artifactId>
       <version>3.1</version>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.collections</groupId>
+      <artifactId>collections-generic</artifactId>
+      <version>4.01</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

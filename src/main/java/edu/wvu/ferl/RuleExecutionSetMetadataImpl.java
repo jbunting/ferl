@@ -9,7 +9,7 @@
 
 package edu.wvu.ferl;
 
-import edu.wvu.ferl.spi.StoredRuleExecutionSet;
+import edu.wvu.ferl.store.StoredRuleExecutionSet;
 import javax.rules.RuleExecutionSetMetadata;
 
 /**

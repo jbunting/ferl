@@ -82,7 +82,7 @@ public class ProviderRuleSet implements RuleSet {
   
   private class RuleReferenceCreationRule extends UriBasedObjectCreationRule {
     protected Object createObject(String uri) throws Exception {
-      return new RuleReference(uri, administrator.serviceProvider.getRuleRuntimeImpl().getRuleStore());
+      return new RuleReference(uri, administrator.serviceProvider.getRuleRuntime().getRuleStore());
     }
   }
   

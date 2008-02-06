@@ -9,8 +9,8 @@
 
 package edu.wvu.ferl.admin;
 
-import edu.wvu.ferl.spi.RuleStore;
-import edu.wvu.ferl.spi.StoredRuleExecutionSet;
+import edu.wvu.ferl.store.RuleStore;
+
 import javax.rules.ConfigurationException;
 import javax.rules.admin.Rule;
 

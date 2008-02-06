@@ -10,9 +10,9 @@
 package edu.wvu.ferl.admin;
 
 import edu.wvu.ferl.RuleServiceProvider;
-import edu.wvu.ferl.spi.RuleStore;
-import edu.wvu.ferl.spi.StoredRuleExecutionSet;
-import edu.wvu.ferl.spi.impl.StoredRuleExecutionSetImpl;
+import edu.wvu.ferl.store.RuleStore;
+import edu.wvu.ferl.store.StoredRuleExecutionSet;
+import edu.wvu.ferl.store.impl.StoredRuleExecutionSetImpl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -97,7 +97,7 @@ public class RuleAdministratorImpl implements RuleAdministrator {
     RuleExecutionSetImpl ruleExecutionSetImpl = (RuleExecutionSetImpl) ruleExecutionSet;
 
     try {
-      RuleStore ruleStore = serviceProvider.getRuleRuntimeImpl().getRuleStore();
+      RuleStore ruleStore = serviceProvider.getRuleRuntime().getRuleStore();
       List<String> ruleUris = new ArrayList<String>();
       for(RuleDescriptor ruleDescriptor: ruleExecutionSetImpl.getRuleDescriptors()) {
         ruleUris.add(ruleDescriptor.generateRule(ruleStore));
@@ -118,7 +118,7 @@ public class RuleAdministratorImpl implements RuleAdministrator {
    */
   public void deregisterRuleExecutionSet(String uri, Map map) throws RuleExecutionSetDeregistrationException, RemoteException {
       try {
-        RuleStore ruleStore = serviceProvider.getRuleRuntimeImpl().getRuleStore();
+        RuleStore ruleStore = serviceProvider.getRuleRuntime().getRuleStore();
         ruleStore.removeRuleSet(uri);
       } catch (ConfigurationException ex) {
       throw new RuleExecutionSetDeregistrationException("Error registering the RuleExecutionSet...", ex);
