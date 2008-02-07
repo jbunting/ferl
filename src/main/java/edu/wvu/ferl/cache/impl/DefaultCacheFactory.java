@@ -6,7 +6,7 @@ import edu.wvu.ferl.cache.CacheItemLoader;
 import edu.wvu.ferl.cache.CacheItemValidator;
 
 /**
- * Meant to create now {@link Cache} objects.
+ * A default implementation of {@link CacheFactory} that creates {@link DefaultCache} objects as its Cache.
  * User: jbunting
  * Date: Feb 6, 2008
  * Time: 9:03:26 AM
@@ -14,17 +14,17 @@ import edu.wvu.ferl.cache.CacheItemValidator;
 public class DefaultCacheFactory implements CacheFactory {
 
   /**
-   * Creates the actual c
-   * @param cacheItemValidator
-   * @param cacheItemLoader
-   * @param keyType
-   * @param valueType
-   * @return
+   * {@inheritDoc}
+   * @param cacheItemValidator {@inheritDoc}
+   * @param cacheItemLoader {@inheritDoc}
+   * @param keyType {@inheritDoc}
+   * @param valueType {@inheritDoc}
+   * @return {@inheritDoc}
    */
   public <K, V> Cache<K, V> createCache(CacheItemValidator<? super K, ? super V> cacheItemValidator,
                                              CacheItemLoader<? super K, ? extends V> cacheItemLoader,
                                              Class<K> keyType,
                                              Class<V> valueType) {
-    return new DefaultCache(cacheItemValidator, cacheItemLoader, keyType, valueType);
+    return new DefaultCache<K, V>(cacheItemValidator, cacheItemLoader, keyType, valueType);
   }
 }
