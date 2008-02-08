@@ -43,6 +43,8 @@ public class DefaultCache<K, V> implements Cache<K, V> {
 
   /**
    * {@inheritDoc}
+   * This method is thread safe.  It uses locks and multiple condition checks to ensure that data does not get lost
+   * or overwritten.
    * @param key {@inheritDoc}
    * @return {@inheritDoc}
    */

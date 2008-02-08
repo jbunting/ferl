@@ -14,15 +14,20 @@ class ScriptCacheItemValidator implements CacheItemValidator<String, ScriptCompi
 
   private RuleStore ruleStore;
 
+  /**
+   * Creates a new validator.
+   * @param ruleStore the rulestore to look up the current script in
+   */
   ScriptCacheItemValidator(RuleStore ruleStore) {
     this.ruleStore = ruleStore;
   }
 
   /**
-   * {@inheritDoc}
+   * Compares the raw script stored in the cache with the raw script currently in the rule store.  If they are the same
+   * then this method returns true, otherwise it returns false.
    * @param key {@inheritDoc}
    * @param value {@inheritDoc}
-   * @return {@inheritDoc
+   * @return true if the item is valid, false otherwise
    */
   public boolean isValid(String key, ScriptCompilation value) {
     StoredRule storedRule = ruleStore.lookupRule(key);

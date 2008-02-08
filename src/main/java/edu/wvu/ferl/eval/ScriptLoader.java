@@ -13,8 +13,8 @@ import javax.script.*;
  */
 class ScriptLoader {
 
-  RuleStore ruleStore;
-  ScriptEngineManager scriptEngineManager;
+  private RuleStore ruleStore;
+  private ScriptEngineManager scriptEngineManager;
 
   /**
    * Creates a new {@code ScriptLoader}.

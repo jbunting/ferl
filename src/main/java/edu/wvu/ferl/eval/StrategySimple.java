@@ -17,15 +17,26 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 /**
- *
+ * A {@link Strategy} used for scripting engines that do not support compilation.  This {@code Strategy} will retrieve
+ * a raw script from the {@link StoredRule} and invoke it.
  * @author jbunting
  */
 class StrategySimple implements Strategy {
   
-  /** Creates a new instance of StrategySimple */
+  /**
+   * Creates a new instance.
+   */
   public StrategySimple() {
   }
 
+  /**
+   * Evaluates the raw script using the script engine retrieved from the engine manager.
+   * @param rule {@inheritDoc}
+   * @param context {@inheritDoc}
+   * @param engineManager {@inheritDoc}
+   * @return the output of the rule invocation
+   * @throws InvalidRuleSessionException {@inheritDoc}
+   */
   public Object evaluateRule(StoredRule rule, ScriptContext context, ScriptEngineManager engineManager) throws InvalidRuleSessionException {
     ScriptEngine engine = engineManager.getEngineByName(rule.getLanguage());
 
