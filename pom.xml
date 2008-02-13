@@ -24,6 +24,9 @@
   <packaging>jar</packaging>
   <version>0.1-SNAPSHOT</version>
   <name>ferl</name>
+  <prerequisites>
+    <maven>2.0.7</maven>
+  </prerequisites>
   <description>
     ferl's goal is to be a JSR-94 compliant Rules Engine with rule sets being defined as a collection of scripts,
     invoked use JSR-223 compliant script engines.
@@ -41,6 +44,11 @@
     <name>West Virginia University Office of Information Technology</name>
     <url>http://oit.wvu.edu/</url>
   </organization>
+  <scm>
+    <connection>scm:svn:http://ferl.googlecode.com/svn/trunk/</connection>
+    <developerConnection>scm:svn:https://ferl.googlecode.com/svn/trunk/</developerConnection>
+    <url>http://code.google.com/p/ferl/source/browse</url>
+  </scm>
   <developers>
     <developer>
       <id>jbunting</id>
@@ -201,6 +209,7 @@
     </profile>
   </profiles>
   <distributionManagement>
+    <downloadUrl></downloadUrl>
     <snapshotRepository>
       <uniqueVersion>true</uniqueVersion>
       <id>deploy-wvu-esd</id>
