@@ -43,18 +43,18 @@ import javax.rules.RuleRuntime;
 import javax.rules.StatefulRuleSession;
 import javax.script.ScriptContext;
 
-import org.apache.commons.collections.Closure;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.PredicateUtils;
-import org.apache.commons.collections.list.PredicatedList;
-import org.apache.commons.collections.map.ListOrderedMap;
+import org.apache.commons.collections15.map.ListOrderedMap;
+import org.apache.commons.collections15.list.PredicatedList;
+import org.apache.commons.collections15.PredicateUtils;
+import org.apache.commons.collections15.CollectionUtils;
+import org.apache.commons.collections15.Closure;
 
 /**
  * @author jbunting
  */
 class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRuleSession {
 
-  private ListOrderedMap state = new ListOrderedMap();
+  private ListOrderedMap<Handle, Object> state = new ListOrderedMap<Handle, Object>();
 
   /**
    * Creates a new instance of StatefulRuleSessionImpl

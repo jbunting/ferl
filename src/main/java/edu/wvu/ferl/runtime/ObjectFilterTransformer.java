@@ -28,12 +28,12 @@ package edu.wvu.ferl.runtime;
 
 import javax.rules.ObjectFilter;
 
-import org.apache.commons.collections.Transformer;
+import org.apache.commons.collections15.Transformer;
 
 /**
  * @author jbunting
  */
-class ObjectFilterTransformer implements Transformer {
+class ObjectFilterTransformer implements Transformer<Object, Object> {
 
   private ObjectFilter objectFilter;
 

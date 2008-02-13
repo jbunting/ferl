@@ -27,7 +27,6 @@
 package edu.wvu.ferl.runtime;
 
 import edu.wvu.ferl.store.StoredRuleExecutionSet;
-import edu.wvu.ferl.runtime.AbstractRuleSession;
 import edu.wvu.ferl.eval.RuleEvaluator;
 
 import java.rmi.RemoteException;
@@ -40,9 +39,9 @@ import javax.rules.RuleRuntime;
 import javax.rules.StatelessRuleSession;
 import javax.script.ScriptContext;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.PredicateUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.collections15.CollectionUtils;
+import org.apache.commons.collections15.PredicateUtils;
 
 /**
  * @author jbunting
