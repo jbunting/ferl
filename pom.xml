@@ -200,4 +200,23 @@
       </dependencies>
     </profile>
   </profiles>
+  <distributionManagement>
+    <snapshotRepository>
+      <uniqueVersion>true</uniqueVersion>
+      <id>deploy-wvu-esd</id>
+      <name>Internal WVU Snapshot Deployment Repository</name>
+      <url>sftp://subversion.systems.wvu.edu/svn/maven/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>deploy-wvu-esd</id>
+      <name>Internal WVU Deployment Repository</name>
+      <url>sftp://subversion.systems.wvu.edu/svn/maven/internal</url>
+    </repository>
+    <site>
+      <id>deploy-wvu-esd</id>
+      <name>Internal ESD Project Sites</name>
+      <url>sftp://subversion.systems.wvu.edu/svn/sites/sei</url>
+    </site>
+  </distributionManagement>
 </project>
