@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2008 West Virginia University
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~
+  -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -7,8 +24,50 @@
   <packaging>jar</packaging>
   <version>0.1-SNAPSHOT</version>
   <name>ferl</name>
-  <description>Script Based (JSR223) Rules Engine</description>
-  <url>http://maven.apache.org</url>
+  <description>
+    ferl's goal is to be a JSR-94 compliant Rules Engine with rule sets being defined as a collection of scripts,
+    invoked use JSR-223 compliant script engines.
+  </description>
+  <url>http://ferl.googlecode.com/</url>
+  <inceptionYear>2007</inceptionYear>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <organization>
+    <name>West Virginia University Office of Information Technology</name>
+    <url>http://oit.wvu.edu/</url>
+  </organization>
+  <developers>
+    <developer>
+      <id>jbunting</id>
+      <name>Jared Bunting</name>
+      <email>jared@jaredbunting.com</email>
+      <url>http://www.jaredbunting.com/</url>
+      <organization>Jared Bunting Software Development</organization>
+      <organizationUrl>http://www.jaredbunting.com/</organizationUrl>
+      <roles>
+        <role>architect</role>
+        <role>developer</role>
+      </roles>
+      <timezone>-6</timezone>
+    </developer>
+    <developer>
+      <id>pgreen</id>
+      <name>Phillip Green II</name>
+      <email>phillip.green@mail.wvu.edu</email>
+      <url>http://www.development.wvu.edu/developers/pgreen</url>
+      <organization>West Virginia University Office of Information Technology</organization>
+      <organizationUrl>http://oit.wvu.edu/</organizationUrl>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>-5</timezone>
+    </developer>
+  </developers>
   <build>
     <plugins>
       <plugin>
