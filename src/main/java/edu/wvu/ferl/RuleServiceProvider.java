@@ -1,12 +1,3 @@
-/*
- * ScriptRulesServiceProvider.java
- *
- * Created on May 5, 2007, 2:12 PM
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
-
 package edu.wvu.ferl;
 
 import edu.wvu.ferl.admin.RuleAdministratorImpl;
@@ -27,8 +18,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * The {@link javax.rules.RuleServiceProvider RuleServiceProvider} for ferl.  Also maintains ferl's
- * {@link CompiledScriptCache} and its {@link RuleStore}.
+ * The {@link javax.rules.RuleServiceProvider RuleServiceProvider} for ferl.  Also maintains ferl's {@link RuleStore}.
+ *
+ * Date: May 5, 2007
+ * Time: 2:12 PM
  * @author jbunting
  */
 public class RuleServiceProvider extends javax.rules.RuleServiceProvider {
@@ -36,7 +29,7 @@ public class RuleServiceProvider extends javax.rules.RuleServiceProvider {
   private static final Log logger = LogFactory.getLog(RuleServiceProvider.class);
 
   /**
-   * ferl's registraction uri
+   * ferl's registraction uri - {@value}
    */
   public static final String REGISTRATION_URI = "edu.wvu.ferl.RuleServiceProvider";
 
@@ -58,11 +51,16 @@ public class RuleServiceProvider extends javax.rules.RuleServiceProvider {
   private ClassLoader classLoader;
   
   /**
-   * Creates a new instance of RuleServiceProvider 
+   * Creates a new instance of {@code RuleServiceProvider} 
    * */
   public RuleServiceProvider() {
   }
 
+  /**
+   * Sets the classloader to be used by the rules engine for loading up classes.  This is really only used for
+   * {@link javax.rules.ObjectFilter}s.
+   * @param classLoader the class loader to set
+   */
   public void setClassLoader(ClassLoader classLoader) {
     this.classLoader = classLoader;
     super.setClassLoader(classLoader);

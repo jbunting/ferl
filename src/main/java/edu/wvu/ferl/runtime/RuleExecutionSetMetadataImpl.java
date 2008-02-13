@@ -1,38 +1,47 @@
-/*
- * RuleExecutionSetMetadataImpl.java
- *
- * Created on May 5, 2007, 3:15 PM
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
-
-package edu.wvu.ferl;
+package edu.wvu.ferl.runtime;
 
 import edu.wvu.ferl.store.StoredRuleExecutionSet;
 import javax.rules.RuleExecutionSetMetadata;
 
 /**
+ * An implementation of {@code RuleExecutionSetMetadata}.  Essentially an adapter to the {@link StoredRuleExecutionSet}.
  *
+ * Date: May 5, 2007
+ * Time: 3:15 PM
  * @author jbunting
  */
-public class RuleExecutionSetMetadataImpl implements RuleExecutionSetMetadata {
+class RuleExecutionSetMetadataImpl implements RuleExecutionSetMetadata {
   
   private StoredRuleExecutionSet storedRuleExecutionSet;
   
-  /** Creates a new instance of RuleExecutionSetMetadataImpl */
+  /**
+   * Creates a new instance of {@code RuleExecutionSetMetadataImpl}
+   * @param storedRuleExecutionSet the execution set to adapt
+   */
   public RuleExecutionSetMetadataImpl(StoredRuleExecutionSet storedRuleExecutionSet) {
     this.storedRuleExecutionSet = storedRuleExecutionSet;
   }
 
+  /**
+   * {@inheritDoc}
+   * @return {@inheritDoc}
+   */
   public String getUri() {
     return storedRuleExecutionSet.getUri();
   }
 
+  /**
+   * {@inheritDoc}
+   * @return {@inheritDoc}
+   */
   public String getName() {
     return storedRuleExecutionSet.getName();
   }
 
+  /**
+   * {@inheritDoc}
+   * @return {@inheritDoc}
+   */
   public String getDescription() {
     return storedRuleExecutionSet.getDescription();
   }
