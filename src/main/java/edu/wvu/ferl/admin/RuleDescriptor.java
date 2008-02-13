@@ -15,7 +15,6 @@ import javax.rules.ConfigurationException;
 import javax.rules.admin.Rule;
 
 /**
- *
  * @author jbunting
  */
 interface RuleDescriptor extends Rule {

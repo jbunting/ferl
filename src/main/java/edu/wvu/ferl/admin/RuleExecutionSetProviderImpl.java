@@ -28,19 +28,21 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamSource;
+
 import org.w3c.dom.Element;
 import org.apache.commons.digester.Digester;
 
 /**
- *
  * @author jbunting
  */
 public class RuleExecutionSetProviderImpl implements RuleExecutionSetProvider, LocalRuleExecutionSetProvider {
-  
+
   private RuleAdministratorImpl administrator;
   private ProviderRuleSet providerRuleSet;
-  
-  /** Creates a new instance of RuleExecutionSetProviderImpl */
+
+  /**
+   * Creates a new instance of RuleExecutionSetProviderImpl
+   */
   public RuleExecutionSetProviderImpl(RuleAdministratorImpl administrator) {
     this.administrator = administrator;
     providerRuleSet = new ProviderRuleSet(administrator);
@@ -72,29 +74,29 @@ public class RuleExecutionSetProviderImpl implements RuleExecutionSetProvider, L
   public RuleExecutionSet createRuleExecutionSet(Object object, Map map) throws RuleExecutionSetCreateException {
     throw new UnsupportedOperationException("Does not support the object method...");
   }
-  
+
   public RuleExecutionSet createRuleExecutionSet(Source source, Map<?, ?> properties) throws RuleExecutionSetCreateException {
     Digester digester = new Digester();
-    
+
     digester.addRuleSet(providerRuleSet);
-    
+
     Result result = new SAXResult(digester);
-    
+
     try {
       TransformerFactory factory = TransformerFactory.newInstance();
       Transformer transformer = factory.newTransformer();
-      
+
       transformer.transform(source, result);
-    } catch (TransformerException ex) {
+    } catch(TransformerException ex) {
       throw new RuleExecutionSetCreateException("Could not process xml...", ex);
     }
-    
+
     RuleExecutionSetImpl ruleExecutionSetImpl = (RuleExecutionSetImpl) digester.getRoot();
     if(properties != null) {
       ruleExecutionSetImpl.addAllProperties(properties);
     }
-    
+
     return (RuleExecutionSet) digester.getRoot();
   }
-  
+
 }

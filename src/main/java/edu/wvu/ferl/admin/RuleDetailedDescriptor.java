@@ -12,43 +12,46 @@ package edu.wvu.ferl.admin;
 import edu.wvu.ferl.store.RuleStore;
 import edu.wvu.ferl.store.StoredRule;
 import edu.wvu.ferl.store.impl.StoredRuleImpl;
+
 import java.util.HashMap;
 import java.util.Map;
 import javax.rules.ConfigurationException;
+
 import org.apache.commons.lang.StringUtils;
 
 /**
- *
  * @author jbunting
  */
 class RuleDetailedDescriptor implements RuleDescriptor {
-  
+
   private String uri;
   private String name;
   private String description;
   private String language;
   private String script;
   private Map properties = new HashMap();
-  
-  /** Creates a new instance of RuleDetailedDescriptor */
+
+  /**
+   * Creates a new instance of RuleDetailedDescriptor
+   */
   public RuleDetailedDescriptor(String uri) {
     this.setUri(uri);
   }
 
   public String generateRule(RuleStore ruleStore) throws ConfigurationException {
-    
+
     this.checkForNull(getUri(), "uri");
     this.checkForNull(getName(), "name");
     this.checkForNull(getDescription(), "description");
     this.checkForNull(getLanguage(), "language");
     this.checkForNull(getScript(), "script");
-    
+
     StoredRule storedRule = new StoredRuleImpl(getUri(),
-                                           getName(),
-                                           getDescription(),
-                                           getLanguage(),
-                                           getScript(),
-                                           properties);
+            getName(),
+            getDescription(),
+            getLanguage(),
+            getScript(),
+            properties);
     ruleStore.storeRule(storedRule);
     return this.getUri();
   }

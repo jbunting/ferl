@@ -9,24 +9,24 @@ package edu.wvu.ferl.store.impl;
 
 import edu.wvu.ferl.store.*;
 import junit.framework.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
  * @author jbunting
  */
 public class StoredRuleImplTest extends TestCase {
-  
+
   private StoredRule instance;
-  
+
   private String expectedUri;
   private String expectedName;
   private String expectedDescription;
   private String expectedLanguage;
   private String expectedScript;
   private Map expectedProperties = new HashMap();
-  
+
   public StoredRuleImplTest(String testName) {
     super(testName);
   }
@@ -43,11 +43,11 @@ public class StoredRuleImplTest extends TestCase {
    */
   public void testGetLanguage() {
     System.out.println("getLanguage");
-    
+
     String expResult = expectedLanguage;
     String result = instance.getLanguage();
     assertEquals(expResult, result);
-    
+
   }
 
   /**
@@ -55,7 +55,7 @@ public class StoredRuleImplTest extends TestCase {
    */
   public void testGetScript() {
     System.out.println("getScript");
-    
+
     String expResult = expectedScript;
     String result = instance.getScript();
     assertEquals(expResult, result);
@@ -66,11 +66,11 @@ public class StoredRuleImplTest extends TestCase {
    */
   public void testGetName() {
     System.out.println("getName");
-    
+
     String expResult = expectedName;
     String result = instance.getName();
     assertEquals(expResult, result);
-    
+
   }
 
   /**
@@ -78,7 +78,7 @@ public class StoredRuleImplTest extends TestCase {
    */
   public void testGetDescription() {
     System.out.println("getDescription");
-    
+
     String expResult = expectedDescription;
     String result = instance.getDescription();
     assertEquals(expResult, result);
@@ -89,7 +89,7 @@ public class StoredRuleImplTest extends TestCase {
    */
   public void testGetUri() {
     System.out.println("getUri");
-    
+
     String expResult = expectedUri;
     String result = instance.getUri();
     assertEquals(expResult, result);
@@ -100,11 +100,11 @@ public class StoredRuleImplTest extends TestCase {
    */
   public void testGetProperties() {
     System.out.println("getProperties");
-    
+
     Map<Object, Object> expResult = expectedProperties;
     Map<Object, Object> result = instance.getProperties();
     assertEquals(expResult, result);
-    
+
   }
-  
+
 }

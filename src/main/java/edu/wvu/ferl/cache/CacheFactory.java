@@ -10,14 +10,15 @@ public interface CacheFactory {
 
   /**
    * Creates the new {@link Cache} object.
-   * @param validator the validator to use in the new cache to see if the value is still correct
+   *
+   * @param validator       the validator to use in the new cache to see if the value is still correct
    * @param cacheItemLoader used in the new cache to load items when they don't exist or are invalidated
-   * @param keyType the type used for the key of this cache
-   * @param valueType the type used for the value of this cache
+   * @param keyType         the type used for the key of this cache
+   * @param valueType       the type used for the value of this cache
    * @return the new {@link Cache}
    */
   public <K, V> Cache<K, V> createCache(CacheItemValidator<? super K, ? super V> validator,
-                                             CacheItemLoader<? super K, ? extends V> cacheItemLoader,
-                                             Class<K> keyType,
-                                             Class<V> valueType);
+                                        CacheItemLoader<? super K, ? extends V> cacheItemLoader,
+                                        Class<K> keyType,
+                                        Class<V> valueType);
 }

@@ -11,7 +11,7 @@ import java.text.MessageFormat;
  */
 @SuppressWarnings({"ThrowableInstanceNeverThrown"})
 class StrategyLoadingException extends Exception {
-  
+
   private static final String LANGUAGE_NOT_EXIST_MESSAGE =
           "Language {0} does not exist, a strategy cannot be loaded for it.";
   private static final MessageFormat LANGUAGE_NOT_EXIST_FORMAT = new MessageFormat(LANGUAGE_NOT_EXIST_MESSAGE);
@@ -75,20 +75,22 @@ class StrategyLoadingException extends Exception {
 
   /**
    * Creates a new exception that indicates that the language requested does not exist.
+   *
    * @param language the language that does not exist
    * @return the new exception
    */
   public static StrategyLoadingException newLanguageNotExist(String language) {
     return new StrategyLoadingException(format(LANGUAGE_NOT_EXIST_FORMAT, language));
   }
-  
+
   /**
    * Convenience method for doing the array conversions.
+   *
    * @param format the format to build an error message from
-   * @param args the arguments to pass into the format
+   * @param args   the arguments to pass into the format
    * @return the new error message
    */
-  private static String format(MessageFormat format, Object ... args) {
+  private static String format(MessageFormat format, Object... args) {
     return format.format(args);
   }
 }

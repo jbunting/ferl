@@ -25,32 +25,34 @@ import javax.rules.RuleSessionTypeUnsupportedException;
 
 /**
  * The ferl implementation of {@link RuleRuntime}.
+ *
  * @author jbunting
  */
 public class RuleRuntimeImpl implements RuleRuntime {
-  
+
   private RuleServiceProvider serviceProvider;
 
   protected RuleEvaluator ruleEvaluator = new RuleEvaluator(this);
 
   /**
    * Creates a new instance of the ferl {@link RuleRuntime}.
+   *
    * @param serviceProvider the service provider that created this runtime
    */
   public RuleRuntimeImpl(RuleServiceProvider serviceProvider) {
     this.serviceProvider = serviceProvider;
   }
 
-  public RuleSession createRuleSession(String uri, Map properties, int i) 
-          throws RuleSessionTypeUnsupportedException, 
-                 RuleSessionCreateException, 
-                 RuleExecutionSetNotFoundException, 
-                 RemoteException {
+  public RuleSession createRuleSession(String uri, Map properties, int i)
+          throws RuleSessionTypeUnsupportedException,
+          RuleSessionCreateException,
+          RuleExecutionSetNotFoundException,
+          RemoteException {
     StoredRuleExecutionSet set = serviceProvider.getRuleStore().lookupRuleSet(uri);
     if(set == null) {
       throw new RuleExecutionSetNotFoundException("No RuleExecutionSet registered at uri " + uri);
     }
-    
+
     if(RuleRuntime.STATELESS_SESSION_TYPE == i) {
       return new StatelessRuleSessionImpl(set, properties, this);
     } else {
@@ -65,7 +67,7 @@ public class RuleRuntimeImpl implements RuleRuntime {
   public RuleStore getRuleStore() {
     return serviceProvider.getRuleStore();
   }
-  
+
   public RuleServiceProvider getRuleServiceProvider() {
     return serviceProvider;
   }

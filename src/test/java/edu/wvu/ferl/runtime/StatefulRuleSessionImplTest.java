@@ -10,11 +10,10 @@ package edu.wvu.ferl.runtime;
 import junit.framework.*;
 
 /**
- *
  * @author jbunting
  */
 public class StatefulRuleSessionImplTest extends TestCase {
-  
+
   public StatefulRuleSessionImplTest(String testName) {
     super(testName);
   }
@@ -31,11 +30,11 @@ public class StatefulRuleSessionImplTest extends TestCase {
   public void testExecuteRules() throws Exception {
     System.out.println("executeRules");
 
-    
+
     StatefulRuleSessionImpl instance = null;
-    
+
     //instance.executeRules();
-    
+
   }
-  
+
 }

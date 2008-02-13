@@ -15,16 +15,17 @@ public class DefaultCacheFactory implements CacheFactory {
 
   /**
    * Creates a new {@code DefaultCache} object using the specified validator, loader, and types.
+   *
    * @param cacheItemValidator {@inheritDoc}
-   * @param cacheItemLoader {@inheritDoc}
-   * @param keyType {@inheritDoc}
-   * @param valueType {@inheritDoc}
+   * @param cacheItemLoader    {@inheritDoc}
+   * @param keyType            {@inheritDoc}
+   * @param valueType          {@inheritDoc}
    * @return a new {@code DefaultCache} object that will use the specified validator, loader, and types
    */
   public <K, V> Cache<K, V> createCache(CacheItemValidator<? super K, ? super V> cacheItemValidator,
-                                             CacheItemLoader<? super K, ? extends V> cacheItemLoader,
-                                             Class<K> keyType,
-                                             Class<V> valueType) {
+                                        CacheItemLoader<? super K, ? extends V> cacheItemLoader,
+                                        Class<K> keyType,
+                                        Class<V> valueType) {
     return new DefaultCache<K, V>(cacheItemValidator, cacheItemLoader, keyType, valueType);
   }
 }

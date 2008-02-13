@@ -12,23 +12,22 @@ package edu.wvu.ferl.runtime;
 import javax.rules.Handle;
 
 /**
- *
  * @author jbunting
  */
 class HandleImpl implements Handle {
-  
+
   private Object object;
 
   public HandleImpl(Object object) {
     this.object = object;
   }
- 
+
   public boolean equals(Object other) {
-    return object == ((HandleImpl)other).object;
+    return object == ((HandleImpl) other).object;
   }
 
   public int hashCode() {
     return object.hashCode() * 3;
   }
-  
+
 }

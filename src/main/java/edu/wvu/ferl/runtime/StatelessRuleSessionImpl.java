@@ -22,17 +22,19 @@ import javax.rules.ObjectFilter;
 import javax.rules.RuleRuntime;
 import javax.rules.StatelessRuleSession;
 import javax.script.ScriptContext;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.PredicateUtils;
 import org.apache.commons.lang.StringUtils;
 
 /**
- *
  * @author jbunting
  */
 class StatelessRuleSessionImpl extends AbstractRuleSession implements StatelessRuleSession {
-  
-  /** Creates a new instance of StatelessRuleSessionImpl */
+
+  /**
+   * Creates a new instance of StatelessRuleSessionImpl
+   */
   public StatelessRuleSessionImpl(StoredRuleExecutionSet storedRuleExecutionSet, Map properties, RuleRuntimeImpl ruleRuntime) {
     super(storedRuleExecutionSet, properties, ruleRuntime);
   }
@@ -64,15 +66,15 @@ class StatelessRuleSessionImpl extends AbstractRuleSession implements StatelessR
     }
     return outList;
   }
-  
+
   private static class StatelessExecuteRulesHook implements RuleEvaluator.ExecuteRulesHook {
-    
+
     private List currentList;
-    
+
     public StatelessExecuteRulesHook(List currentList) {
       this.currentList = currentList;
     }
-    
+
     public void populateScriptContext(ScriptContext context) {
       context.setAttribute("data", currentList, ScriptContext.ENGINE_SCOPE);
     }
@@ -91,6 +93,6 @@ class StatelessRuleSessionImpl extends AbstractRuleSession implements StatelessR
     public List getCurrentList() {
       return currentList;
     }
-    
+
   }
 }

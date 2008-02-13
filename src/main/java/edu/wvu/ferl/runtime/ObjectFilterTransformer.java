@@ -10,17 +10,19 @@
 package edu.wvu.ferl.runtime;
 
 import javax.rules.ObjectFilter;
+
 import org.apache.commons.collections.Transformer;
 
 /**
- *
  * @author jbunting
  */
 class ObjectFilterTransformer implements Transformer {
-  
+
   private ObjectFilter objectFilter;
-  
-  /** Creates a new instance of ObjectFilterTransformer */
+
+  /**
+   * Creates a new instance of ObjectFilterTransformer
+   */
   public ObjectFilterTransformer(ObjectFilter objectFilter) {
     this.objectFilter = objectFilter;
   }
@@ -32,7 +34,6 @@ class ObjectFilterTransformer implements Transformer {
       return object;
     }
   }
-  
-  
-  
+
+
 }

@@ -17,8 +17,9 @@ class ScriptCompilation {
 
   /**
    * Creates a new {@code ScriptCompilation}.
+   *
    * @param compiled the compiled version
-   * @param script the uncompiled version
+   * @param script   the uncompiled version
    * @param language the language of the script
    */
   public ScriptCompilation(CompiledScript compiled, String script, String language) {
@@ -29,6 +30,7 @@ class ScriptCompilation {
 
   /**
    * Gets the compiled version of the script.
+   *
    * @return the compiled version
    */
   public CompiledScript getCompiled() {
@@ -37,6 +39,7 @@ class ScriptCompilation {
 
   /**
    * Gets the uncompiled version of the script.
+   *
    * @return the uncompiled version
    */
   public String getScript() {
@@ -45,6 +48,7 @@ class ScriptCompilation {
 
   /**
    * Gets the language of the script.
+   *
    * @return the language
    */
   public String getLanguage() {
@@ -55,6 +59,7 @@ class ScriptCompilation {
    * Tests if this compilation matches the rule passed in.  If this is the same rule that was originally used to
    * create the compilation, then a false result indicates that the rule has changed.  In that case, this compilation
    * should be discared.
+   *
    * @param rule the rule to test against
    * @return true if this compilation matches {@code rule}, false otherwise
    */

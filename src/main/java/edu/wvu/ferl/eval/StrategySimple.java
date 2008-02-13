@@ -10,6 +10,7 @@
 package edu.wvu.ferl.eval;
 
 import edu.wvu.ferl.store.StoredRule;
+
 import javax.rules.InvalidRuleSessionException;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
@@ -19,10 +20,11 @@ import javax.script.ScriptException;
 /**
  * A {@link Strategy} used for scripting engines that do not support compilation.  This {@code Strategy} will retrieve
  * a raw script from the {@link StoredRule} and invoke it.
+ *
  * @author jbunting
  */
 class StrategySimple implements Strategy {
-  
+
   /**
    * Creates a new instance.
    */
@@ -31,8 +33,9 @@ class StrategySimple implements Strategy {
 
   /**
    * Evaluates the raw script using the script engine retrieved from the engine manager.
-   * @param rule {@inheritDoc}
-   * @param context {@inheritDoc}
+   *
+   * @param rule          {@inheritDoc}
+   * @param context       {@inheritDoc}
    * @param engineManager {@inheritDoc}
    * @return the output of the rule invocation
    * @throws InvalidRuleSessionException {@inheritDoc}
@@ -45,9 +48,9 @@ class StrategySimple implements Strategy {
     }
     try {
       return engine.eval(rule.getScript(), context);
-    } catch (ScriptException ex) {
+    } catch(ScriptException ex) {
       throw new InvalidRuleSessionException("Error executing rule: " + rule.getUri(), ex);
     }
   }
-  
+
 }

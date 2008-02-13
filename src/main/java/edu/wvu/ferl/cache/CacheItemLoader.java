@@ -11,6 +11,7 @@ public interface CacheItemLoader<K, V> {
 
   /**
    * Loads the new instance as designated by the provided key.
+   *
    * @param key the key of the new instance to load
    * @return the new instance
    * @throws UnloadableException if this loader is unable to load the new instance

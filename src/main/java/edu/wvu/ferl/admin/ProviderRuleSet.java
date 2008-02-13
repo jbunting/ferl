@@ -9,6 +9,7 @@
 package edu.wvu.ferl.admin;
 
 import javax.rules.ConfigurationException;
+
 import org.apache.commons.digester.Digester;
 import org.apache.commons.digester.Rule;
 import org.apache.commons.digester.RuleSet;
@@ -18,17 +19,18 @@ import org.apache.commons.logging.LogFactory;
 import org.xml.sax.Attributes;
 
 /**
- *
  * @author Jared Bunting
  */
 public class ProviderRuleSet implements RuleSet {
-  
+
   private static final Log logger =
           LogFactory.getLog(Class.class);
-  
+
   private RuleAdministratorImpl administrator;
 
-  /** Creates a new instance of ProviderRuleSet */
+  /**
+   * Creates a new instance of ProviderRuleSet
+   */
   public ProviderRuleSet(RuleAdministratorImpl administrator) {
     this.administrator = administrator;
   }
@@ -51,7 +53,7 @@ public class ProviderRuleSet implements RuleSet {
     digester.addCallParam("property", 0, "key");
     digester.addCallParam("property", 1, "value");
   }
-  
+
   private abstract class UriBasedObjectCreationRule extends Rule {
     public void begin(String namespace, String name, Attributes attributes) throws Exception {
       String uri = attributes.getValue("uri");
@@ -60,30 +62,30 @@ public class ProviderRuleSet implements RuleSet {
       }
       digester.push(createObject(uri));
     }
-    
+
     public void end(String namespace, String name) throws Exception {
       Object top = digester.pop();
     }
-    
+
     protected abstract Object createObject(String uri) throws Exception;
   }
-  
+
   private class RuleExecutionSetCreationRule extends UriBasedObjectCreationRule {
     protected Object createObject(String uri) {
       return new RuleExecutionSetImpl(uri);
     }
   }
-  
+
   private class RuleDetailedDescriptorCreationRule extends UriBasedObjectCreationRule {
     protected Object createObject(String uri) {
       return new RuleDetailedDescriptor(uri);
     }
   }
-  
+
   private class RuleReferenceCreationRule extends UriBasedObjectCreationRule {
     protected Object createObject(String uri) throws Exception {
       return new RuleReference(uri, administrator.serviceProvider.getRuleRuntime().getRuleStore());
     }
   }
-  
+
 }

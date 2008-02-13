@@ -15,6 +15,7 @@ class ScriptCacheItemLoader implements CacheItemLoader<String, ScriptCompilation
 
   /**
    * Creates a new loader.
+   *
    * @param scriptLoader the script loader
    */
   public ScriptCacheItemLoader(ScriptLoader scriptLoader) {
@@ -23,6 +24,7 @@ class ScriptCacheItemLoader implements CacheItemLoader<String, ScriptCompilation
 
   /**
    * Loads a new {@link ScriptCompilation} from the rule that has a uri matching {@code key}.
+   *
    * @param key the uri of the rule to load
    * @return the loaded script
    * @throws UnloadableException if the script fails to load
@@ -30,7 +32,7 @@ class ScriptCacheItemLoader implements CacheItemLoader<String, ScriptCompilation
   public ScriptCompilation loadNewInstance(String key) throws UnloadableException {
     try {
       return scriptLoader.loadCompilableScript(key);
-    } catch (ScriptLoadingException e) {
+    } catch(ScriptLoadingException e) {
       throw new UnloadableException(e);
     }
   }

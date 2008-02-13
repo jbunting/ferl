@@ -21,8 +21,9 @@ class StrategyDeterminer {
 
   /**
    * Creates a new instance using the provided engine manager and script cache.
+   *
    * @param scriptEngineManager the engine manager to use
-   * @param scriptCache the script cache to use
+   * @param scriptCache         the script cache to use
    */
   public StrategyDeterminer(ScriptEngineManager scriptEngineManager, Cache<String, ScriptCompilation> scriptCache) {
     this.scriptEngineManager = scriptEngineManager;
@@ -34,6 +35,7 @@ class StrategyDeterminer {
    * Actually loads the appropriate strategy based on whether or not the language specified supports compilation.  If
    * it does, then this method returns an instance of {@link StrategyCompiled}.  Otherwise it returns an instance of
    * {@link StrategySimple}.
+   *
    * @param language the language to determine the strategy for
    * @return the appropriate strategy for the specified language
    * @throws StrategyLoadingException if somethign goes wrong during the strategy loading process

@@ -21,6 +21,7 @@ import javax.script.ScriptException;
 /**
  * A {@link Strategy} used for scripting engines that support compilation.  This {@code Strategy} will invoke a
  * {@link CompiledScript} as retrieved from the script cache.
+ *
  * @author jbunting
  */
 class StrategyCompiled implements Strategy {
@@ -29,6 +30,7 @@ class StrategyCompiled implements Strategy {
 
   /**
    * Creates a new object using the provided script cache.
+   *
    * @param scriptCache the script cache to obtain {@link CompiledScript CompiledScripts} from
    */
   StrategyCompiled(Cache<String, ScriptCompilation> scriptCache) {
@@ -37,8 +39,9 @@ class StrategyCompiled implements Strategy {
 
   /**
    * Evalutes the compiled script after retrieving it from the script cache.
-   * @param rule {@inheritDoc}
-   * @param context {@inheritDoc}
+   *
+   * @param rule          {@inheritDoc}
+   * @param context       {@inheritDoc}
    * @param engineManager {@inheritDoc}
    * @return the output of the rule invocation
    * @throws InvalidRuleSessionException {@inheritDoc}
@@ -47,7 +50,7 @@ class StrategyCompiled implements Strategy {
     CompiledScript compiledScript = scriptCache.lookup(rule.getUri()).getCompiled();
     try {
       return compiledScript.eval(context);
-    } catch (ScriptException ex) {
+    } catch(ScriptException ex) {
       throw new InvalidRuleSessionException("Error running script...", ex);
     }
   }

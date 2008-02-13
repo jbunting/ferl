@@ -25,6 +25,7 @@ import javax.rules.ObjectFilter;
 import javax.rules.RuleRuntime;
 import javax.rules.StatefulRuleSession;
 import javax.script.ScriptContext;
+
 import org.apache.commons.collections.Closure;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.PredicateUtils;
@@ -32,14 +33,15 @@ import org.apache.commons.collections.list.PredicatedList;
 import org.apache.commons.collections.map.ListOrderedMap;
 
 /**
- *
  * @author jbunting
  */
 class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRuleSession {
-  
+
   private ListOrderedMap state = new ListOrderedMap();
-  
-  /** Creates a new instance of StatefulRuleSessionImpl */
+
+  /**
+   * Creates a new instance of StatefulRuleSessionImpl
+   */
   public StatefulRuleSessionImpl(StoredRuleExecutionSet storedRuleExecutionSet, Map properties, RuleRuntimeImpl ruleRuntime) {
     super(storedRuleExecutionSet, properties, ruleRuntime);
   }
@@ -64,7 +66,7 @@ class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRul
   public List addObjects(List list) throws RemoteException, InvalidRuleSessionException {
     checkRelease();
     List handles = new ArrayList();
-    for(Object object: list) {
+    for(Object object : list) {
       handles.add(this.addObject(object));
     }
     return handles;
@@ -111,15 +113,15 @@ class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRul
     checkRelease();
     return state.get(handle);
   }
-  
+
   private static class StatefulExecuteRulesHook implements RuleEvaluator.ExecuteRulesHook {
-    
+
     Map<Handle, Object> state;
-    
+
     public StatefulExecuteRulesHook(Map<Handle, Object> state) {
       this.state = state;
     }
-    
+
     public void populateScriptContext(ScriptContext context) {
       List currentList = new ArrayList();
       currentList.addAll(state.values());
@@ -133,20 +135,20 @@ class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRul
         CollectionUtils.forAllDo(list, new Closure() {
           public void execute(Object object) {
             ensureContains(object);
-          }          
+          }
         });
       } else if(output != null) {
         ensureContains(output);
         populateScriptContext(context);
       }
     }
-    
+
     private void ensureContains(Object object) {
       Handle handle = new HandleImpl(object);
       if(!state.containsKey(handle)) {
         state.put(handle, object);
       }
     }
-    
+
   }
 }

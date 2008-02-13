@@ -34,6 +34,7 @@ public class RuleEvaluator {
 
   /**
    * Creates a new {@code RuleEvaluator}
+   *
    * @param ruleRuntime the runtime that this evaluator is being used with
    */
   public RuleEvaluator(RuleRuntimeImpl ruleRuntime) {
@@ -54,14 +55,15 @@ public class RuleEvaluator {
   /**
    * The primary method of this class.  This method executes a StoredRuleExecutionSet.  The {@link ExecuteRulesHook} is
    * called to provide for differences in context handling.
-   * @param hook the hook that will be invoked to perform context handling
+   *
+   * @param hook                   the hook that will be invoked to perform context handling
    * @param storedRuleExecutionSet the execution set to be invoked
    * @throws InvalidRuleSessionException if there is an issue with the rule invocation requested
    */
   public void executeRules(ExecuteRulesHook hook, StoredRuleExecutionSet storedRuleExecutionSet) throws InvalidRuleSessionException {
     ScriptContext context = new SimpleScriptContext();
     hook.populateScriptContext(context);
-    for(String ruleUri: storedRuleExecutionSet.getRuleUris()) {
+    for(String ruleUri : storedRuleExecutionSet.getRuleUris()) {
       StoredRule rule = this.ruleRuntime.getRuleStore().lookupRule(ruleUri);
       if(rule == null) {
         throw new InvalidRuleSessionException("Cannot locate rule by uri: " + ruleUri);
@@ -81,6 +83,7 @@ public class RuleEvaluator {
     /**
      * Invoked prior to executing any of the rules in order to allow the session to populate the {@link ScriptContext}
      * that is going to be used for running the rules.
+     *
      * @param scriptContext the script context to populate
      */
     public void populateScriptContext(ScriptContext scriptContext);
@@ -88,8 +91,9 @@ public class RuleEvaluator {
     /**
      * Invoked after the execution of each rule in the rule set.  This method allows the session to handle the output
      * in a manner appropriate for the type of session being run.
+     *
      * @param context the script context for this execution
-     * @param output the output from the last rule executed
+     * @param output  the output from the last rule executed
      */
     public void handleOutput(ScriptContext context, Object output);
   }

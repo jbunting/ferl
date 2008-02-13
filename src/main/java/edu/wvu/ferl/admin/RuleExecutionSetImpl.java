@@ -17,11 +17,10 @@ import javax.rules.admin.Rule;
 import javax.rules.admin.RuleExecutionSet;
 
 /**
- *
  * @author jbunting
  */
 public class RuleExecutionSetImpl implements RuleExecutionSet {
-  
+
   private String uri;
   private String name;
   private String description;
@@ -29,12 +28,14 @@ public class RuleExecutionSetImpl implements RuleExecutionSet {
 
   private List<RuleDescriptor> ruleDescriptors = new ArrayList<RuleDescriptor>();
   private Map<Object, Object> properties;
-  
-  /** Creates a new instance of RuleExecutionSetImpl */
+
+  /**
+   * Creates a new instance of RuleExecutionSetImpl
+   */
   public RuleExecutionSetImpl(String uri) {
     this.uri = uri;
   }
-  
+
   public String getUri() {
     return uri;
   }
@@ -58,7 +59,7 @@ public class RuleExecutionSetImpl implements RuleExecutionSet {
   public List<RuleDescriptor> getRuleDescriptors() {
     return Collections.unmodifiableList(ruleDescriptors);
   }
-  
+
   public void addRuleDescriptor(RuleDescriptor ruleDescriptor) {
     ruleDescriptors.add(ruleDescriptor);
   }
@@ -70,11 +71,11 @@ public class RuleExecutionSetImpl implements RuleExecutionSet {
   public void setProperty(Object key, Object value) {
     this.properties.put(key, value);
   }
-  
+
   public void addAllProperties(Map<?, ?> map) {
     this.properties.putAll(map);
   }
-  
+
   public Map getProperties() {
     return Collections.unmodifiableMap(properties);
   }
@@ -90,5 +91,5 @@ public class RuleExecutionSetImpl implements RuleExecutionSet {
   public List getRules() {
     return Collections.unmodifiableList(ruleDescriptors);
   }
-  
+
 }

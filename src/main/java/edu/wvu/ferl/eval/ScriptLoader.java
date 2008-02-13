@@ -18,7 +18,8 @@ class ScriptLoader {
 
   /**
    * Creates a new {@code ScriptLoader}.
-   * @param ruleStore the store to retrieve rules from
+   *
+   * @param ruleStore           the store to retrieve rules from
    * @param scriptEngineManager the engine manager to retrieve {@link ScriptEngine ScriptEngines} from for compiling
    */
   ScriptLoader(RuleStore ruleStore, ScriptEngineManager scriptEngineManager) {
@@ -29,6 +30,7 @@ class ScriptLoader {
   /**
    * Loads a compiled script.  Returns the result in a {@link ScriptCompilation} that pairs the compiled script with the
    * information used to create it.
+   *
    * @param uri the uri of the rule to load
    * @return the pair containing the compiled script and the original script
    * @throws ScriptLoadingException if something goes wrong during the load or compile process
@@ -50,13 +52,14 @@ class ScriptLoader {
     try {
       CompiledScript compiled = compiler.compile(storedRule.getScript());
       return new ScriptCompilation(compiled, storedRule.getScript(), storedRule.getLanguage());
-    } catch (ScriptException ex) {
+    } catch(ScriptException ex) {
       throw ScriptLoadingException.newErrorCompiling(storedRule.getLanguage(), uri, ex);
     }
   }
 
   /**
    * Loads an uncompiled script.  Returns the script as a string.
+   *
    * @param uri the uri of the rule to load
    * @return the script text
    * @throws ScriptLoadingException if something goes wrong during the load process
@@ -71,6 +74,7 @@ class ScriptLoader {
 
   /**
    * Loads a rule.
+   *
    * @param uri the ur of the rule to load
    * @return the stored rule
    * @throws ScriptLoadingException if something goes wrong during the load process

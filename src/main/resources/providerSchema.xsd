@@ -42,7 +42,7 @@
       <xsd:attribute name="uri" type="xsd:string" use="required"/>
     </xsd:complexType>
   </xsd:element>
-  
+
   <xsd:complexType name="property">
     <xsd:attribute name="key" type="xsd:string" use="required"/>
     <xsd:attribute name="value" type="xsd:string" use="required"/>

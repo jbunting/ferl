@@ -30,10 +30,11 @@ public class DefaultCache<K, V> implements Cache<K, V> {
 
   /**
    * Creates a new {@code DefaultCache}.  Should only be invoked by {@link DefaultCacheFactory}.
+   *
    * @param cacheItemValidator the validator to use for this cache
-   * @param cacheItemLoader the loader to use for this cache
-   * @param keyType the type of the key for this cache
-   * @param valueType the type of the value for this cache
+   * @param cacheItemLoader    the loader to use for this cache
+   * @param keyType            the type of the key for this cache
+   * @param valueType          the type of the value for this cache
    */
   @SuppressWarnings({"UnusedDeclaration"})
   DefaultCache(CacheItemValidator<? super K, ? super V> cacheItemValidator, CacheItemLoader<? super K, ? extends V> cacheItemLoader, Class<K> keyType, Class<V> valueType) {
@@ -45,6 +46,7 @@ public class DefaultCache<K, V> implements Cache<K, V> {
    * {@inheritDoc}
    * This method is thread safe.  It uses locks and multiple condition checks to ensure that data does not get lost
    * or overwritten.
+   *
    * @param key {@inheritDoc}
    * @return {@inheritDoc}
    */

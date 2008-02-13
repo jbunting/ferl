@@ -15,15 +15,16 @@ import edu.wvu.ferl.store.StoredRule;
 import javax.rules.ConfigurationException;
 
 /**
- *
  * @author jbunting
  */
 class RuleReference implements RuleDescriptor {
-  
+
   private String uri;
   private StoredRule storedRule;
-  
-  /** Creates a new instance of RuleReference */
+
+  /**
+   * Creates a new instance of RuleReference
+   */
   public RuleReference(String uri, RuleStore ruleStore) throws ConfigurationException {
     this.setUri(uri);
     this.storedRule = ruleStore.lookupRule(uri);
@@ -62,5 +63,5 @@ class RuleReference implements RuleDescriptor {
   public void setProperty(Object key, Object value) {
     throw new UnsupportedOperationException("You can't set a property on a reference....silly...");
   }
-  
+
 }

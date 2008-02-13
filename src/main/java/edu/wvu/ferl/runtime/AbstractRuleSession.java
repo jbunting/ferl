@@ -21,20 +21,21 @@ import javax.rules.RuleSession;
 
 /**
  * An abstract super class for the stateful and stateless session classes.  Implements the methods in
- * {@link RuleSession} as well as providing the common interface to the {@link RuleEvaluator}.  
- *
+ * {@link RuleSession} as well as providing the common interface to the {@link RuleEvaluator}.
+ * <p/>
  * Date: May 5, 2007
  * Time: 3:15 PM
+ *
  * @author jbunting
  */
 abstract class AbstractRuleSession implements RuleSession {
-  
+
   protected StoredRuleExecutionSet storedRuleExecutionSet;
   protected RuleRuntimeImpl ruleRuntime;
   protected Map properties;
 
   protected boolean isReleased = false;
-  
+
   /**
    * Creates a new instance of {@code AbstractRuleSession}.
    */
@@ -46,9 +47,10 @@ abstract class AbstractRuleSession implements RuleSession {
 
   /**
    * Wraps up the stored {@code StoredRuleExecutionSet} and returns it.
+   *
    * @return the metadata object
    * @throws InvalidRuleSessionException {@inheritDoc}
-   * @throws RemoteException {@inheritDoc}
+   * @throws RemoteException             {@inheritDoc}
    */
   public RuleExecutionSetMetadata getRuleExecutionSetMetadata() throws InvalidRuleSessionException, RemoteException {
     checkRelease();
@@ -57,7 +59,8 @@ abstract class AbstractRuleSession implements RuleSession {
 
   /**
    * {@inheritDoc}
-   * @throws RemoteException {@inheritDoc}
+   *
+   * @throws RemoteException             {@inheritDoc}
    * @throws InvalidRuleSessionException {@inheritDoc}
    */
   public void release() throws RemoteException, InvalidRuleSessionException {
@@ -68,6 +71,7 @@ abstract class AbstractRuleSession implements RuleSession {
   /**
    * Checks if this session has already been released.  If it has, throws a {@code InvalidRuleSessionException}.  This
    * method should be called at the beginning of any other method in the session.
+   *
    * @throws InvalidRuleSessionException if the session has already been released
    */
   protected void checkRelease() throws InvalidRuleSessionException {
@@ -79,6 +83,7 @@ abstract class AbstractRuleSession implements RuleSession {
 
   /**
    * Invokes the {@link RuleEvaluator}.  Should be invoked by subclasses to actually perform their rule invocations.
+   *
    * @param hook
    * @throws InvalidRuleSessionException
    * @throws RemoteException
@@ -86,5 +91,5 @@ abstract class AbstractRuleSession implements RuleSession {
   protected void executeRules(RuleEvaluator.ExecuteRulesHook hook) throws InvalidRuleSessionException, RemoteException {
     ruleRuntime.ruleEvaluator.executeRules(hook, storedRuleExecutionSet);
   }
-  
+
 }

@@ -15,6 +15,7 @@ class StrategyCacheItemLoader implements CacheItemLoader<String, Strategy> {
 
   /**
    * Creates a new instance using the specified {@link StrategyDeterminer}.
+   *
    * @param strategyDeterminer the strategy determiner to use for loading
    */
   public StrategyCacheItemLoader(StrategyDeterminer strategyDeterminer) {
@@ -23,6 +24,7 @@ class StrategyCacheItemLoader implements CacheItemLoader<String, Strategy> {
 
   /**
    * Loads a new strategy by interpreting the key as the name of a language and invoking the {@link StrategyDeterminer}.
+   *
    * @param key the name fo the language
    * @return the appropriate strategy
    * @throws UnloadableException if the strategy cannot be loaded for some reason
@@ -30,7 +32,7 @@ class StrategyCacheItemLoader implements CacheItemLoader<String, Strategy> {
   public Strategy loadNewInstance(String key) throws UnloadableException {
     try {
       return strategyDeterminer.loadStrategy(key);
-    } catch (StrategyLoadingException ex) {
+    } catch(StrategyLoadingException ex) {
       throw new UnloadableException(ex);
     }
   }
