@@ -23,7 +23,10 @@ import edu.wvu.ferl.runtime.RuleRuntimeImpl;
 import edu.wvu.ferl.cache.Cache;
 import edu.wvu.ferl.cache.CacheItemValidator;
 
+import java.util.List;
+import java.util.Map;
 import javax.rules.InvalidRuleSessionException;
+import javax.rules.RuleExecutionException;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptContext;
 import javax.script.SimpleScriptContext;
@@ -33,20 +36,19 @@ import javax.script.SimpleScriptContext;
  * implement the strategy pattern to differentiate between languages that are compilable and ones that are not.  It
  * uses the {@link edu.wvu.ferl.cache.CacheFactory CacheFactory} obtained from the {@link RuleRuntimeImpl} in order
  * to create two caches.  One is used for storing which strategy will be used for which language.  The other is for
- * storing compiled scripts.  It also uses a callback interface {@link ExecuteRulesHook}.  This is to provide for
- * the differences between Stateless and Stateful rule sessions.  Each one provides it's own implementation to be used
- * for executing rules.
+ * storing compiled scripts.  See {@link #executeRules} for details on how the data is passed to the scripts.
  * User: jbunting
  * Date: Feb 5, 2008
  * Time: 10:14:38 AM
  */
 public class RuleEvaluator {
 
+  public static final String DATA_ATTRIBUTE_NAME = "ferl.data";
+  public static final String PREVIOUS_OUTPUT_ATTRIBUTE_NAME = "ferl.previousOutput";
+  
   private RuleRuntimeImpl ruleRuntime;
   private ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
 
-  @SuppressWarnings({"FieldCanBeLocal"})
-  private Cache<String, ScriptCompilation> scriptCache;
   private Cache<String, Strategy> strategyCache;
 
   /**
@@ -56,62 +58,57 @@ public class RuleEvaluator {
    */
   public RuleEvaluator(RuleRuntimeImpl ruleRuntime) {
     this.ruleRuntime = ruleRuntime;
-    scriptCache = ruleRuntime.getRuleServiceProvider().getCacheFactory().createCache(
-            new ScriptCacheItemValidator(ruleRuntime.getRuleStore()),
-            new ScriptCacheItemLoader(new ScriptLoader(ruleRuntime.getRuleStore(), scriptEngineManager)),
+
+    ScriptCacheItemValidator scriptValidator =
+            new ScriptCacheItemValidator(ruleRuntime.getRuleServiceProvider().getRuleStore());
+    ScriptCacheItemLoader scriptLoader=
+            new ScriptCacheItemLoader(new ScriptLoader(ruleRuntime.getRuleServiceProvider().getRuleStore(), scriptEngineManager));
+
+
+    Cache<String, ScriptCompilation> scriptCache = ruleRuntime.getRuleServiceProvider().getCacheFactory().createCache(
+            scriptValidator,
+            scriptLoader,
             String.class,
             ScriptCompilation.class);
 
+    StrategyDeterminer strategyDeterminer = new StrategyDeterminer(scriptEngineManager, scriptCache);
+    StrategyCacheItemLoader strategyCacheItemLoader = new StrategyCacheItemLoader(strategyDeterminer);
+
     strategyCache = ruleRuntime.getRuleServiceProvider().getCacheFactory().createCache(
             CacheItemValidator.TRUE,
-            new StrategyCacheItemLoader(new StrategyDeterminer(scriptEngineManager, scriptCache)),
+            strategyCacheItemLoader,
             String.class,
             Strategy.class);
   }
 
   /**
-   * The primary method of this class.  This method executes a StoredRuleExecutionSet.  The {@link ExecuteRulesHook} is
-   * called to provide for differences in context handling.
-   *
-   * @param hook                   the hook that will be invoked to perform context handling
-   * @param storedRuleExecutionSet the execution set to be invoked
-   * @throws InvalidRuleSessionException if there is an issue with the rule invocation requested
+   * The primary method of this class.  This method executes a StoredRuleExecutionSet.  The properties are mapped to
+   * the {@link ScriptContext} and the data is stored in the {@code ScriptContext} under the attribute
+   * {@value #DATA_ATTRIBUTE_NAME}.  Each rule is execute in turn, with the output of each rule being appended to
+   * the end of {@code data} as well as being stored in the {@code ScriptContext} under the attribute
+   * {@value #PREVIOUS_OUTPUT_ATTRIBUTE_NAME}.  The {@code data} passed into this method will most likely be changed
+   * by the rules.
+   * @param data the data to be used for executing the rules
+   * @param storedRuleExecutionSet the rule set to execute
+   * @param properties the properties to map to the script context
+   * @throws InvalidRuleSessionException if something goes wrong 
    */
-  public void executeRules(ExecuteRulesHook hook, StoredRuleExecutionSet storedRuleExecutionSet) throws InvalidRuleSessionException {
+  public void executeRules(List<Object> data, StoredRuleExecutionSet storedRuleExecutionSet, Map<? extends String,Object> properties) throws RuleExecutionException {
     ScriptContext context = new SimpleScriptContext();
-    hook.populateScriptContext(context);
+    context.getBindings(ScriptContext.ENGINE_SCOPE).putAll(properties);
+    context.setAttribute(DATA_ATTRIBUTE_NAME, data, ScriptContext.ENGINE_SCOPE);
     for(String ruleUri : storedRuleExecutionSet.getRuleUris()) {
-      StoredRule rule = this.ruleRuntime.getRuleStore().lookupRule(ruleUri);
+      StoredRule rule = this.ruleRuntime.getRuleServiceProvider().getRuleStore().lookupRule(ruleUri);
       if(rule == null) {
-        throw new InvalidRuleSessionException("Cannot locate rule by uri: " + ruleUri);
+        throw new RuleExecutionException("Cannot locate rule by uri: " + ruleUri);
       }
       Strategy evalStrategy = strategyCache.lookup(rule.getLanguage());
       Object output = evalStrategy.evaluateRule(rule, context, scriptEngineManager);
-      hook.handleOutput(context, output);
+      context.setAttribute(PREVIOUS_OUTPUT_ATTRIBUTE_NAME, output, ScriptContext.ENGINE_SCOPE);
+      if(output != null) {
+        data.add(output);
+      }
     }
   }
 
-  /**
-   * Used to allow the client of the {@code RuleEvaluator} to decide how to initially populate the
-   * {@link ScriptContext} and also how to handle the output of each rule.
-   */
-  public interface ExecuteRulesHook {
-
-    /**
-     * Invoked prior to executing any of the rules in order to allow the session to populate the {@link ScriptContext}
-     * that is going to be used for running the rules.
-     *
-     * @param scriptContext the script context to populate
-     */
-    public void populateScriptContext(ScriptContext scriptContext);
-
-    /**
-     * Invoked after the execution of each rule in the rule set.  This method allows the session to handle the output
-     * in a manner appropriate for the type of session being run.
-     *
-     * @param context the script context for this execution
-     * @param output  the output from the last rule executed
-     */
-    public void handleOutput(ScriptContext context, Object output);
-  }
 }

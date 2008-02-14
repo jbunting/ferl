@@ -32,16 +32,18 @@ import edu.wvu.ferl.store.StoredRuleExecutionSet;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 import javax.rules.InvalidRuleSessionException;
 import javax.rules.ObjectFilter;
 import javax.rules.RuleExecutionSetMetadata;
 import javax.rules.RuleSession;
+import javax.rules.RuleExecutionException;
 
 import org.apache.commons.collections15.CollectionUtils;
 import org.apache.commons.collections15.PredicateUtils;
+import org.apache.commons.collections15.ListUtils;
 import org.apache.commons.collections15.list.PredicatedList;
 import org.apache.commons.lang.StringUtils;
 
@@ -58,7 +60,7 @@ abstract class AbstractRuleSession implements RuleSession {
 
   protected StoredRuleExecutionSet storedRuleExecutionSet;
   protected RuleRuntimeImpl ruleRuntime;
-  protected Map properties;
+  protected Map<String, Object> properties;
 
   protected boolean isReleased = false;
 
@@ -68,9 +70,12 @@ abstract class AbstractRuleSession implements RuleSession {
    * @param properties the properties provided by the client
    * @param ruleRuntime the runtime that this session is being created in
    */
-  public AbstractRuleSession(StoredRuleExecutionSet storedRuleExecutionSet, Map properties, RuleRuntimeImpl ruleRuntime) {
+  public AbstractRuleSession(StoredRuleExecutionSet storedRuleExecutionSet, Map<?, ?> properties, RuleRuntimeImpl ruleRuntime) {
     this.storedRuleExecutionSet = storedRuleExecutionSet;
-    this.properties = properties;
+    this.properties = new HashMap<String, Object>(properties.size());
+    for(Map.Entry<?, ?> entry: properties.entrySet()) {
+      this.properties.put(entry.getKey().toString(), entry.getValue());
+    }
     this.ruleRuntime = ruleRuntime;
   }
 
@@ -112,12 +117,18 @@ abstract class AbstractRuleSession implements RuleSession {
 
   /**
    * Invokes the {@link RuleEvaluator}.  Should be invoked by subclasses to actually perform their rule invocations.
+   * Subclasses are responsible for packaging the data.  The data list will be passed directly to the rule evaluator
+   * and may be modified by the rules.
    *
-   * @param hook the hook to use for delegating control over output and input mapping
+   * @param data the data list to be passed into the rule invocations
    * @throws InvalidRuleSessionException if there is an issue with this session
    */
-  protected void executeRules(RuleEvaluator.ExecuteRulesHook hook) throws InvalidRuleSessionException {
-    ruleRuntime.ruleEvaluator.executeRules(hook, storedRuleExecutionSet);
+  protected void doExecuteRules(List<Object> data) throws InvalidRuleSessionException {
+    try {
+      ruleRuntime.ruleEvaluator.executeRules(data,  storedRuleExecutionSet, properties);
+    } catch(RuleExecutionException ex) {
+      throw new InvalidRuleSessionException("Execution set " + storedRuleExecutionSet.getUri() + " not runnable.", ex);
+    }
   }
 
   /**
@@ -129,18 +140,14 @@ abstract class AbstractRuleSession implements RuleSession {
    * @return the filtered list
    * @throws InvalidRuleSessionException if something goes wrong
    */
-  protected List filter(ObjectFilter objectFilter, Collection filterInput) throws InvalidRuleSessionException {
+  protected List<Object> filter(ObjectFilter objectFilter, Collection<Object> filterInput) throws InvalidRuleSessionException {
     if(objectFilter == null && !StringUtils.isBlank(storedRuleExecutionSet.getDefaultObjectFilter())) {
       objectFilter = this.ruleRuntime.getRuleServiceProvider().instantiate(ObjectFilter.class,
               storedRuleExecutionSet.getDefaultObjectFilter());
     }
-    List outputList = PredicatedList.decorate(new ArrayList(filterInput.size()), PredicateUtils.notNullPredicate());
-    if(objectFilter != null) {
-      CollectionUtils.collect(filterInput, new ObjectFilterTransformer(objectFilter), outputList);
-    } else {
-      outputList.addAll(filterInput);
-    }
-    return Collections.unmodifiableList(outputList);
+    List<Object> outputList = PredicatedList.decorate(new ArrayList<Object>(filterInput.size()), PredicateUtils.notNullPredicate());
+    CollectionUtils.collect(filterInput, new ObjectFilterTransformer(objectFilter), outputList);
+    return ListUtils.unmodifiableList(outputList);
   }
 
 }

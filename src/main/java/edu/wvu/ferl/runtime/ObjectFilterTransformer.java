@@ -31,7 +31,8 @@ import javax.rules.ObjectFilter;
 import org.apache.commons.collections15.Transformer;
 
 /**
- * A transformer adapter for the {@link ObjectFilter} interface.
+ * A transformer adapter for the {@link ObjectFilter} interface.  If the object filter is null, the input object is
+ * simply returned as the output object. 
  * @author jbunting
  */
 class ObjectFilterTransformer implements Transformer<Object, Object> {

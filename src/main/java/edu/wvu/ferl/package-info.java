@@ -16,8 +16,6 @@
  */
 
 /**
- * This package contains the classes for implementing the runtime portion of the rules engine api.
- * <p/>
- * @TODO describe behavior of stateful and stateless sessions, including variable handling vs. script context and filtering
+ * @TODO describe the ferl package
  */
-package edu.wvu.ferl.runtime;
+package edu.wvu.ferl;

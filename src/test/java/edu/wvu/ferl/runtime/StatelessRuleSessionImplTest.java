@@ -55,7 +55,7 @@ public class StatelessRuleSessionImplTest extends MockObjectTestCase {
   }
 
   /**
-   * Test of executeRules method, of class edu.wvu.ferl.runtime.StatelessRuleSessionImpl.
+   * Test of doExecuteRules method, of class edu.wvu.ferl.runtime.StatelessRuleSessionImpl.
    */
   public void testExecuteRules() throws Exception {
     System.out.println("executeRules");
@@ -87,7 +87,8 @@ public class StatelessRuleSessionImplTest extends MockObjectTestCase {
     StatelessRuleSessionImpl instance = new StatelessRuleSessionImpl(set, new HashMap(), ruleRuntime);
 
     System.out.println("Running first test...");
-    List result = instance.executeRules(list);
+    instance.doExecuteRules(list);
+    List result = list;
 
     System.out.println(result);
 
@@ -97,7 +98,8 @@ public class StatelessRuleSessionImplTest extends MockObjectTestCase {
     StatelessRuleSessionImpl instance2 = new StatelessRuleSessionImpl(set, new HashMap(), ruleRuntime);
 
     System.out.println("Running second test...");
-    List result2 = instance.executeRules(list);
+    instance.doExecuteRules(list);
+    List result2 = list;
 
     System.out.println(result);
 

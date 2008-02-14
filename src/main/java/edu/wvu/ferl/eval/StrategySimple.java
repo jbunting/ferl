@@ -28,7 +28,7 @@ package edu.wvu.ferl.eval;
 
 import edu.wvu.ferl.store.StoredRule;
 
-import javax.rules.InvalidRuleSessionException;
+import javax.rules.RuleExecutionException;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -55,18 +55,18 @@ class StrategySimple implements Strategy {
    * @param context       {@inheritDoc}
    * @param engineManager {@inheritDoc}
    * @return the output of the rule invocation
-   * @throws InvalidRuleSessionException {@inheritDoc}
+   * @throws RuleExecutionException {@inheritDoc}
    */
-  public Object evaluateRule(StoredRule rule, ScriptContext context, ScriptEngineManager engineManager) throws InvalidRuleSessionException {
+  public Object evaluateRule(StoredRule rule, ScriptContext context, ScriptEngineManager engineManager) throws RuleExecutionException {
     ScriptEngine engine = engineManager.getEngineByName(rule.getLanguage());
 
     if(engine == null) {
-      throw new InvalidRuleSessionException("ScriptEngine " + rule.getLanguage() + " specified by rule " + rule.getUri() + " is not available...");
+      throw new RuleExecutionException("ScriptEngine " + rule.getLanguage() + " specified by rule " + rule.getUri() + " is not available...");
     }
     try {
       return engine.eval(rule.getScript(), context);
     } catch(ScriptException ex) {
-      throw new InvalidRuleSessionException("Error executing rule: " + rule.getUri(), ex);
+      throw new RuleExecutionException("Error executing rule: " + rule.getUri(), ex);
     }
   }
 

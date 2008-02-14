@@ -42,7 +42,7 @@ public class StatefulRuleSessionImplTest extends TestCase {
   }
 
   /**
-   * Test of executeRules method, of class edu.wvu.ferl.runtime.StatefulRuleSessionImpl.
+   * Test of doExecuteRules method, of class edu.wvu.ferl.runtime.StatefulRuleSessionImpl.
    */
   public void testExecuteRules() throws Exception {
     System.out.println("executeRules");
@@ -50,7 +50,7 @@ public class StatefulRuleSessionImplTest extends TestCase {
 
     StatefulRuleSessionImpl instance = null;
 
-    //instance.executeRules();
+    //instance.doExecuteRules();
 
   }
 

@@ -26,6 +26,7 @@
 
 package edu.wvu.ferl.runtime;
 
+import java.util.UUID;
 import javax.rules.Handle;
 
 /**
@@ -34,14 +35,15 @@ import javax.rules.Handle;
  */
 class HandleImpl implements Handle {
 
-  private Object object;
+  private UUID uuid;
 
   /**
    * Creates a new handle.
    * @param object the object for this handle to link to
    */
+  @SuppressWarnings({"UnusedDeclaration"})
   public HandleImpl(Object object) {
-    this.object = object;
+    this.uuid = UUID.randomUUID();
   }
 
   /**
@@ -50,7 +52,7 @@ class HandleImpl implements Handle {
    * @return {@inheritDoc}
    */
   public boolean equals(Object other) {
-    return (other instanceof Handle) && (object == ((HandleImpl) other).object);
+    return (other instanceof HandleImpl) && (uuid.equals(((HandleImpl)other).uuid));
   }
 
   /**
@@ -58,7 +60,7 @@ class HandleImpl implements Handle {
    * @return {@inheritDoc}
    */
   public int hashCode() {
-    return object.hashCode() * 3;
+    return uuid.hashCode();
   }
 
 }

@@ -29,7 +29,7 @@ package edu.wvu.ferl.eval;
 import edu.wvu.ferl.store.StoredRule;
 import edu.wvu.ferl.cache.Cache;
 
-import javax.rules.InvalidRuleSessionException;
+import javax.rules.RuleExecutionException;
 import javax.script.CompiledScript;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngineManager;
@@ -61,14 +61,14 @@ class StrategyCompiled implements Strategy {
    * @param context       {@inheritDoc}
    * @param engineManager {@inheritDoc}
    * @return the output of the rule invocation
-   * @throws InvalidRuleSessionException {@inheritDoc}
+   * @throws RuleExecutionException {@inheritDoc}
    */
-  public Object evaluateRule(StoredRule rule, ScriptContext context, ScriptEngineManager engineManager) throws InvalidRuleSessionException {
+  public Object evaluateRule(StoredRule rule, ScriptContext context, ScriptEngineManager engineManager) throws RuleExecutionException {
     CompiledScript compiledScript = scriptCache.lookup(rule.getUri()).getCompiled();
     try {
       return compiledScript.eval(context);
     } catch(ScriptException ex) {
-      throw new InvalidRuleSessionException("Error running script...", ex);
+      throw new RuleExecutionException("Error executing rule: " + rule.getUri(), ex);
     }
   }
 }

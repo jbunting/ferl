@@ -28,7 +28,7 @@ package edu.wvu.ferl.eval;
 
 import edu.wvu.ferl.store.StoredRule;
 
-import javax.rules.InvalidRuleSessionException;
+import javax.rules.RuleExecutionException;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngineManager;
 
@@ -47,8 +47,8 @@ interface Strategy {
    * @param context       the context in which to evaluate the rule
    * @param engineManager the engine manager to retrieve the appropriate engine from
    * @return the output of the rule invocation
-   * @throws InvalidRuleSessionException if there was an error in the rule evaluation process
+   * @throws RuleExecutionException if there was an error in the rule evaluation process
    */
   public Object evaluateRule(StoredRule rule, ScriptContext context, ScriptEngineManager engineManager)
-          throws InvalidRuleSessionException;
+          throws RuleExecutionException;
 }

@@ -17,7 +17,7 @@
 
 /**
  * This package is the primary mechanism used by ferl to store and retrieve rules.  It provides three interfaces:
- * {@link RuleStore}, {@link StoredRule}, {@link StoredRuleExecutionSet}.  The {@code StoredRule} and
+ * {@code RuleStore}, {@code StoredRule}, {@code StoredRuleExecutionSet}.  The {@code StoredRule} and
  * {@code StoredRuleExecutionSet} correspond to {@code Rule} and {@code RuleExecutionSet}.  These are both stored
  * independently as first-order objects, and keyed by a unique uri.  The {@code RuleStore} is the repository for
  * the rules and rule execution sets.  It is acceptable to access the interfaces in this package directly from client

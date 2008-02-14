@@ -118,7 +118,7 @@ public class RuleAdministratorImpl implements RuleAdministrator {
     RuleExecutionSetImpl ruleExecutionSetImpl = (RuleExecutionSetImpl) ruleExecutionSet;
 
     try {
-      RuleStore ruleStore = serviceProvider.getRuleRuntime().getRuleStore();
+      RuleStore ruleStore = serviceProvider.getRuleRuntime().getRuleServiceProvider().getRuleStore();
       List<String> ruleUris = new ArrayList<String>();
       for(RuleDescriptor ruleDescriptor : ruleExecutionSetImpl.getRuleDescriptors()) {
         ruleUris.add(ruleDescriptor.generateRule(ruleStore));
@@ -140,7 +140,7 @@ public class RuleAdministratorImpl implements RuleAdministrator {
    */
   public void deregisterRuleExecutionSet(String uri, Map map) throws RuleExecutionSetDeregistrationException, RemoteException {
     try {
-      RuleStore ruleStore = serviceProvider.getRuleRuntime().getRuleStore();
+      RuleStore ruleStore = serviceProvider.getRuleRuntime().getRuleServiceProvider().getRuleStore();
       ruleStore.removeRuleSet(uri);
     } catch(ConfigurationException ex) {
       throw new RuleExecutionSetDeregistrationException("Error registering the RuleExecutionSet...", ex);

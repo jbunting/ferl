@@ -124,6 +124,15 @@
             <link>http://java.sun.com/javase/6/docs/api/</link>
             <link>http://www.javarules.org/api_doc/api/</link>
           </links>
+          <stylesheet>maven</stylesheet>
+          <!--stylesheetfile>${basedir}/stylesheet.css</stylesheetfile-->
+          <tags>
+            <tag>
+              <name>TODO</name>
+              <placement>a</placement>
+              <head>To Do:</head>
+            </tag>
+          </tags>
         </configuration>
       </plugin>
       <plugin>

@@ -26,12 +26,10 @@
 
 package edu.wvu.ferl.runtime;
 
-import edu.wvu.ferl.eval.RuleEvaluator;
 import edu.wvu.ferl.store.StoredRuleExecutionSet;
+import edu.wvu.ferl.util.ListMap;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -41,37 +39,64 @@ import javax.rules.InvalidRuleSessionException;
 import javax.rules.ObjectFilter;
 import javax.rules.RuleRuntime;
 import javax.rules.StatefulRuleSession;
-import javax.script.ScriptContext;
 
-import org.apache.commons.collections15.Closure;
-import org.apache.commons.collections15.CollectionUtils;
-import org.apache.commons.collections15.map.ListOrderedMap;
+import org.apache.commons.collections15.Transformer;
 
 /**
- * The implementation of the stateless rules session.
+ * The implementation of the stateful rules session.
+ *
+ * It is important to note, that if during execution, a script removes an object from the passed list, and then re-adds
+ * it, it will have a new handle.  If the object is changed, it will retain its
  * @author jbunting
  */
 class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRuleSession {
 
-  private ListOrderedMap<Handle, Object> state = new ListOrderedMap<Handle, Object>();
+  private static final Transformer<Object, Handle> HANDLE_CREATION_TRANSFORMER = new Transformer<Object, Handle>() {
+    public Handle transform(Object o) {
+      return new HandleImpl(o);
+    }
+  };
+
+  private ListMap<Handle, Object> state = new ListMap<Handle, Object>();
 
   /**
-   * Creates a new instance of StatefulRuleSessionImpl
+   * Creates a new instance with the provided rule execution set and properties attached to the provided runtime.
+   * @param storedRuleExecutionSet the rule set to create this session for
+   * @param properties properties to be applied to this session
+   * @param ruleRuntime the runtime this session is attached to
    */
-  public StatefulRuleSessionImpl(StoredRuleExecutionSet storedRuleExecutionSet, Map properties, RuleRuntimeImpl ruleRuntime) {
+  public StatefulRuleSessionImpl(StoredRuleExecutionSet storedRuleExecutionSet, Map<?, ?> properties, RuleRuntimeImpl ruleRuntime) {
     super(storedRuleExecutionSet, properties, ruleRuntime);
   }
 
+  /**
+   * {@inheritDoc}
+   * @return {@link RuleRuntime#STATEFUL_SESSION_TYPE}
+   * @throws InvalidRuleSessionException if this session has already been released
+   */
   public int getType() throws InvalidRuleSessionException {
     checkRelease();
     return RuleRuntime.STATEFUL_SESSION_TYPE;
   }
 
+  /**
+   * {@inheritDoc}
+   * @param handle {@inheritDoc}
+   * @return {@inheritDoc}
+   * @throws InvalidRuleSessionException {@inheritDoc}
+   * @throws InvalidHandleException {@inheritDoc}
+   */
   public boolean containsObject(Handle handle) throws InvalidRuleSessionException, InvalidHandleException {
     checkRelease();
     return state.containsKey(handle);
   }
 
+  /**
+   * {@inheritDoc}
+   * @param object {@inheritDoc}
+   * @return {@inheritDoc}
+   * @throws InvalidRuleSessionException {@inheritDoc}
+   */
   public Handle addObject(Object object) throws InvalidRuleSessionException {
     checkRelease();
     HandleImpl handle = new HandleImpl(object);
@@ -79,94 +104,108 @@ class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRul
     return handle;
   }
 
-  public List addObjects(List list) throws InvalidRuleSessionException {
+  /**
+   * {@inheritDoc}
+   * @param list {@inheritDoc}
+   * @return {@inheritDoc}
+   * @throws InvalidRuleSessionException {@inheritDoc}
+   */
+  public List<Handle> addObjects(List list) throws InvalidRuleSessionException {
     checkRelease();
-    List handles = new ArrayList();
+    List<Handle> handles = new ArrayList<Handle>();
     for(Object object : list) {
       handles.add(this.addObject(object));
     }
     return handles;
   }
 
+
+  /**
+   * {@inheritDoc}
+   * @param handle {@inheritDoc}
+   * @param object {@inheritDoc}
+   * @throws InvalidRuleSessionException {@inheritDoc}
+   * @throws InvalidHandleException {@inheritDoc}
+   */
   public void updateObject(Handle handle, Object object) throws InvalidRuleSessionException, InvalidHandleException {
     checkRelease();
-    state.put(handle, object);
+    if(handle instanceof HandleImpl) {
+      state.put(handle, object);
+    } else {
+      throw new InvalidHandleException("Handle " + handle + " was not created by ferl.");
+    }
   }
 
+  /**
+   * {@inheritDoc}
+   * @param handle {@inheritDoc}
+   * @throws InvalidHandleException {@inheritDoc}
+   * @throws InvalidRuleSessionException {@inheritDoc}
+   */
   public void removeObject(Handle handle) throws InvalidHandleException, InvalidRuleSessionException {
     checkRelease();
     state.remove(handle);
   }
 
-  public List getObjects() throws InvalidRuleSessionException {
+  /**
+   * {@inheritDoc}
+   * @return {@inheritDoc}
+   * @throws InvalidRuleSessionException {@inheritDoc}
+   */
+  public List<Object> getObjects() throws InvalidRuleSessionException {
     checkRelease();
     return this.getObjects(null);
   }
 
-  public List getHandles() throws InvalidRuleSessionException {
+  /**
+   * {@inheritDoc}
+   * @return {@inheritDoc}
+   * @throws InvalidRuleSessionException {@inheritDoc}
+   */
+  public List<Handle> getHandles() throws InvalidRuleSessionException {
     checkRelease();
-    return Collections.unmodifiableList(new ArrayList(state.keySet()));
+    return Collections.unmodifiableList(new ArrayList<Handle>(state.keySet()));
   }
 
-  public List getObjects(final ObjectFilter objectFilter) throws InvalidRuleSessionException {
+  /**
+   * {@inheritDoc}
+   * @param objectFilter {@inheritDoc}
+   * @return {@inheritDoc}
+   * @throws InvalidRuleSessionException {@inheritDoc}
+   */
+  public List<Object> getObjects(final ObjectFilter objectFilter) throws InvalidRuleSessionException {
     checkRelease();
     return super.filter(objectFilter, state.values());
   }
 
+  /**
+   * {@inheritDoc}
+   * @throws InvalidRuleSessionException {@inheritDoc}
+   */
   public void executeRules() throws InvalidRuleSessionException {
     checkRelease();
-    super.executeRules(new StatefulExecuteRulesHook(state));
+    super.doExecuteRules(state.asList(HANDLE_CREATION_TRANSFORMER));
   }
 
-  public void reset() throws RemoteException, InvalidRuleSessionException {
+  /**
+   * {@inheritDoc}
+   * @throws InvalidRuleSessionException {@inheritDoc}
+   */
+  public void reset() throws InvalidRuleSessionException {
     checkRelease();
     state.clear();
   }
 
-  public Object getObject(Handle handle) throws RemoteException, InvalidHandleException, InvalidRuleSessionException {
+  /**
+   * {@inheritDoc}
+   * @param handle {@inheritDoc}
+   * @return {@inheritDoc}
+   * @throws InvalidHandleException {@inheritDoc}
+   * @throws InvalidRuleSessionException {@inheritDoc}
+   */
+  public Object getObject(Handle handle) throws InvalidHandleException, InvalidRuleSessionException {
     checkRelease();
     return state.get(handle);
   }
 
-  protected Map doFilter(ObjectFilter objectFilter, Collection filterInput) {
-    return null;  //To change body of implemented methods use File | Settings | File Templates.
-  }
-
-  private static class StatefulExecuteRulesHook implements RuleEvaluator.ExecuteRulesHook {
-
-    Map<Handle, Object> state;
-
-    public StatefulExecuteRulesHook(Map<Handle, Object> state) {
-      this.state = state;
-    }
-
-    public void populateScriptContext(ScriptContext context) {
-      List currentList = new ArrayList();
-      currentList.addAll(state.values());
-      context.setAttribute("data", currentList, ScriptContext.ENGINE_SCOPE);
-    }
-
-    public void handleOutput(ScriptContext context, Object output) {
-      // should we remove values from the state??
-      if(output instanceof List) {
-        List list = (List) output;
-        CollectionUtils.forAllDo(list, new Closure() {
-          public void execute(Object object) {
-            ensureContains(object);
-          }
-        });
-      } else if(output != null) {
-        ensureContains(output);
-        populateScriptContext(context);
-      }
-    }
-
-    private void ensureContains(Object object) {
-      Handle handle = new HandleImpl(object);
-      if(!state.containsKey(handle)) {
-        state.put(handle, object);
-      }
-    }
-
-  }
 }
