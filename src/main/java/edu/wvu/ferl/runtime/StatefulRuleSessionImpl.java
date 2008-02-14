@@ -26,12 +26,12 @@
 
 package edu.wvu.ferl.runtime;
 
-import edu.wvu.ferl.store.StoredRuleExecutionSet;
-import edu.wvu.ferl.runtime.AbstractRuleSession;
 import edu.wvu.ferl.eval.RuleEvaluator;
+import edu.wvu.ferl.store.StoredRuleExecutionSet;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -43,13 +43,12 @@ import javax.rules.RuleRuntime;
 import javax.rules.StatefulRuleSession;
 import javax.script.ScriptContext;
 
-import org.apache.commons.collections15.map.ListOrderedMap;
-import org.apache.commons.collections15.list.PredicatedList;
-import org.apache.commons.collections15.PredicateUtils;
-import org.apache.commons.collections15.CollectionUtils;
 import org.apache.commons.collections15.Closure;
+import org.apache.commons.collections15.CollectionUtils;
+import org.apache.commons.collections15.map.ListOrderedMap;
 
 /**
+ * The implementation of the stateless rules session.
  * @author jbunting
  */
 class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRuleSession {
@@ -63,24 +62,24 @@ class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRul
     super(storedRuleExecutionSet, properties, ruleRuntime);
   }
 
-  public int getType() throws RemoteException, InvalidRuleSessionException {
+  public int getType() throws InvalidRuleSessionException {
     checkRelease();
     return RuleRuntime.STATEFUL_SESSION_TYPE;
   }
 
-  public boolean containsObject(Handle handle) throws RemoteException, InvalidRuleSessionException, InvalidHandleException {
+  public boolean containsObject(Handle handle) throws InvalidRuleSessionException, InvalidHandleException {
     checkRelease();
     return state.containsKey(handle);
   }
 
-  public Handle addObject(Object object) throws RemoteException, InvalidRuleSessionException {
+  public Handle addObject(Object object) throws InvalidRuleSessionException {
     checkRelease();
     HandleImpl handle = new HandleImpl(object);
     state.put(handle, object);
     return handle;
   }
 
-  public List addObjects(List list) throws RemoteException, InvalidRuleSessionException {
+  public List addObjects(List list) throws InvalidRuleSessionException {
     checkRelease();
     List handles = new ArrayList();
     for(Object object : list) {
@@ -89,34 +88,32 @@ class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRul
     return handles;
   }
 
-  public void updateObject(Handle handle, Object object) throws RemoteException, InvalidRuleSessionException, InvalidHandleException {
+  public void updateObject(Handle handle, Object object) throws InvalidRuleSessionException, InvalidHandleException {
     checkRelease();
     state.put(handle, object);
   }
 
-  public void removeObject(Handle handle) throws RemoteException, InvalidHandleException, InvalidRuleSessionException {
+  public void removeObject(Handle handle) throws InvalidHandleException, InvalidRuleSessionException {
     checkRelease();
     state.remove(handle);
   }
 
-  public List getObjects() throws RemoteException, InvalidRuleSessionException {
+  public List getObjects() throws InvalidRuleSessionException {
     checkRelease();
-    return Collections.unmodifiableList(new ArrayList(state.values()));
+    return this.getObjects(null);
   }
 
-  public List getHandles() throws RemoteException, InvalidRuleSessionException {
+  public List getHandles() throws InvalidRuleSessionException {
     checkRelease();
     return Collections.unmodifiableList(new ArrayList(state.keySet()));
   }
 
-  public List getObjects(final ObjectFilter objectFilter) throws RemoteException, InvalidRuleSessionException {
+  public List getObjects(final ObjectFilter objectFilter) throws InvalidRuleSessionException {
     checkRelease();
-    List outputList = PredicatedList.decorate(new ArrayList(state.size()), PredicateUtils.notNullPredicate());
-    CollectionUtils.collect(state.values(), new ObjectFilterTransformer(objectFilter), outputList);
-    return Collections.unmodifiableList(outputList);
+    return super.filter(objectFilter, state.values());
   }
 
-  public void executeRules() throws RemoteException, InvalidRuleSessionException {
+  public void executeRules() throws InvalidRuleSessionException {
     checkRelease();
     super.executeRules(new StatefulExecuteRulesHook(state));
   }
@@ -129,6 +126,10 @@ class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRul
   public Object getObject(Handle handle) throws RemoteException, InvalidHandleException, InvalidRuleSessionException {
     checkRelease();
     return state.get(handle);
+  }
+
+  protected Map doFilter(ObjectFilter objectFilter, Collection filterInput) {
+    return null;  //To change body of implemented methods use File | Settings | File Templates.
   }
 
   private static class StatefulExecuteRulesHook implements RuleEvaluator.ExecuteRulesHook {

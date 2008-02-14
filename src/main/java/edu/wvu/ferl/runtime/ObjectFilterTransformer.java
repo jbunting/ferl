@@ -31,6 +31,7 @@ import javax.rules.ObjectFilter;
 import org.apache.commons.collections15.Transformer;
 
 /**
+ * A transformer adapter for the {@link ObjectFilter} interface.
  * @author jbunting
  */
 class ObjectFilterTransformer implements Transformer<Object, Object> {
@@ -39,11 +40,18 @@ class ObjectFilterTransformer implements Transformer<Object, Object> {
 
   /**
    * Creates a new instance of ObjectFilterTransformer
+   *
+   * @param objectFilter the object filter to adapt
    */
   public ObjectFilterTransformer(ObjectFilter objectFilter) {
     this.objectFilter = objectFilter;
   }
 
+  /**
+   * Transforms {@code object} by invoking {@link ObjectFilter#filter} on the object filter.
+   * @param object the object to transform
+   * @return the result of the filtering
+   */
   public Object transform(Object object) {
     if(objectFilter != null) {
       return objectFilter.filter(object);

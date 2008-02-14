@@ -29,20 +29,34 @@ package edu.wvu.ferl.runtime;
 import javax.rules.Handle;
 
 /**
+ * Used as a handle to objects in a {@link javax.rules.StatefulRuleSession}.
  * @author jbunting
  */
 class HandleImpl implements Handle {
 
   private Object object;
 
+  /**
+   * Creates a new handle.
+   * @param object the object for this handle to link to
+   */
   public HandleImpl(Object object) {
     this.object = object;
   }
 
+  /**
+   * {@inheritDoc}
+   * @param other {@inheritDoc}
+   * @return {@inheritDoc}
+   */
   public boolean equals(Object other) {
-    return object == ((HandleImpl) other).object;
+    return (other instanceof Handle) && (object == ((HandleImpl) other).object);
   }
 
+  /**
+   * {@inheritDoc}
+   * @return {@inheritDoc}
+   */
   public int hashCode() {
     return object.hashCode() * 3;
   }
