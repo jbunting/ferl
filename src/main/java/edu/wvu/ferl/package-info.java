@@ -16,6 +16,7 @@
  */
 
 /**
- * @TODO describe the ferl package
+ * The root package for ferl.  Contains only the {@code RuleServiceProvider}.  All other implementations and helper
+ * classes are included in subpackages.  The uri for ferl's provider is {@value RuleServiceProvider#REGISTRATION_URI}.
  */
 package edu.wvu.ferl;

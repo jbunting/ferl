@@ -16,6 +16,9 @@
  */
 
 /**
- * @TODO describe the admin package
+ * Provides the administrative interface into the ferl system.  Basically provides the implementation of
+ * {@link javax.rules.admin.RuleAdministrator RuleAdministrator} and all required classes.  As with everything else in
+ * ferl, the admin functionality is backed by the {@link edu.wvu.ferl.store.RuleStore RuleStore}.  Given that the
+ * {@link javax.rules.admin} api is fairly sparce, more fine grained control can be acheived with the {@code RuleStore}.
  */
 package edu.wvu.ferl.admin;

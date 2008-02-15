@@ -30,6 +30,7 @@ import java.util.Map;
  * is not transient in any way, this store is not recommended for production use.  However, it can serve as a simple
  * example for building other {@code RuleStores}.
  * <p/>
+ * This {@code RuleStore} allows and retains ANY type of object for property values.
  * Date: May 5, 2007
  * Time: 3:03 PM
  *

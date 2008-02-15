@@ -32,8 +32,17 @@ import javax.rules.ConfigurationException;
 import javax.rules.admin.Rule;
 
 /**
+ * A simple interface for describing a rule to the rule administrator.  This is used to store rule information in the
+ * {@code RuleExecutionSet} after generation so that it can later be added to a the {@link RuleStore}.
  * @author jbunting
  */
 interface RuleDescriptor extends Rule {
+  /**
+   * Invoked by {@link RuleAdministratorImpl#registerRuleExecutionSet}.  Stores this rule in the {@code RuleStore}
+   * and returns the {@code uri} of this rule
+   * @param ruleStore the {@code RuleStore} to store this rule in
+   * @return the uri of the stored rule
+   * @throws ConfigurationException if there is something wrong with this rule, such as some value not existing
+   */
   public String generateRule(RuleStore ruleStore) throws ConfigurationException;
 }

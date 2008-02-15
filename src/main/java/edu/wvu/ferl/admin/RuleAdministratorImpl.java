@@ -41,7 +41,6 @@ import javax.rules.admin.LocalRuleExecutionSetProvider;
 import javax.rules.admin.RuleAdministrator;
 import javax.rules.admin.RuleExecutionSet;
 import javax.rules.admin.RuleExecutionSetDeregistrationException;
-import javax.rules.admin.RuleExecutionSetProvider;
 import javax.rules.admin.RuleExecutionSetRegisterException;
 
 import org.apache.commons.lang.IllegalClassException;
@@ -57,6 +56,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class RuleAdministratorImpl implements RuleAdministrator {
 
+  @SuppressWarnings({"UnusedDeclaration"})
   private static final Log logger =
           LogFactory.getLog(RuleAdministratorImpl.class);
 
@@ -76,9 +76,8 @@ public class RuleAdministratorImpl implements RuleAdministrator {
    *
    * @param properties a map of properties to be used for the provider - currently has no effect
    * @return an instance of RuleExecutionSetProviderImpl
-   * @throws java.rmi.RemoteException if there is an exception retrieving a remote resource
    */
-  public RuleExecutionSetProvider getRuleExecutionSetProvider(Map properties) throws RemoteException {
+  public RuleExecutionSetProviderImpl getRuleExecutionSetProvider(Map properties) {
     return new RuleExecutionSetProviderImpl(this);
   }
 
@@ -87,9 +86,8 @@ public class RuleAdministratorImpl implements RuleAdministrator {
    *
    * @param properties a map of properties to be used for the provider - currently has no effect
    * @return an instance of RuleExecutionSetProviderImpl
-   * @throws java.rmi.RemoteException if there is an exception retrieving a remote resource
    */
-  public LocalRuleExecutionSetProvider getLocalRuleExecutionSetProvider(Map properties) throws RemoteException {
+  public LocalRuleExecutionSetProvider getLocalRuleExecutionSetProvider(Map properties) {
     return new RuleExecutionSetProviderImpl(this);
   }
 
@@ -107,11 +105,10 @@ public class RuleAdministratorImpl implements RuleAdministrator {
    * @param uri              the uri of the new RuleExecutionSet
    * @param ruleExecutionSet the RuleExecutionSet
    * @param properties       a map of properties to be used for the provider - currently has no effect
-   * @throws javax.rules.admin.RuleExecutionSetRegisterException
+   * @throws RuleExecutionSetRegisterException
    *                                  thrown if anything goes wrong during the registration process
-   * @throws java.rmi.RemoteException if there is an exception retrieving a remote resource
    */
-  public void registerRuleExecutionSet(String uri, RuleExecutionSet ruleExecutionSet, Map properties) throws RuleExecutionSetRegisterException, RemoteException {
+  public void registerRuleExecutionSet(String uri, RuleExecutionSet ruleExecutionSet, Map properties) throws RuleExecutionSetRegisterException {
     if(!(ruleExecutionSet instanceof RuleExecutionSetImpl)) {
       throw new IllegalClassException("Only RuleExecutionSets created by this RuleAdministrator can be registered...");
     }
@@ -159,16 +156,15 @@ public class RuleAdministratorImpl implements RuleAdministrator {
    * @param properties           a map of properties to be used for the provider - currently has no effect
    * @return the StoredRuleExecutionSet that can be loaded to the RuleStore
    */
-  protected StoredRuleExecutionSet createStoredRuleExecutionSet(String uri, RuleExecutionSetImpl ruleExecutionSetImpl, List<String> ruleUris, Map properties) {
-    Map localProperties = new HashMap(ruleExecutionSetImpl.getProperties());
-    StoredRuleExecutionSet storedRuleExecutionSet = new StoredRuleExecutionSetImpl(uri,
+  protected StoredRuleExecutionSet createStoredRuleExecutionSet(String uri, RuleExecutionSetImpl ruleExecutionSetImpl, List<String> ruleUris, Map<?, ?> properties) {
+    Map<Object, Object> localProperties = new HashMap<Object, Object>(ruleExecutionSetImpl.getProperties());
+    localProperties.putAll(properties);
+    return new StoredRuleExecutionSetImpl(uri,
             ruleExecutionSetImpl.getName(),
             ruleExecutionSetImpl.getDescription(),
             ruleUris,
             localProperties,
             ruleExecutionSetImpl.getDefaultObjectFilter());
-
-    return storedRuleExecutionSet;
   }
 
 }

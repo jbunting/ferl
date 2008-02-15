@@ -32,6 +32,7 @@ import edu.wvu.ferl.store.StoredRule;
 import javax.rules.ConfigurationException;
 
 /**
+ * An implementation of {@code RuleDescriptor} that simply points to an already defined rule.
  * @author jbunting
  */
 class RuleReference implements RuleDescriptor {
@@ -40,7 +41,10 @@ class RuleReference implements RuleDescriptor {
   private StoredRule storedRule;
 
   /**
-   * Creates a new instance of RuleReference
+   * Creates a new instance with the specified uri and the specified {@code RuleStore}.
+   * @param uri the uri this rule refers to
+   * @param ruleStore the rule store for this rule
+   * @throws ConfigurationException if the uri is invalid
    */
   public RuleReference(String uri, RuleStore ruleStore) throws ConfigurationException {
     this.setUri(uri);
@@ -50,14 +54,28 @@ class RuleReference implements RuleDescriptor {
     }
   }
 
+  /**
+   * Gets the uri.
+   * @return the uri
+   */
   public String getUri() {
     return uri;
   }
 
-  public void setUri(String uri) {
+  /**
+   * Sets the uri.
+   * @param uri the uri
+   */
+  private void setUri(String uri) {
     this.uri = uri;
   }
 
+  /**
+   * {@inheritDoc}
+   * @param ruleStore {@inheritDoc}
+   * @return {@inheritDoc}
+   * @throws ConfigurationException {@inheritDoc}
+   */
   public String generateRule(RuleStore ruleStore) throws ConfigurationException {
     if(ruleStore.lookupRule(this.getUri()) == null) {
       throw new ConfigurationException("No Rule Exists at " + this.getUri());
@@ -65,18 +83,39 @@ class RuleReference implements RuleDescriptor {
     return this.getUri();
   }
 
+  /**
+   * Gets the name.
+   * @return the name
+   */
   public String getName() {
     return storedRule.getName();
   }
 
+  /**
+   * Gets the description.
+   * @return the description
+   */
   public String getDescription() {
     return storedRule.getDescription();
   }
 
+  /**
+   * {@inheritDoc}
+   * @param key {@inheritDoc}
+   * @return {@inheritDoc}
+   */
   public Object getProperty(Object key) {
     return storedRule.getProperties().get(key);
   }
 
+  /**
+   * {@inheritDoc}
+   * <p/>
+   * This implementation will ALWAYS throw an {@link UnsupportedOperationException}.  Properties cannot be set on
+   * references, they are fixed.
+   * @param key {@inheritDoc}
+   * @param value {@inheritDoc}
+   */
   public void setProperty(Object key, Object value) {
     throw new UnsupportedOperationException("You can't set a property on a reference....silly...");
   }

@@ -123,9 +123,12 @@
           <links>
             <link>http://java.sun.com/javase/6/docs/api/</link>
             <link>http://www.javarules.org/api_doc/api/</link>
+            <link>http://commons.apache.org/digester/commons-digester-1.8/docs/api/</link>
           </links>
-          <stylesheet>maven</stylesheet>
-          <!--stylesheetfile>${basedir}/stylesheet.css</stylesheetfile-->
+          <stylesheetfile>${basedir}/src/main/javadoc/stylesheet.css</stylesheetfile>
+          <bottom>
+            <![CDATA[Copyright &#169; {inceptionYear}-{currentYear} <a href="{organizationUrl}">{organizationName}</a>. All Rights Reserved.]]>
+          </bottom>
           <tags>
             <tag>
               <name>TODO</name>

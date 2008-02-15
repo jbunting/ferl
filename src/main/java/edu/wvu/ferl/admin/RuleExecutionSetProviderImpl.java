@@ -30,9 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.Serializable;
-import java.rmi.RemoteException;
 import java.util.Map;
-import java.util.Map.Entry;
 import javax.rules.admin.LocalRuleExecutionSetProvider;
 import javax.rules.admin.RuleExecutionSet;
 import javax.rules.admin.RuleExecutionSetCreateException;
@@ -50,52 +48,114 @@ import org.w3c.dom.Element;
 import org.apache.commons.digester.Digester;
 
 /**
+ * An implementation of {@code RuleExecutionSetProvider} and {@code LocalRuleExecutionSetProvider}.  Allows creation
+ * of rule execution sets using an {@link Element}, {@link String}, {@link InputStream}, and {@link Reader}.
+ * <p/>
+ * This class treats all inputs as xml, with the {@code String} being treated as a URL to xml.  See
+ * {@code providerSchema.xsd} for how to build the xml.
+ *
  * @author jbunting
  */
-public class RuleExecutionSetProviderImpl implements RuleExecutionSetProvider, LocalRuleExecutionSetProvider {
+class RuleExecutionSetProviderImpl implements RuleExecutionSetProvider, LocalRuleExecutionSetProvider {
 
-  private RuleAdministratorImpl administrator;
-  private ProviderRuleSet providerRuleSet;
+  private DigesterRuleSet digesterRuleSet;
 
   /**
-   * Creates a new instance of RuleExecutionSetProviderImpl
+   * Creates a new instance sourced by the given {@code administrator}.
+   * @param administrator the administrator that this provider was created from
    */
   public RuleExecutionSetProviderImpl(RuleAdministratorImpl administrator) {
-    this.administrator = administrator;
-    providerRuleSet = new ProviderRuleSet(administrator);
+    digesterRuleSet = new DigesterRuleSet(administrator);
   }
 
-  public RuleExecutionSet createRuleExecutionSet(Element element, Map map) throws RuleExecutionSetCreateException, RemoteException {
-    return createRuleExecutionSet(new DOMSource(element), map);
+  /**
+   * {@inheritDoc}
+   * @param element {@inheritDoc}
+   * @param properties {@inheritDoc}
+   * @return {@inheritDoc}
+   * @throws RuleExecutionSetCreateException {@inheritDoc}
+   */
+  public RuleExecutionSet createRuleExecutionSet(Element element, Map properties) throws RuleExecutionSetCreateException {
+    return createRuleExecutionSet(new DOMSource(element), properties);
   }
 
-  public RuleExecutionSet createRuleExecutionSet(Serializable serializable, Map map) throws RuleExecutionSetCreateException, RemoteException {
+  /**
+   * {@inheritDoc}
+   * <p/>
+   * Will always throw a {@code UnsupportedOperationException}.  This method is not supported by ferl.
+   * @param serializable {@inheritDoc}
+   * @param properties {@inheritDoc}
+   * @return {@inheritDoc}
+   * @throws RuleExecutionSetCreateException {@inheritDoc}
+   * @throws UnsupportedOperationException always - this method is not supported
+   */
+  public RuleExecutionSet createRuleExecutionSet(Serializable serializable, Map properties) throws RuleExecutionSetCreateException, UnsupportedOperationException {
     throw new UnsupportedOperationException("Does not support the serializable method...");
   }
 
   /**
-   * Treats the string as a URL
+   * {@inheritDoc}
+   * This method treats the incoming string as a url, and retrieves the xml from there.
+   * @param string the url
+   * @param properties {@inheritDoc}
+   * @return {@inheritDoc}
+   * @throws RuleExecutionSetCreateException {@inheritDoc}
+   * @throws IOException {@inheritDoc}
    */
-  public RuleExecutionSet createRuleExecutionSet(String string, Map map) throws RuleExecutionSetCreateException, IOException, RemoteException {
-    return createRuleExecutionSet(new StreamSource(string), map);
+  public RuleExecutionSet createRuleExecutionSet(String string, Map properties) throws RuleExecutionSetCreateException, IOException {
+    return createRuleExecutionSet(new StreamSource(string), properties);
   }
 
-  public RuleExecutionSet createRuleExecutionSet(InputStream inputStream, Map map) throws RuleExecutionSetCreateException, IOException {
-    return createRuleExecutionSet(new StreamSource(inputStream), map);
+  /**
+   * {@inheritDoc}
+   * @param inputStream {@inheritDoc}
+   * @param properties {@inheritDoc}
+   * @return {@inheritDoc}
+   * @throws RuleExecutionSetCreateException
+   * @throws IOException
+   */
+  public RuleExecutionSet createRuleExecutionSet(InputStream inputStream, Map properties) throws RuleExecutionSetCreateException, IOException {
+    return createRuleExecutionSet(new StreamSource(inputStream), properties);
   }
 
-  public RuleExecutionSet createRuleExecutionSet(Reader reader, Map map) throws RuleExecutionSetCreateException, IOException {
-    return createRuleExecutionSet(new StreamSource(reader), map);
+  /**
+   * {@inheritDoc}
+   * @param reader {@inheritDoc}
+   * @param properties {@inheritDoc}
+   * @return {@inheritDoc}
+   * @throws RuleExecutionSetCreateException {@inheritDoc}
+   * @throws IOException {@inheritDoc}
+   */
+  public RuleExecutionSet createRuleExecutionSet(Reader reader, Map properties) throws RuleExecutionSetCreateException, IOException {
+    return createRuleExecutionSet(new StreamSource(reader), properties);
   }
 
-  public RuleExecutionSet createRuleExecutionSet(Object object, Map map) throws RuleExecutionSetCreateException {
+  /**
+   * {@inheritDoc}
+   * <p/>
+   * Will always throw a {@code UnsupportedOperationException}.  This method is not supported by ferl.
+   * @param object {@inheritDoc}
+   * @param properties {@inheritDoc}
+   * @return {@inheritDoc}
+   * @throws RuleExecutionSetCreateException {@inheritDoc}
+   * @throws UnsupportedOperationException always - this method is not supported
+   */
+  public RuleExecutionSet createRuleExecutionSet(Object object, Map properties) throws RuleExecutionSetCreateException {
     throw new UnsupportedOperationException("Does not support the object method...");
   }
 
+  /**
+   * Creates a {@code RuleExecutionSet} from a {@code Source} object.  This is the underlying method for creation, and
+   * is invoked by all of the other methods after converting their various inputs into a {@code Source}.
+   * @param source the xml source
+   * @param properties the properties
+   * @return the new {@code RuleExecutionSet}
+   * @throws RuleExecutionSetCreateException if something goes wrong during creation
+   */
   public RuleExecutionSet createRuleExecutionSet(Source source, Map<?, ?> properties) throws RuleExecutionSetCreateException {
     Digester digester = new Digester();
 
-    digester.addRuleSet(providerRuleSet);
+    digester.addRuleSet(digesterRuleSet);
 
     Result result = new SAXResult(digester);
 

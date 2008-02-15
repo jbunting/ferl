@@ -29,6 +29,10 @@ import java.util.List;
  * It is acceptable for client code to operate against this api in order to manage the rule store.  This should be
  * limited to things such as administrative interfaces and the like.
  * <p/>
+ * The {@code RuleStore} has sole control over how properties are stored.  Some may support serializable values only,
+ * some may only support certain types of objects.  It is important that {@code RuleStore}s specify this, and that
+ * clients are aware of it.  A {@code RuleStore} that is asked to store a property value that it does not support
+ * should throw an {@code IllegalArgumentException} during the store methods, thus aborting the store operation.
  * Date: May 5, 2007
  * Time: 2:30 PM
  *
@@ -42,8 +46,9 @@ public interface RuleStore {
    * {@code RuleStore}.  It also allows storage in the storage mechanism's own implementation.
    *
    * @param storedRuleExecutionSet the set to store
+   * @throws IllegalArgumentException if this {@code RuleStore} cannot store the property values
    */
-  public void storeRuleSet(StoredRuleExecutionSet storedRuleExecutionSet);
+  public void storeRuleSet(StoredRuleExecutionSet storedRuleExecutionSet) throws IllegalArgumentException;
 
   /**
    * Removes the set with the specified uri from the store.
@@ -73,8 +78,9 @@ public interface RuleStore {
    * existing rule simply overwrites the existing rule.
    *
    * @param storedRule the rule to store
+   * @throws IllegalArgumentException if this {@code RuleStore} cannot store the property values
    */
-  public void storeRule(StoredRule storedRule);
+  public void storeRule(StoredRule storedRule) throws IllegalArgumentException;
 
   /**
    * Removes the rule with the specified uri from the store.
