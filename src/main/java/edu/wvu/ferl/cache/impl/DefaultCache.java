@@ -21,11 +21,11 @@ import edu.wvu.ferl.cache.Cache;
 import edu.wvu.ferl.cache.CacheItemLoader;
 import edu.wvu.ferl.cache.CacheItemValidator;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.concurrent.locks.Lock;
 
 /**
  * A default implementation of {@link Cache} that uses a {@link HashMap} to store the information.  This class is

@@ -31,6 +31,7 @@ import javax.rules.Handle;
 
 /**
  * Used as a handle to objects in a {@link javax.rules.StatefulRuleSession}.
+ *
  * @author jbunting
  */
 class HandleImpl implements Handle {
@@ -39,6 +40,7 @@ class HandleImpl implements Handle {
 
   /**
    * Creates a new handle.
+   *
    * @param object the object for this handle to link to
    */
   @SuppressWarnings({"UnusedDeclaration"})
@@ -48,15 +50,17 @@ class HandleImpl implements Handle {
 
   /**
    * {@inheritDoc}
+   *
    * @param other {@inheritDoc}
    * @return {@inheritDoc}
    */
   public boolean equals(Object other) {
-    return (other instanceof HandleImpl) && (uuid.equals(((HandleImpl)other).uuid));
+    return (other instanceof HandleImpl) && (uuid.equals(((HandleImpl) other).uuid));
   }
 
   /**
    * {@inheritDoc}
+   *
    * @return {@inheritDoc}
    */
   public int hashCode() {

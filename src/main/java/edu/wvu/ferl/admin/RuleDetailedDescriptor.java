@@ -38,6 +38,7 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  * Implementation of {@code RuleDescriptor}.
+ *
  * @author jbunting
  */
 class RuleDetailedDescriptor implements RuleDescriptor {
@@ -51,6 +52,7 @@ class RuleDetailedDescriptor implements RuleDescriptor {
 
   /**
    * Creates a new instance with the give {@code uri}.
+   *
    * @param uri the uri of the new rule
    */
   public RuleDetailedDescriptor(String uri) {
@@ -59,6 +61,7 @@ class RuleDetailedDescriptor implements RuleDescriptor {
 
   /**
    * Checks that all of the properties have been set, and stores the rule in the provided {@code RuleStore}.
+   *
    * @param ruleStore {@inheritDoc}
    * @return the uri of the generated rule
    * @throws ConfigurationException {@inheritDoc}
@@ -83,6 +86,7 @@ class RuleDetailedDescriptor implements RuleDescriptor {
 
   /**
    * Gets the uri.
+   *
    * @return the uri
    */
   public String getUri() {
@@ -95,6 +99,7 @@ class RuleDetailedDescriptor implements RuleDescriptor {
 
   /**
    * Gets the name.
+   *
    * @return the name
    */
   public String getName() {
@@ -103,6 +108,7 @@ class RuleDetailedDescriptor implements RuleDescriptor {
 
   /**
    * Sets the name.
+   *
    * @param name the name
    */
   public void setName(String name) {
@@ -111,6 +117,7 @@ class RuleDetailedDescriptor implements RuleDescriptor {
 
   /**
    * Gets the description.
+   *
    * @return the description
    */
   public String getDescription() {
@@ -119,6 +126,7 @@ class RuleDetailedDescriptor implements RuleDescriptor {
 
   /**
    * Sets the description.
+   *
    * @param description the description
    */
   public void setDescription(String description) {
@@ -127,6 +135,7 @@ class RuleDetailedDescriptor implements RuleDescriptor {
 
   /**
    * Gets the language.
+   *
    * @return the language
    */
   public String getLanguage() {
@@ -135,6 +144,7 @@ class RuleDetailedDescriptor implements RuleDescriptor {
 
   /**
    * Sets the language.
+   *
    * @param language the language
    */
   public void setLanguage(String language) {
@@ -143,6 +153,7 @@ class RuleDetailedDescriptor implements RuleDescriptor {
 
   /**
    * Gets the script.
+   *
    * @return the script
    */
   public String getScript() {
@@ -151,6 +162,7 @@ class RuleDetailedDescriptor implements RuleDescriptor {
 
   /**
    * Sets the script.
+   *
    * @param script the script
    */
   public void setScript(String script) {
@@ -159,6 +171,7 @@ class RuleDetailedDescriptor implements RuleDescriptor {
 
   /**
    * Checks if the input is null, if so throws a {@code ConfigurationException} using {@code field} in the message.
+   *
    * @param input the value to check
    * @param field the field the value came from
    * @throws ConfigurationException if the input value is null
@@ -171,6 +184,7 @@ class RuleDetailedDescriptor implements RuleDescriptor {
 
   /**
    * Gets the property specified by {@code key}.
+   *
    * @param key the key of the property to get
    * @return the value of the property
    */
@@ -180,7 +194,8 @@ class RuleDetailedDescriptor implements RuleDescriptor {
 
   /**
    * Sets the property specified by {@code key} to {@code value}.
-   * @param key the key of the property to set
+   *
+   * @param key   the key of the property to set
    * @param value the value of the property
    */
   public void setProperty(Object key, Object value) {

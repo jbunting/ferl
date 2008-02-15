@@ -32,18 +32,18 @@ import edu.wvu.ferl.store.StoredRuleExecutionSet;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 import javax.rules.InvalidRuleSessionException;
 import javax.rules.ObjectFilter;
+import javax.rules.RuleExecutionException;
 import javax.rules.RuleExecutionSetMetadata;
 import javax.rules.RuleSession;
-import javax.rules.RuleExecutionException;
 
 import org.apache.commons.collections15.CollectionUtils;
-import org.apache.commons.collections15.PredicateUtils;
 import org.apache.commons.collections15.ListUtils;
+import org.apache.commons.collections15.PredicateUtils;
 import org.apache.commons.collections15.list.PredicatedList;
 import org.apache.commons.lang.StringUtils;
 
@@ -66,14 +66,15 @@ abstract class AbstractRuleSession implements RuleSession {
 
   /**
    * Creates a new instance of {@code AbstractRuleSession}.
+   *
    * @param storedRuleExecutionSet the stored rule execution set to create this session from
-   * @param properties the properties provided by the client
-   * @param ruleRuntime the runtime that this session is being created in
+   * @param properties             the properties provided by the client
+   * @param ruleRuntime            the runtime that this session is being created in
    */
   public AbstractRuleSession(StoredRuleExecutionSet storedRuleExecutionSet, Map<?, ?> properties, RuleRuntimeImpl ruleRuntime) {
     this.storedRuleExecutionSet = storedRuleExecutionSet;
     this.properties = new HashMap<String, Object>(properties.size());
-    for(Map.Entry<?, ?> entry: properties.entrySet()) {
+    for(Map.Entry<?, ?> entry : properties.entrySet()) {
       this.properties.put(entry.getKey().toString(), entry.getValue());
     }
     this.ruleRuntime = ruleRuntime;
@@ -125,7 +126,7 @@ abstract class AbstractRuleSession implements RuleSession {
    */
   protected void doExecuteRules(List<Object> data) throws InvalidRuleSessionException {
     try {
-      ruleRuntime.ruleEvaluator.executeRules(data,  storedRuleExecutionSet, properties);
+      ruleRuntime.ruleEvaluator.executeRules(data, storedRuleExecutionSet, properties);
     } catch(RuleExecutionException ex) {
       throw new InvalidRuleSessionException("Execution set " + storedRuleExecutionSet.getUri() + " not runnable.", ex);
     }
@@ -135,8 +136,9 @@ abstract class AbstractRuleSession implements RuleSession {
    * Filters the input based on the passed object filter.  If {@code objectFilter} is null, then retrieves the default
    * filter for the rule execution set.  If this is null, then it only removes null values.  This method always returns
    * a copy of the passed collection.
+   *
    * @param objectFilter the filter to use, if null, uses the default filter for the rule execution set
-   * @param filterInput the input to the filter
+   * @param filterInput  the input to the filter
    * @return the filtered list
    * @throws InvalidRuleSessionException if something goes wrong
    */

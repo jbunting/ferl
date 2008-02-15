@@ -25,6 +25,7 @@ package edu.wvu.ferl.cache;
  * Time: 9:43:03 AM
  */
 public interface CacheItemValidator<K, V> {
+  @SuppressWarnings({"BooleanMethodIsAlwaysInverted"})
   public boolean isValid(K key, V value);
 
   /**

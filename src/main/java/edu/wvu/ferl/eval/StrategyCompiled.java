@@ -26,8 +26,8 @@
 
 package edu.wvu.ferl.eval;
 
-import edu.wvu.ferl.store.StoredRule;
 import edu.wvu.ferl.cache.Cache;
+import edu.wvu.ferl.store.StoredRule;
 
 import javax.rules.RuleExecutionException;
 import javax.script.CompiledScript;

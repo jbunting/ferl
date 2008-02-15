@@ -17,8 +17,8 @@
 
 package edu.wvu.ferl.util;
 
-import java.util.List;
 import java.util.AbstractList;
+import java.util.List;
 
 import org.apache.commons.collections15.Transformer;
 
@@ -27,10 +27,10 @@ import org.apache.commons.collections15.Transformer;
  * {@link Transformer} is used to generate new keys when a value is added.  This is for a situation in which keys
  * are required, but can be easily determined given the value supplied.  Every add method generates a new key by
  * invoking the {@code keyCreator} passed in the constructor.
- *  
+ *
  * @author jbunting
- * Date: Feb 14, 2008
- * Time: 10:40:36 AM
+ *         Date: Feb 14, 2008
+ *         Time: 10:40:36 AM
  */
 public class ListMapBackedList<K, V> extends AbstractList<V> {
 
@@ -57,6 +57,7 @@ public class ListMapBackedList<K, V> extends AbstractList<V> {
 
   /**
    * {@inheritDoc}
+   *
    * @return {@inheritDoc}
    */
   public int size() {
@@ -65,6 +66,7 @@ public class ListMapBackedList<K, V> extends AbstractList<V> {
 
   /**
    * {@inheritDoc}
+   *
    * @throws UnsupportedOperationException {@inheritDoc}
    * @throws ClassCastException            {@inheritDoc}
    * @throws NullPointerException          {@inheritDoc}
@@ -78,6 +80,7 @@ public class ListMapBackedList<K, V> extends AbstractList<V> {
 
   /**
    * {@inheritDoc}
+   *
    * @throws UnsupportedOperationException {@inheritDoc}
    * @throws ClassCastException            {@inheritDoc}
    * @throws NullPointerException          {@inheritDoc}
@@ -91,6 +94,7 @@ public class ListMapBackedList<K, V> extends AbstractList<V> {
 
   /**
    * {@inheritDoc}
+   *
    * @throws UnsupportedOperationException {@inheritDoc}
    * @throws IndexOutOfBoundsException     {@inheritDoc}
    */

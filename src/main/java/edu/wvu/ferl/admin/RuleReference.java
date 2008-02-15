@@ -33,6 +33,7 @@ import javax.rules.ConfigurationException;
 
 /**
  * An implementation of {@code RuleDescriptor} that simply points to an already defined rule.
+ *
  * @author jbunting
  */
 class RuleReference implements RuleDescriptor {
@@ -42,7 +43,8 @@ class RuleReference implements RuleDescriptor {
 
   /**
    * Creates a new instance with the specified uri and the specified {@code RuleStore}.
-   * @param uri the uri this rule refers to
+   *
+   * @param uri       the uri this rule refers to
    * @param ruleStore the rule store for this rule
    * @throws ConfigurationException if the uri is invalid
    */
@@ -56,6 +58,7 @@ class RuleReference implements RuleDescriptor {
 
   /**
    * Gets the uri.
+   *
    * @return the uri
    */
   public String getUri() {
@@ -64,6 +67,7 @@ class RuleReference implements RuleDescriptor {
 
   /**
    * Sets the uri.
+   *
    * @param uri the uri
    */
   private void setUri(String uri) {
@@ -72,6 +76,7 @@ class RuleReference implements RuleDescriptor {
 
   /**
    * {@inheritDoc}
+   *
    * @param ruleStore {@inheritDoc}
    * @return {@inheritDoc}
    * @throws ConfigurationException {@inheritDoc}
@@ -85,6 +90,7 @@ class RuleReference implements RuleDescriptor {
 
   /**
    * Gets the name.
+   *
    * @return the name
    */
   public String getName() {
@@ -93,6 +99,7 @@ class RuleReference implements RuleDescriptor {
 
   /**
    * Gets the description.
+   *
    * @return the description
    */
   public String getDescription() {
@@ -101,6 +108,7 @@ class RuleReference implements RuleDescriptor {
 
   /**
    * {@inheritDoc}
+   *
    * @param key {@inheritDoc}
    * @return {@inheritDoc}
    */
@@ -113,7 +121,8 @@ class RuleReference implements RuleDescriptor {
    * <p/>
    * This implementation will ALWAYS throw an {@link UnsupportedOperationException}.  Properties cannot be set on
    * references, they are fixed.
-   * @param key {@inheritDoc}
+   *
+   * @param key   {@inheritDoc}
    * @param value {@inheritDoc}
    */
   public void setProperty(Object key, Object value) {

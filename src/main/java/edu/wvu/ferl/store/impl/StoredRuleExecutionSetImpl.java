@@ -17,7 +17,7 @@
 
 package edu.wvu.ferl.store.impl;
 
-import edu.wvu.ferl.store.*;
+import edu.wvu.ferl.store.StoredRuleExecutionSet;
 
 import java.util.ArrayList;
 import java.util.Collections;

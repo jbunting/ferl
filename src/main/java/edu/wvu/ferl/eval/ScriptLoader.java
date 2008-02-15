@@ -20,7 +20,11 @@ package edu.wvu.ferl.eval;
 import edu.wvu.ferl.store.RuleStore;
 import edu.wvu.ferl.store.StoredRule;
 
-import javax.script.*;
+import javax.script.Compilable;
+import javax.script.CompiledScript;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 /**
  * Used to load scripts from the {@link RuleStore}.  Will also compile them if the script type is compilable.

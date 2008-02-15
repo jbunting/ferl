@@ -38,6 +38,7 @@ import javax.rules.StatelessRuleSession;
 
 /**
  * The implementation of the stateless rules session.
+ *
  * @author jbunting
  */
 @SuppressWarnings({"unchecked"})
@@ -47,9 +48,10 @@ class StatelessRuleSessionImpl extends AbstractRuleSession implements StatelessR
 
   /**
    * Creates a new instance of StatelessRuleSessionImpl
+   *
    * @param storedRuleExecutionSet the execution set to create this session for
-   * @param properties the properties passed by the client
-   * @param ruleRuntime the runtime this session is executing in
+   * @param properties             the properties passed by the client
+   * @param ruleRuntime            the runtime this session is executing in
    */
   public StatelessRuleSessionImpl(StoredRuleExecutionSet storedRuleExecutionSet, Map properties, RuleRuntimeImpl ruleRuntime) {
     super(storedRuleExecutionSet, properties, ruleRuntime);
@@ -57,6 +59,7 @@ class StatelessRuleSessionImpl extends AbstractRuleSession implements StatelessR
 
   /**
    * {@inheritDoc}
+   *
    * @return {@inheritDoc}
    * @throws InvalidRuleSessionException {@inheritDoc}
    */
@@ -67,6 +70,7 @@ class StatelessRuleSessionImpl extends AbstractRuleSession implements StatelessR
 
   /**
    * Peforms the actual execution of the rules.
+   *
    * @param list {@inheritDoc}
    * @return the filtered result list
    * @throws InvalidRuleSessionException if something goes wrong during the execution
@@ -78,7 +82,8 @@ class StatelessRuleSessionImpl extends AbstractRuleSession implements StatelessR
   /**
    * Performs the actual execution of the rules, filtering the output using the provided {@code objectFilter}.  A copy
    * is made of the input list prior to executing the rules.
-   * @param list the input list
+   *
+   * @param list         the input list
    * @param objectFilter the filter to apply to the output
    * @throws InvalidRuleSessionException if something goes wrong during the execution
    */

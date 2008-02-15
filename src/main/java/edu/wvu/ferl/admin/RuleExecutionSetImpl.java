@@ -28,14 +28,15 @@ package edu.wvu.ferl.admin;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 import javax.rules.admin.RuleExecutionSet;
 
 /**
  * An implementation of {@code RuleExecutionSet} used for storing information between the load and the register
  * operations.
+ *
  * @author jbunting
  */
 class RuleExecutionSetImpl implements RuleExecutionSet {
@@ -50,6 +51,7 @@ class RuleExecutionSetImpl implements RuleExecutionSet {
 
   /**
    * Creates a new instance with the given {@code uri}.
+   *
    * @param uri the uri
    */
   public RuleExecutionSetImpl(String uri) {
@@ -58,6 +60,7 @@ class RuleExecutionSetImpl implements RuleExecutionSet {
 
   /**
    * Gets the uri.
+   *
    * @return the uri
    */
   public String getUri() {
@@ -70,6 +73,7 @@ class RuleExecutionSetImpl implements RuleExecutionSet {
 
   /**
    * Gets the name.
+   *
    * @return the name
    */
   public String getName() {
@@ -78,6 +82,7 @@ class RuleExecutionSetImpl implements RuleExecutionSet {
 
   /**
    * Sets the name.
+   *
    * @param name the name
    */
   public void setName(String name) {
@@ -86,6 +91,7 @@ class RuleExecutionSetImpl implements RuleExecutionSet {
 
   /**
    * Gets the description.
+   *
    * @return the description
    */
   public String getDescription() {
@@ -94,6 +100,7 @@ class RuleExecutionSetImpl implements RuleExecutionSet {
 
   /**
    * Sets the description.
+   *
    * @param description the description
    */
   public void setDescription(String description) {
@@ -102,6 +109,7 @@ class RuleExecutionSetImpl implements RuleExecutionSet {
 
   /**
    * Gets the list of all rule descriptors.
+   *
    * @return the list of rule descriptors
    */
   public List<RuleDescriptor> getRuleDescriptors() {
@@ -110,6 +118,7 @@ class RuleExecutionSetImpl implements RuleExecutionSet {
 
   /**
    * Adds a rule descriptor to the current list
+   *
    * @param ruleDescriptor the rule descriptor to add
    */
   public void addRuleDescriptor(RuleDescriptor ruleDescriptor) {
@@ -118,6 +127,7 @@ class RuleExecutionSetImpl implements RuleExecutionSet {
 
   /**
    * Gets the property specified by {@code key}.
+   *
    * @param key the key of the property to get
    * @return the value of the property
    */
@@ -127,7 +137,8 @@ class RuleExecutionSetImpl implements RuleExecutionSet {
 
   /**
    * Sets the property specified by {@code key} to {@code value}.
-   * @param key the key of the property to set
+   *
+   * @param key   the key of the property to set
    * @param value the value of the property
    */
   public void setProperty(Object key, Object value) {
@@ -136,6 +147,7 @@ class RuleExecutionSetImpl implements RuleExecutionSet {
 
   /**
    * Adds all of the properties from {@code map}.
+   *
    * @param map the map
    */
   public void addAllProperties(Map<?, ?> map) {
@@ -144,6 +156,7 @@ class RuleExecutionSetImpl implements RuleExecutionSet {
 
   /**
    * Gets a map of all properties set on this {@code RuleExecutionSet}.
+   *
    * @return the map of properties
    */
   public Map<Object, Object> getProperties() {
@@ -152,6 +165,7 @@ class RuleExecutionSetImpl implements RuleExecutionSet {
 
   /**
    * {@inheritDoc}
+   *
    * @param defaultObjectFilter {@inheritDoc}
    */
   public void setDefaultObjectFilter(String defaultObjectFilter) {
@@ -160,6 +174,7 @@ class RuleExecutionSetImpl implements RuleExecutionSet {
 
   /**
    * {@inheritDoc}
+   *
    * @return {@inheritDoc}
    */
   public String getDefaultObjectFilter() {
@@ -168,6 +183,7 @@ class RuleExecutionSetImpl implements RuleExecutionSet {
 
   /**
    * Gets a list of all rules attached to this {@code RuleExecutionSet}.
+   *
    * @return the list of rules
    */
   public List<RuleDescriptor> getRules() {

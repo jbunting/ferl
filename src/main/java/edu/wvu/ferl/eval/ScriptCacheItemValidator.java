@@ -18,8 +18,8 @@
 package edu.wvu.ferl.eval;
 
 import edu.wvu.ferl.cache.CacheItemValidator;
-import edu.wvu.ferl.store.StoredRule;
 import edu.wvu.ferl.store.RuleStore;
+import edu.wvu.ferl.store.StoredRule;
 
 /**
  * Validates that a script compilation still matches the rule that it was created from.

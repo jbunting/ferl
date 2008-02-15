@@ -106,7 +106,7 @@ public class RuleAdministratorImpl implements RuleAdministrator {
    * @param ruleExecutionSet the RuleExecutionSet
    * @param properties       a map of properties to be used for the provider - currently has no effect
    * @throws RuleExecutionSetRegisterException
-   *                                  thrown if anything goes wrong during the registration process
+   *          thrown if anything goes wrong during the registration process
    */
   public void registerRuleExecutionSet(String uri, RuleExecutionSet ruleExecutionSet, Map properties) throws RuleExecutionSetRegisterException {
     if(!(ruleExecutionSet instanceof RuleExecutionSetImpl)) {

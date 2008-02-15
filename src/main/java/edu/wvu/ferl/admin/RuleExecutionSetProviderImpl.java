@@ -44,8 +44,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.w3c.dom.Element;
 import org.apache.commons.digester.Digester;
+import org.w3c.dom.Element;
 
 /**
  * An implementation of {@code RuleExecutionSetProvider} and {@code LocalRuleExecutionSetProvider}.  Allows creation
@@ -62,6 +62,7 @@ class RuleExecutionSetProviderImpl implements RuleExecutionSetProvider, LocalRul
 
   /**
    * Creates a new instance sourced by the given {@code administrator}.
+   *
    * @param administrator the administrator that this provider was created from
    */
   public RuleExecutionSetProviderImpl(RuleAdministratorImpl administrator) {
@@ -70,10 +71,12 @@ class RuleExecutionSetProviderImpl implements RuleExecutionSetProvider, LocalRul
 
   /**
    * {@inheritDoc}
-   * @param element {@inheritDoc}
+   *
+   * @param element    {@inheritDoc}
    * @param properties {@inheritDoc}
    * @return {@inheritDoc}
-   * @throws RuleExecutionSetCreateException {@inheritDoc}
+   * @throws RuleExecutionSetCreateException
+   *          {@inheritDoc}
    */
   public RuleExecutionSet createRuleExecutionSet(Element element, Map properties) throws RuleExecutionSetCreateException {
     return createRuleExecutionSet(new DOMSource(element), properties);
@@ -83,10 +86,12 @@ class RuleExecutionSetProviderImpl implements RuleExecutionSetProvider, LocalRul
    * {@inheritDoc}
    * <p/>
    * Will always throw a {@code UnsupportedOperationException}.  This method is not supported by ferl.
+   *
    * @param serializable {@inheritDoc}
-   * @param properties {@inheritDoc}
+   * @param properties   {@inheritDoc}
    * @return {@inheritDoc}
-   * @throws RuleExecutionSetCreateException {@inheritDoc}
+   * @throws RuleExecutionSetCreateException
+   *                                       {@inheritDoc}
    * @throws UnsupportedOperationException always - this method is not supported
    */
   public RuleExecutionSet createRuleExecutionSet(Serializable serializable, Map properties) throws RuleExecutionSetCreateException, UnsupportedOperationException {
@@ -96,10 +101,12 @@ class RuleExecutionSetProviderImpl implements RuleExecutionSetProvider, LocalRul
   /**
    * {@inheritDoc}
    * This method treats the incoming string as a url, and retrieves the xml from there.
-   * @param string the url
+   *
+   * @param string     the url
    * @param properties {@inheritDoc}
    * @return {@inheritDoc}
-   * @throws RuleExecutionSetCreateException {@inheritDoc}
+   * @throws RuleExecutionSetCreateException
+   *                     {@inheritDoc}
    * @throws IOException {@inheritDoc}
    */
   public RuleExecutionSet createRuleExecutionSet(String string, Map properties) throws RuleExecutionSetCreateException, IOException {
@@ -108,10 +115,12 @@ class RuleExecutionSetProviderImpl implements RuleExecutionSetProvider, LocalRul
 
   /**
    * {@inheritDoc}
+   *
    * @param inputStream {@inheritDoc}
-   * @param properties {@inheritDoc}
+   * @param properties  {@inheritDoc}
    * @return {@inheritDoc}
    * @throws RuleExecutionSetCreateException
+   *
    * @throws IOException
    */
   public RuleExecutionSet createRuleExecutionSet(InputStream inputStream, Map properties) throws RuleExecutionSetCreateException, IOException {
@@ -120,10 +129,12 @@ class RuleExecutionSetProviderImpl implements RuleExecutionSetProvider, LocalRul
 
   /**
    * {@inheritDoc}
-   * @param reader {@inheritDoc}
+   *
+   * @param reader     {@inheritDoc}
    * @param properties {@inheritDoc}
    * @return {@inheritDoc}
-   * @throws RuleExecutionSetCreateException {@inheritDoc}
+   * @throws RuleExecutionSetCreateException
+   *                     {@inheritDoc}
    * @throws IOException {@inheritDoc}
    */
   public RuleExecutionSet createRuleExecutionSet(Reader reader, Map properties) throws RuleExecutionSetCreateException, IOException {
@@ -134,10 +145,12 @@ class RuleExecutionSetProviderImpl implements RuleExecutionSetProvider, LocalRul
    * {@inheritDoc}
    * <p/>
    * Will always throw a {@code UnsupportedOperationException}.  This method is not supported by ferl.
-   * @param object {@inheritDoc}
+   *
+   * @param object     {@inheritDoc}
    * @param properties {@inheritDoc}
    * @return {@inheritDoc}
-   * @throws RuleExecutionSetCreateException {@inheritDoc}
+   * @throws RuleExecutionSetCreateException
+   *                                       {@inheritDoc}
    * @throws UnsupportedOperationException always - this method is not supported
    */
   public RuleExecutionSet createRuleExecutionSet(Object object, Map properties) throws RuleExecutionSetCreateException {
@@ -147,10 +160,12 @@ class RuleExecutionSetProviderImpl implements RuleExecutionSetProvider, LocalRul
   /**
    * Creates a {@code RuleExecutionSet} from a {@code Source} object.  This is the underlying method for creation, and
    * is invoked by all of the other methods after converting their various inputs into a {@code Source}.
-   * @param source the xml source
+   *
+   * @param source     the xml source
    * @param properties the properties
    * @return the new {@code RuleExecutionSet}
-   * @throws RuleExecutionSetCreateException if something goes wrong during creation
+   * @throws RuleExecutionSetCreateException
+   *          if something goes wrong during creation
    */
   public RuleExecutionSet createRuleExecutionSet(Source source, Map<?, ?> properties) throws RuleExecutionSetCreateException {
     Digester digester = new Digester();

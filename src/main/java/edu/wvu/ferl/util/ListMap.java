@@ -17,19 +17,20 @@
 
 package edu.wvu.ferl.util;
 
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.commons.collections15.map.ListOrderedMap;
 import org.apache.commons.collections15.Transformer;
 import org.apache.commons.collections15.keyvalue.UnmodifiableMapEntry;
+import org.apache.commons.collections15.map.ListOrderedMap;
 
 /**
  * A map that extends {@code ListOrderedMap} to allow set and add operations at a specified index in the list.  The
  * purpose of this map is to provide more {@code List}-like semantics to the {@code ListOrderedMap}.
+ *
  * @author jbunting
- * Date: Feb 14, 2008
- * Time: 10:58:42 AM
+ *         Date: Feb 14, 2008
+ *         Time: 10:58:42 AM
  */
 public class ListMap<K, V> extends ListOrderedMap<K, V> {
 
@@ -45,8 +46,8 @@ public class ListMap<K, V> extends ListOrderedMap<K, V> {
   /**
    * Constructor for wrapping.
    *
-   * @see org.apache.commons.collections15.map.ListOrderedMap#ListOrderedMap(java.util.Map)
    * @param backingMap the backing map
+   * @see org.apache.commons.collections15.map.ListOrderedMap#ListOrderedMap(java.util.Map)
    */
   protected ListMap(Map<K, V> backingMap) {
     super(backingMap);
@@ -54,9 +55,10 @@ public class ListMap<K, V> extends ListOrderedMap<K, V> {
 
   /**
    * Replaces the key and value at the specified index in this map's order with the provided {@code key} and
-   * {@code value}. 
+   * {@code value}.
+   *
    * @param index the index to set the value at
-   * @param key the key of this entry
+   * @param key   the key of this entry
    * @param value the value of this entry
    * @return the old entry that was at this index
    * @throws IndexOutOfBoundsException if the index is out of bounds
@@ -72,8 +74,9 @@ public class ListMap<K, V> extends ListOrderedMap<K, V> {
 
   /**
    * Essentially performs a {@link #put}, but places the added entry at the specified spot in the order.
+   *
    * @param index the location in the order to place this entry
-   * @param key the key of this entry
+   * @param key   the key of this entry
    * @param value the value of this entry
    * @throws IndexOutOfBoundsException if the index is out of bounds
    */
@@ -85,7 +88,8 @@ public class ListMap<K, V> extends ListOrderedMap<K, V> {
 
   /**
    * Returns a fully modifiable list that is backed by this map's values.  When {@code add} and {@code set} methods are
-   * invoked on the list, the {@code keyCreator} is used to create a new key for that value. 
+   * invoked on the list, the {@code keyCreator} is used to create a new key for that value.
+   *
    * @param keyCreator the transformer to use for creating new keys when values are added to the list
    * @return the new, modifiable list
    */
@@ -96,7 +100,7 @@ public class ListMap<K, V> extends ListOrderedMap<K, V> {
   /**
    * Overrides the {@link ListOrderedMap#remove remove} method to return a {@code V} instead of a {@code Object}.  This
    * should probably be a patch to {@code ListOrderedMap}.
-   * 
+   *
    * @param index {@inheritDoc}
    * @return the removed value
    */

@@ -26,9 +26,9 @@
 
 package edu.wvu.ferl.runtime;
 
+import edu.wvu.ferl.RuleServiceProvider;
 import edu.wvu.ferl.eval.RuleEvaluator;
 import edu.wvu.ferl.store.StoredRuleExecutionSet;
-import edu.wvu.ferl.RuleServiceProvider;
 
 import java.util.List;
 import java.util.Map;
@@ -40,10 +40,10 @@ import javax.rules.RuleSessionTypeUnsupportedException;
 
 /**
  * The ferl implementation of {@link RuleRuntime}.  See {@link RuleEvaluator#executeRules} for information on how data
- * is mapped to the {@link javax.script.ScriptContext ScriptContext}. 
+ * is mapped to the {@link javax.script.ScriptContext ScriptContext}.
  *
- * @see edu.wvu.ferl.eval.RuleEvaluator#executeRules
  * @author jbunting
+ * @see edu.wvu.ferl.eval.RuleEvaluator#executeRules
  */
 public class RuleRuntimeImpl implements RuleRuntime {
 
@@ -63,14 +63,17 @@ public class RuleRuntimeImpl implements RuleRuntime {
   /**
    * Creates a new {@code RuleSession} of type {@code sessionType} using the {@code RuleExecutionSet} found at
    * {@code uri}.
-   * @param uri the uri that uniquely identifies the rule set
-   * @param properties custom properties to be applied to the rule set
+   *
+   * @param uri         the uri that uniquely identifies the rule set
+   * @param properties  custom properties to be applied to the rule set
    * @param sessionType either {@link #STATEFUL_SESSION_TYPE} or {@link #STATELESS_SESSION_TYPE}
    * @return the new session
-   * @throws RuleSessionTypeUnsupportedException if an unsupported session type is requested
+   * @throws RuleSessionTypeUnsupportedException
+   *                                    if an unsupported session type is requested
    * @throws RuleSessionCreateException if some other error occurs creating the new session
-   * @throws RuleExecutionSetNotFoundException if the set specified by {@code uri} is not in the
-   * {@link edu.wvu.ferl.store.RuleStore}
+   * @throws RuleExecutionSetNotFoundException
+   *                                    if the set specified by {@code uri} is not in the
+   *                                    {@link edu.wvu.ferl.store.RuleStore}
    */
   public RuleSession createRuleSession(String uri, Map properties, int sessionType)
           throws RuleSessionTypeUnsupportedException,
@@ -87,12 +90,13 @@ public class RuleRuntimeImpl implements RuleRuntime {
       case RuleRuntime.STATEFUL_SESSION_TYPE:
         return new StatefulRuleSessionImpl(set, properties, this);
       default:
-      throw new RuleSessionTypeUnsupportedException("Ferl does not support RuleSession type " + sessionType);
+        throw new RuleSessionTypeUnsupportedException("Ferl does not support RuleSession type " + sessionType);
     }
   }
 
   /**
    * {@inheritDoc}
+   *
    * @return {@inheritDoc}
    */
   public List getRegistrations() {
@@ -103,6 +107,7 @@ public class RuleRuntimeImpl implements RuleRuntime {
    * Returns the {@code RuleServiceProvider} that this runtime belongs to.  This can be used to access the
    * {@link edu.wvu.ferl.store.RuleStore RuleStore} and the {@link edu.wvu.ferl.cache.CacheFactory CacheFactory}
    * associated with this ferl instance.
+   *
    * @return the service provider
    */
   public RuleServiceProvider getRuleServiceProvider() {

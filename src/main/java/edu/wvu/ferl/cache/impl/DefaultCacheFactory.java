@@ -17,8 +17,8 @@
 
 package edu.wvu.ferl.cache.impl;
 
-import edu.wvu.ferl.cache.CacheFactory;
 import edu.wvu.ferl.cache.Cache;
+import edu.wvu.ferl.cache.CacheFactory;
 import edu.wvu.ferl.cache.CacheItemLoader;
 import edu.wvu.ferl.cache.CacheItemValidator;
 

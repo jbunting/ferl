@@ -17,18 +17,18 @@
 
 package edu.wvu.ferl.eval;
 
-import edu.wvu.ferl.store.StoredRule;
-import edu.wvu.ferl.store.StoredRuleExecutionSet;
-import edu.wvu.ferl.runtime.RuleRuntimeImpl;
 import edu.wvu.ferl.cache.Cache;
 import edu.wvu.ferl.cache.CacheItemValidator;
+import edu.wvu.ferl.runtime.RuleRuntimeImpl;
+import edu.wvu.ferl.store.StoredRule;
+import edu.wvu.ferl.store.StoredRuleExecutionSet;
 
 import java.util.List;
 import java.util.Map;
 import javax.rules.InvalidRuleSessionException;
 import javax.rules.RuleExecutionException;
-import javax.script.ScriptEngineManager;
 import javax.script.ScriptContext;
+import javax.script.ScriptEngineManager;
 import javax.script.SimpleScriptContext;
 
 /**
@@ -45,7 +45,7 @@ public class RuleEvaluator {
 
   public static final String DATA_ATTRIBUTE_NAME = "ferl.data";
   public static final String PREVIOUS_OUTPUT_ATTRIBUTE_NAME = "ferl.previousOutput";
-  
+
   private RuleRuntimeImpl ruleRuntime;
   private ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
 
@@ -61,7 +61,7 @@ public class RuleEvaluator {
 
     ScriptCacheItemValidator scriptValidator =
             new ScriptCacheItemValidator(ruleRuntime.getRuleServiceProvider().getRuleStore());
-    ScriptCacheItemLoader scriptLoader=
+    ScriptCacheItemLoader scriptLoader =
             new ScriptCacheItemLoader(new ScriptLoader(ruleRuntime.getRuleServiceProvider().getRuleStore(), scriptEngineManager));
 
 
@@ -88,12 +88,13 @@ public class RuleEvaluator {
    * the end of {@code data} as well as being stored in the {@code ScriptContext} under the attribute
    * {@value #PREVIOUS_OUTPUT_ATTRIBUTE_NAME}.  The {@code data} passed into this method will most likely be changed
    * by the rules.
-   * @param data the data to be used for executing the rules
+   *
+   * @param data                   the data to be used for executing the rules
    * @param storedRuleExecutionSet the rule set to execute
-   * @param properties the properties to map to the script context
-   * @throws InvalidRuleSessionException if something goes wrong 
+   * @param properties             the properties to map to the script context
+   * @throws InvalidRuleSessionException if something goes wrong
    */
-  public void executeRules(List<Object> data, StoredRuleExecutionSet storedRuleExecutionSet, Map<? extends String,Object> properties) throws RuleExecutionException {
+  public void executeRules(List<Object> data, StoredRuleExecutionSet storedRuleExecutionSet, Map<? extends String, Object> properties) throws RuleExecutionException {
     ScriptContext context = new SimpleScriptContext();
     context.getBindings(ScriptContext.ENGINE_SCOPE).putAll(properties);
     context.setAttribute(DATA_ATTRIBUTE_NAME, data, ScriptContext.ENGINE_SCOPE);

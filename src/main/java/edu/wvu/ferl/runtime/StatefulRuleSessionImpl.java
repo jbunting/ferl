@@ -44,9 +44,10 @@ import org.apache.commons.collections15.Transformer;
 
 /**
  * The implementation of the stateful rules session.
- *
+ * <p/>
  * It is important to note, that if during execution, a script removes an object from the passed list, and then re-adds
  * it, it will have a new handle.  If the object is changed, it will retain its
+ *
  * @author jbunting
  */
 class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRuleSession {
@@ -61,9 +62,10 @@ class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRul
 
   /**
    * Creates a new instance with the provided rule execution set and properties attached to the provided runtime.
+   *
    * @param storedRuleExecutionSet the rule set to create this session for
-   * @param properties properties to be applied to this session
-   * @param ruleRuntime the runtime this session is attached to
+   * @param properties             properties to be applied to this session
+   * @param ruleRuntime            the runtime this session is attached to
    */
   public StatefulRuleSessionImpl(StoredRuleExecutionSet storedRuleExecutionSet, Map<?, ?> properties, RuleRuntimeImpl ruleRuntime) {
     super(storedRuleExecutionSet, properties, ruleRuntime);
@@ -71,6 +73,7 @@ class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRul
 
   /**
    * {@inheritDoc}
+   *
    * @return {@link RuleRuntime#STATEFUL_SESSION_TYPE}
    * @throws InvalidRuleSessionException if this session has already been released
    */
@@ -81,10 +84,11 @@ class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRul
 
   /**
    * {@inheritDoc}
+   *
    * @param handle {@inheritDoc}
    * @return {@inheritDoc}
    * @throws InvalidRuleSessionException {@inheritDoc}
-   * @throws InvalidHandleException {@inheritDoc}
+   * @throws InvalidHandleException      {@inheritDoc}
    */
   public boolean containsObject(Handle handle) throws InvalidRuleSessionException, InvalidHandleException {
     checkRelease();
@@ -93,6 +97,7 @@ class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRul
 
   /**
    * {@inheritDoc}
+   *
    * @param object {@inheritDoc}
    * @return {@inheritDoc}
    * @throws InvalidRuleSessionException {@inheritDoc}
@@ -106,6 +111,7 @@ class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRul
 
   /**
    * {@inheritDoc}
+   *
    * @param list {@inheritDoc}
    * @return {@inheritDoc}
    * @throws InvalidRuleSessionException {@inheritDoc}
@@ -122,10 +128,11 @@ class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRul
 
   /**
    * {@inheritDoc}
+   *
    * @param handle {@inheritDoc}
    * @param object {@inheritDoc}
    * @throws InvalidRuleSessionException {@inheritDoc}
-   * @throws InvalidHandleException {@inheritDoc}
+   * @throws InvalidHandleException      {@inheritDoc}
    */
   public void updateObject(Handle handle, Object object) throws InvalidRuleSessionException, InvalidHandleException {
     checkRelease();
@@ -138,8 +145,9 @@ class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRul
 
   /**
    * {@inheritDoc}
+   *
    * @param handle {@inheritDoc}
-   * @throws InvalidHandleException {@inheritDoc}
+   * @throws InvalidHandleException      {@inheritDoc}
    * @throws InvalidRuleSessionException {@inheritDoc}
    */
   public void removeObject(Handle handle) throws InvalidHandleException, InvalidRuleSessionException {
@@ -149,6 +157,7 @@ class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRul
 
   /**
    * {@inheritDoc}
+   *
    * @return {@inheritDoc}
    * @throws InvalidRuleSessionException {@inheritDoc}
    */
@@ -159,6 +168,7 @@ class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRul
 
   /**
    * {@inheritDoc}
+   *
    * @return {@inheritDoc}
    * @throws InvalidRuleSessionException {@inheritDoc}
    */
@@ -169,6 +179,7 @@ class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRul
 
   /**
    * {@inheritDoc}
+   *
    * @param objectFilter {@inheritDoc}
    * @return {@inheritDoc}
    * @throws InvalidRuleSessionException {@inheritDoc}
@@ -180,6 +191,7 @@ class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRul
 
   /**
    * {@inheritDoc}
+   *
    * @throws InvalidRuleSessionException {@inheritDoc}
    */
   public void executeRules() throws InvalidRuleSessionException {
@@ -189,6 +201,7 @@ class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRul
 
   /**
    * {@inheritDoc}
+   *
    * @throws InvalidRuleSessionException {@inheritDoc}
    */
   public void reset() throws InvalidRuleSessionException {
@@ -198,9 +211,10 @@ class StatefulRuleSessionImpl extends AbstractRuleSession implements StatefulRul
 
   /**
    * {@inheritDoc}
+   *
    * @param handle {@inheritDoc}
    * @return {@inheritDoc}
-   * @throws InvalidHandleException {@inheritDoc}
+   * @throws InvalidHandleException      {@inheritDoc}
    * @throws InvalidRuleSessionException {@inheritDoc}
    */
   public Object getObject(Handle handle) throws InvalidHandleException, InvalidRuleSessionException {

@@ -27,7 +27,8 @@ import org.xml.sax.Attributes;
 
 /**
  * A {@linkplain <a href="http://commons.apache.org/digester/">Commons Digester</a> rule set for processing the rule
- * input xml. 
+ * input xml.
+ *
  * @author Jared Bunting
  */
 class DigesterRuleSet implements RuleSet {
@@ -40,6 +41,7 @@ class DigesterRuleSet implements RuleSet {
 
   /**
    * Creates a new instance using the provided administrator.
+   *
    * @param administrator the administrator to be used for any rules that require it
    */
   public DigesterRuleSet(RuleAdministratorImpl administrator) {
@@ -50,6 +52,7 @@ class DigesterRuleSet implements RuleSet {
    * {@inheritDoc}
    * <p/>
    * Currently returns null.
+   *
    * @return {@inheritDoc}
    */
   public String getNamespaceURI() {
@@ -58,6 +61,7 @@ class DigesterRuleSet implements RuleSet {
 
   /**
    * Adds all of the rules for processing a rule input file.
+   *
    * @param digester the digester to add the rules to
    */
   public void addRuleInstances(Digester digester) {
@@ -81,8 +85,9 @@ class DigesterRuleSet implements RuleSet {
   private abstract class UriBasedObjectCreationRule extends Rule {
     /**
      * {@inheritDoc}
-     * @param namespace {@inheritDoc}
-     * @param name {@inheritDoc}
+     *
+     * @param namespace  {@inheritDoc}
+     * @param name       {@inheritDoc}
      * @param attributes {@inheritDoc}
      * @throws Exception {@inheritDoc}
      */
@@ -96,8 +101,9 @@ class DigesterRuleSet implements RuleSet {
 
     /**
      * {@inheritDoc}
+     *
      * @param namespace {@inheritDoc}
-     * @param name {@inheritDoc}
+     * @param name      {@inheritDoc}
      * @throws Exception {@inheritDoc}
      */
     public void end(String namespace, String name) throws Exception {
@@ -106,6 +112,7 @@ class DigesterRuleSet implements RuleSet {
 
     /**
      * Performs the actual object creation.
+     *
      * @param uri the uri of the object to create
      * @return the newly created object
      * @throws Exception if something goes wrong
@@ -119,6 +126,7 @@ class DigesterRuleSet implements RuleSet {
   private class RuleExecutionSetCreationRule extends UriBasedObjectCreationRule {
     /**
      * Creates a {@code RuleExecutionSet}.
+     *
      * @param uri {@inheritDoc}
      * @return the newly created object
      */
@@ -133,6 +141,7 @@ class DigesterRuleSet implements RuleSet {
   private class RuleDetailedDescriptorCreationRule extends UriBasedObjectCreationRule {
     /**
      * Creates a {@code RuleDetailedDescriptor}.
+     *
      * @param uri {@inheritDoc}
      * @return the newly created object
      */
@@ -147,6 +156,7 @@ class DigesterRuleSet implements RuleSet {
   private class RuleReferenceCreationRule extends UriBasedObjectCreationRule {
     /**
      * Creates a {@code RuleReference}.
+     *
      * @param uri {@inheritDoc}
      * @return the newly created object
      * @throws Exception {@inheritDoc}
