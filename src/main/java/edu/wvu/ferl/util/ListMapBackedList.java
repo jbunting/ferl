@@ -46,6 +46,10 @@ public class ListMapBackedList<K, V> extends AbstractList<V> {
     this.keyCreator = keyCreator;
   }
 
+  public ListMap<K, V> getMap() {
+    return backingMap;
+  }
+
   /**
    * {@inheritDoc}
    *
