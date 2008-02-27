@@ -35,7 +35,7 @@ import org.apache.commons.collections15.Transformer;
 public class ListMapBackedList<K, V> extends AbstractList<V> {
 
   private ListMap<K, V> backingMap;
-  private Transformer<V, K> keyCreator;
+  protected Transformer<V, K> keyCreator;
 
   public ListMapBackedList(Transformer<V, K> keyCreator) {
     this(new ListMap<K, V>(), keyCreator);

@@ -148,6 +148,41 @@
       </plugin>
     </plugins>
   </build>
+  <repositories>
+    <repository>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>never</updatePolicy>
+        <checksumPolicy>fail</checksumPolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>wvu-esd-internal</id>
+      <name>
+        Internal Repository for storing internal libraries
+      </name>
+      <url>https://subversion.systems.wvu.edu/maven/internal</url>
+    </repository>
+    <repository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>daily</updatePolicy>
+        <checksumPolicy>warn</checksumPolicy>
+      </snapshots>
+      <id>wvu-esd-snapshot</id>
+      <name>
+        Internal Repository for storing internal snapshot
+        libraries
+      </name>
+      <url>
+        https://subversion.systems.wvu.edu/maven/snapshots
+      </url>
+    </repository>
+  </repositories>
   <dependencies>
     <dependency>
       <groupId>javax.rules</groupId>
@@ -177,25 +212,37 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.2</version>
+      <version>4.4</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>jmock</groupId>
+      <groupId>org.jmock</groupId>
       <artifactId>jmock</artifactId>
-      <version>1.1.0</version>
+      <version>2.4.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>jmock</groupId>
-      <artifactId>jmock-cglib</artifactId>
-      <version>1.1.0</version>
+      <groupId>org.jmock</groupId>
+      <artifactId>jmock-junit4</artifactId>
+      <version>2.4.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.jmock</groupId>
+      <artifactId>jmock-legacy</artifactId>
+      <version>2.4.0</version>
+      <scope>test</scope>
+    </dependency>
+    <!--dependency>
       <groupId>com.mockrunner</groupId>
       <artifactId>mockrunner</artifactId>
       <version>0.3.1</version>
+      <scope>test</scope>
+    </dependency-->
+    <dependency>
+      <groupId>edu.wvu.commons</groupId>
+      <artifactId>test2-utils</artifactId>
+      <version>0.1-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
