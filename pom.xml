@@ -142,9 +142,37 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <excludes>
-            <exclude>edu/wvu/ferl/runtime/**/*.java</exclude>
           </excludes>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.mathieucarbou.mojo</groupId>
+        <artifactId>maven-license-plugin</artifactId>
+        <configuration>
+          <header>src/etc/header.txt</header>
+          <excludes>
+            <exclude>target/**</exclude>
+            <exclude>LICENSE</exclude>
+            <exclude>NOTICE</exclude>
+            <exclude>*.ipr</exclude>
+            <exclude>*.iws</exclude>
+          </excludes>
+          <!--<includes>-->
+            <!--<include>src/main/java/edu/wvu/ferl/**/*.java</include>-->
+            <!--<include>src/test/java/edu/wvu/ferl/**/*.java</include>-->
+          <!--</includes>-->
+          <properties>
+            <year>2008</year>
+          </properties>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
@@ -261,6 +289,16 @@
       </dependencies>
     </profile>
   </profiles>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>mathieucarbou</id>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <url>http://mc-repo.googlecode.com/svn/maven2/releases/</url>
+      <name>mathieucarbou</name>
+    </pluginRepository>
+  </pluginRepositories>
   <distributionManagement>
     <snapshotRepository>
       <uniqueVersion>true</uniqueVersion>
