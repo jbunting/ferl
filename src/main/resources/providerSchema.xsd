@@ -22,7 +22,8 @@
     Created on : May 8, 2007, 11:59 AM
     Author     : jbunting
     Description:
-        Purpose of XML Schema document follows.
+        This schema describes an xml document that can be used to import rules and rule sets into
+        ferl.  This is done using the RuleAdministrator as defined in JSR 94.
 -->
 
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -30,38 +31,38 @@
             xmlns="http://oit.wvu.edu/esd/ferl/provider"
             elementFormDefault="qualified">
 
-  <xsd:element name="rule-execution-set">
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element name="name" type="xsd:string"/>
-        <xsd:element name="description" type="xsd:string"/>
-        <xsd:element name="property" minOccurs="0" maxOccurs="unbounded" type="property"/>
-        <xsd:choice minOccurs="0" maxOccurs="unbounded">
-          <xsd:element name="rule">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="name" type="xsd:string"/>
-                <xsd:element name="description" type="xsd:string"/>
-                <xsd:element name="language" type="xsd:string"/>
-                <xsd:element name="script" type="xsd:string"/>
-                <xsd:element name="property" minOccurs="0" maxOccurs="unbounded" type="property"/>
-              </xsd:sequence>
-              <xsd:attribute name="uri" type="xsd:string" use="required"/>
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="rule-ref">
-            <xsd:complexType>
-              <xsd:attribute name="uri" type="xsd:string" use="required"/>
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:sequence>
-      <xsd:attribute name="uri" type="xsd:string" use="required"/>
-    </xsd:complexType>
-  </xsd:element>
+  <xsd:element name="rule-execution-set" type="rule-execution-set"/>
 
   <xsd:complexType name="property">
     <xsd:attribute name="key" type="xsd:string" use="required"/>
     <xsd:attribute name="value" type="xsd:string" use="required"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="rule">
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="description" type="xsd:string"/>
+      <xsd:element name="language" type="xsd:string"/>
+      <xsd:element name="script" type="xsd:string"/>
+      <xsd:element name="property" minOccurs="0" maxOccurs="unbounded" type="property"/>
+    </xsd:sequence>
+    <xsd:attribute name="uri" type="xsd:string" use="required"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="rule-ref">
+    <xsd:attribute name="uri" type="xsd:string" use="required"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="rule-execution-set">
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="description" type="xsd:string"/>
+      <xsd:element name="property" minOccurs="0" maxOccurs="unbounded" type="property"/>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element name="rule" type="rule"/>
+        <xsd:element name="rule-ref" type="rule-ref"/>
+      </xsd:choice>
+    </xsd:sequence>
+    <xsd:attribute name="uri" type="xsd:string" use="required"/>
   </xsd:complexType>
 </xsd:schema>
