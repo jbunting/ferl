@@ -38,4 +38,12 @@ public interface Cache<K, V> {
    */
   public V lookup(K key);
 
+  /**
+   * Allows a client to preload a value in the cache.  This enables setting values in the cache without the help of the
+   * loader.
+   * @param key the key to set
+   * @param value the value to set
+   */
+  public void preLoad(K key, V value);
+
 }

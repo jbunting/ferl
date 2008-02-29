@@ -27,6 +27,9 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.Log;
+
 /**
  * A default implementation of {@link Cache} that uses a {@link HashMap} to store the information.  This class is
  * threadsafe.
@@ -36,6 +39,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public class DefaultCache<K, V> implements Cache<K, V> {
 
+  private static final Log logger = LogFactory.getLog(DefaultCache.class);
+  
   private ReadWriteLock rwLock = new ReentrantReadWriteLock();
   private Lock readLock = rwLock.readLock();
   private Lock writeLock = rwLock.writeLock();
@@ -55,6 +60,7 @@ public class DefaultCache<K, V> implements Cache<K, V> {
    */
   @SuppressWarnings({"UnusedDeclaration"})
   DefaultCache(CacheItemValidator<? super K, ? super V> cacheItemValidator, CacheItemLoader<? super K, ? extends V> cacheItemLoader, Class<K> keyType, Class<V> valueType) {
+    logger.trace("DefaultCache created.");
     this.cacheItemLoader = cacheItemLoader;
     this.cacheItemValidator = cacheItemValidator;
   }
@@ -68,26 +74,56 @@ public class DefaultCache<K, V> implements Cache<K, V> {
    * @return {@inheritDoc}
    */
   public V lookup(K key) {
+    logger.trace("looking up " + key);
     try {
+      logger.trace("locking for read");
       readLock.lock();
       V value = storage.get(key);
+      logger.trace("retrieved value " + value);
       if(value == null || !cacheItemValidator.isValid(key, value)) {
+        logger.trace("loading value");
         try {
+          logger.trace("unlocking read");
           readLock.unlock();
+          logger.trace("locking write");
           writeLock.lock();
           value = storage.get(key);
+          logger.trace("retrieved value for second check " + value);
           if(value == null || !cacheItemValidator.isValid(key, value)) {
+            logger.trace("doing actual value load");
             value = cacheItemLoader.loadNewInstance(key);
+            logger.trace("loaded " + value);
             storage.put(key, value);
+            logger.trace("stored value");
           }
-          readLock.lock();
         } finally {
+          logger.trace("locking for read");
+          readLock.lock();
+          logger.trace("unlocking write");
           writeLock.unlock();
         }
       }
+      logger.trace("returning " + value);
       return value;
     } finally {
+      logger.trace("unlocking read");
       readLock.unlock();
+    }
+  }
+
+  /**
+   * Allows a client to preload a value in the cache.  This enables setting values in the cache without the help of the
+   * loader.
+   *
+   * @param key   the key to set
+   * @param value the value to set
+   */
+  public void preLoad(K key, V value) {
+    try {
+      writeLock.lock();
+      storage.put(key, value);
+    } finally {
+      writeLock.unlock();
     }
   }
 }
