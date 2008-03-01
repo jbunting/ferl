@@ -25,7 +25,6 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.apache.commons.collections15.TransformerUtils;
 
@@ -42,17 +41,17 @@ public class ListMapTest {
 
   private ListMap<String, String> listMap;
 
-  @ParameterSet("indexes")
+  @ParameterSet
   public static final Object[][] indexes = new Object[][] {{0},
                                                            {1}, 
                                                            {2},
                                                            {3}};
 
-  @ParameterSet("existingValues")
-  public static final Object[][] params = new Object[][] {{indexes[0][0], "zeroth", "vZeroth"},
-                                                          {indexes[1][0], "first", "vFirst"},
-                                                          {indexes[2][0], "second", "vSecond"},
-                                                          {indexes[3][0], "third", "vThird"}};
+  @ParameterSet
+  public static final Object[][] existingValues = new Object[][] {{indexes[0][0], "zeroth", "vZeroth"},
+                                                                  {indexes[1][0], "first", "vFirst"},
+                                                                  {indexes[2][0], "second", "vSecond"},
+                                                                  {indexes[3][0], "third", "vThird"}};
 
   private static final int KEY = 1;
   private static final int VALUE = 2;
@@ -60,7 +59,7 @@ public class ListMapTest {
   @Before
   public void setup() {
     listMap = new ListMap<String, String>();
-    for(Object[] pair: params) {
+    for(Object[] pair: existingValues) {
       listMap.put(pair[KEY].toString(), pair[VALUE].toString());
     }
   }
@@ -69,10 +68,10 @@ public class ListMapTest {
   @UsesParameters("existingValues")
   public void testRemove(int index, String key, String value) {
     assertEquals("Removing " + key + ".", value, listMap.remove(index));
-    assertEquals("Checking size of map.", params.length - 1, listMap.size());
+    assertEquals("Checking size of map.", existingValues.length - 1, listMap.size());
     assertNull("Checking that second no longer exists.", listMap.get(key));
-    if(index < params.length - 1) {
-      String newKey = params[index + 1][1].toString();
+    if(index < existingValues.length - 1) {
+      String newKey = existingValues[index + 1][1].toString();
       assertEquals("Checking that the key at index " + index + " is now \"" + newKey + "\"", newKey, listMap.get(index));
     } else {
       try {
@@ -90,13 +89,13 @@ public class ListMapTest {
     listMap.add(index, "new", "vNew");
     // order should now be first, fourth, second, third
     assertEquals("Checking that add happened in the correct place.", "new", listMap.get(index));
-    assertEquals("Checking that " + params[index][KEY] + " is still there.", params[index][KEY].toString(), listMap.get(index + 1));
-    assertEquals("Checking that size has increased.", params.length + 1, listMap.size());
+    assertEquals("Checking that " + existingValues[index][KEY] + " is still there.", existingValues[index][KEY].toString(), listMap.get(index + 1));
+    assertEquals("Checking that size has increased.", existingValues.length + 1, listMap.size());
   }
 
   @Test(expected = IndexOutOfBoundsException.class)
   public void testAddTooHigh() {
-    listMap.add(params.length + 1, "bad", "vBad");
+    listMap.add(existingValues.length + 1, "bad", "vBad");
   }
 
   @Test(expected = IndexOutOfBoundsException.class)
@@ -106,10 +105,10 @@ public class ListMapTest {
 
   @Test
   public void testAddEnd() {
-    listMap.add(params.length, "new", "vNew");
+    listMap.add(existingValues.length, "new", "vNew");
     // order should now be first, second, third, fourth
-    assertEquals("Checking that add happened in the correct place.", "new", listMap.get(params.length));
-    assertEquals("Checking that size has increased.", params.length + 1, listMap.size());
+    assertEquals("Checking that add happened in the correct place.", "new", listMap.get(existingValues.length));
+    assertEquals("Checking that size has increased.", existingValues.length + 1, listMap.size());
   }
 
   @Test
@@ -117,14 +116,14 @@ public class ListMapTest {
   public void testSetNormal(int index) {
     listMap.set(index, "new", "vNew");
     // order should now be first, fourth, third
-    assertEquals("Checking that size was maintained", params.length, listMap.size());
+    assertEquals("Checking that size was maintained", existingValues.length, listMap.size());
     assertEquals("Checking that it was set.", "new", listMap.get(index));
-    assertNull("Checking that " + params[index][KEY] + " is gone.", listMap.get(params[index][KEY]));
+    assertNull("Checking that " + existingValues[index][KEY] + " is gone.", listMap.get(existingValues[index][KEY]));
   }
 
   @Test(expected = IndexOutOfBoundsException.class)
   public void testSetTooHigh() {
-    listMap.set(params.length, "bad", "vBad");
+    listMap.set(existingValues.length, "bad", "vBad");
   }
 
   @Test(expected = IndexOutOfBoundsException.class)
