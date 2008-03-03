@@ -72,50 +72,42 @@ public abstract class StoredRuleImplTest {
   }
 
   @Test
-  @Ignore
   public void checkName() {
     org.junit.Assert.assertEquals("Checking name.", name, storedRule.getName());
   }
 
   @Test
-  @Ignore
   public void checkDescription() {
     org.junit.Assert.assertEquals("Checking description.", description, storedRule.getDescription());
   }
 
   @Test
-  @Ignore
   public void checkLanguage() {
     org.junit.Assert.assertEquals("Checking language.", language, storedRule.getLanguage());
   }
 
   @Test
-  @Ignore
   public void checkScript() {
     org.junit.Assert.assertEquals("Checking script.", script, storedRule.getScript());
   }
 
   @Test
   @UsesParameters("propertyValues")
-  @Ignore
   public void checkPropertyValues(String key, String value) {
     org.junit.Assert.assertEquals("Checking key value pair " + key + ":" + "value.", storedRule.getProperties().get(key), value);
   }
 
   @Test(expected = UnsupportedOperationException.class)
-  @Ignore
   public void checkPutFails() {
     storedRule.getProperties().put("someKey", "someValue");
   }
 
   @Test(expected = UnsupportedOperationException.class)
-  @Ignore
   public void checkRemoveFails() {
     storedRule.getProperties().remove(propertyValues[0][KEY]);
   }
 
   @Test
-  @Ignore
   public void checkDefensiveCopy() {
     String newKey = "myNewKey";
     String newValue = "myNewValue";

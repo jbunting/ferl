@@ -20,6 +20,7 @@ package edu.wvu.ferl.util;
 import edu.wvu.utils.test2.parameterized.Parameterized;
 import edu.wvu.utils.test2.parameterized.ParameterSet;
 import edu.wvu.utils.test2.parameterized.UsesParameters;
+import edu.wvu.utils.test2.parameterized.definition.ParameterSetDefinition;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ import org.junit.runner.RunWith;
 import org.apache.commons.collections15.TransformerUtils;
 
 import static junit.framework.Assert.*;
+import static edu.wvu.utils.test2.parameterized.definition.ParameterSetDefinitionUtils.*;
 
 /**
  * A Test case for the {@link ListMap} class.
@@ -41,20 +43,23 @@ public class ListMapTest {
 
   private ListMap<String, String> listMap;
 
-  @ParameterSet
-  public static final Object[][] indexes = new Object[][] {{0},
-                                                           {1}, 
-                                                           {2},
-                                                           {3}};
+  public static final Object[][] existingValues = new Object[][] {{"zeroth", "vZeroth"},
+                                                                  {"first", "vFirst"},
+                                                                  {"second", "vSecond"},
+                                                                  {"third", "vThird"}};
 
   @ParameterSet
-  public static final Object[][] existingValues = new Object[][] {{indexes[0][0], "zeroth", "vZeroth"},
-                                                                  {indexes[1][0], "first", "vFirst"},
-                                                                  {indexes[2][0], "second", "vSecond"},
-                                                                  {indexes[3][0], "third", "vThird"}};
+  public static final ParameterSetDefinition values = create(existingValues);
 
-  private static final int KEY = 1;
-  private static final int VALUE = 2;
+  @ParameterSet
+  public static final ParameterSetDefinition indexes = index(values);
+
+  @ParameterSet
+  public static final ParameterSetDefinition indexedValues = simpleMerge(indexes, values);
+
+
+  private static final int KEY = 0;
+  private static final int VALUE = 1;
 
   @Before
   public void setup() {
@@ -65,13 +70,13 @@ public class ListMapTest {
   }
 
   @Test
-  @UsesParameters("existingValues")
+  @UsesParameters("indexedValues")
   public void testRemove(int index, String key, String value) {
-    assertEquals("Removing " + key + ".", value, listMap.remove(index));
+    assertEquals("Removing " + key + " with index " + index + ".", value, listMap.remove(index));
     assertEquals("Checking size of map.", existingValues.length - 1, listMap.size());
     assertNull("Checking that second no longer exists.", listMap.get(key));
     if(index < existingValues.length - 1) {
-      String newKey = existingValues[index + 1][1].toString();
+      String newKey = existingValues[index + 1][KEY].toString();
       assertEquals("Checking that the key at index " + index + " is now \"" + newKey + "\"", newKey, listMap.get(index));
     } else {
       try {
