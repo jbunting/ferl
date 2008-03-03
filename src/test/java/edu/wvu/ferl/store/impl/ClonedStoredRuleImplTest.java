@@ -13,7 +13,7 @@ import org.jmock.Expectations;
  * Date: Feb 29, 2008
  * Time: 7:01:11 PM
  */
-public class ClonedStoredRuleImplTest extends StoredRuleImplTest {
+public class ClonedStoredRuleImplTest extends AbstractStoredRuleImplTest {
 
   protected StoredRuleImpl createStoredRuleImpl(final String uri,
                                                 final String name,
