@@ -145,12 +145,10 @@ public class RuleServiceProvider extends javax.rules.RuleServiceProvider {
    * @param ruleStore the rule store to use
    */
   public void setRuleStore(RuleStore ruleStore) {
-    if(this.ruleStore == null) {
-      synchronized(this) {
-        if(this.ruleStore == null) {
-          this.ruleStore = ruleStore;
-          return;
-        }
+    synchronized(this) {
+      if(this.ruleStore == null) {
+        this.ruleStore = ruleStore;
+        return;
       }
     }
     throw new IllegalStateException("RuleStore cannot be changed once set!");
@@ -178,13 +176,13 @@ public class RuleServiceProvider extends javax.rules.RuleServiceProvider {
    * @param cacheFactory the new cache factory for this provider
    */
   public void setCacheFactory(CacheFactory cacheFactory) {
-    if(this.cacheFactory == null) {
-      synchronized(this) {
-        if(this.cacheFactory == null) {
-          this.cacheFactory = cacheFactory;
-        }
+    synchronized(this) {
+      if(this.cacheFactory == null) {
+        this.cacheFactory = cacheFactory;
+        return;
       }
     }
+    throw new IllegalStateException("CacheFactory cannot be changed once set!");
   }
 
   /**
