@@ -162,7 +162,7 @@ class DigesterRuleSet implements RuleSet {
      * @throws Exception {@inheritDoc}
      */
     protected Object createObject(String uri) throws Exception {
-      return new RuleReference(uri, administrator.serviceProvider.getRuleRuntime().getRuleServiceProvider().getRuleStore());
+      return new RuleReference(uri, administrator.getRuleServiceProvider().getRuleRuntime().getRuleServiceProvider().getRuleStore());
     }
   }
 

@@ -60,7 +60,7 @@ public class RuleAdministratorImpl implements RuleAdministrator {
   private static final Log logger =
           LogFactory.getLog(RuleAdministratorImpl.class);
 
-  RuleServiceProvider serviceProvider;
+  private RuleServiceProvider serviceProvider;
 
   /**
    * Creates a new instance of RuleAdministrator
@@ -115,7 +115,7 @@ public class RuleAdministratorImpl implements RuleAdministrator {
     RuleExecutionSetImpl ruleExecutionSetImpl = (RuleExecutionSetImpl) ruleExecutionSet;
 
     try {
-      RuleStore ruleStore = serviceProvider.getRuleRuntime().getRuleServiceProvider().getRuleStore();
+      RuleStore ruleStore = getRuleServiceProvider().getRuleRuntime().getRuleServiceProvider().getRuleStore();
       List<String> ruleUris = new ArrayList<String>();
       for(RuleDescriptor ruleDescriptor : ruleExecutionSetImpl.getRuleDescriptors()) {
         ruleUris.add(ruleDescriptor.generateRule(ruleStore));
@@ -137,7 +137,7 @@ public class RuleAdministratorImpl implements RuleAdministrator {
    */
   public void deregisterRuleExecutionSet(String uri, Map map) throws RuleExecutionSetDeregistrationException, RemoteException {
     try {
-      RuleStore ruleStore = serviceProvider.getRuleRuntime().getRuleServiceProvider().getRuleStore();
+      RuleStore ruleStore = getRuleServiceProvider().getRuleRuntime().getRuleServiceProvider().getRuleStore();
       ruleStore.removeRuleSet(uri);
     } catch(ConfigurationException ex) {
       throw new RuleExecutionSetDeregistrationException("Error registering the RuleExecutionSet...", ex);
@@ -167,4 +167,14 @@ public class RuleAdministratorImpl implements RuleAdministrator {
             ruleExecutionSetImpl.getDefaultObjectFilter());
   }
 
+  /**
+   * Returns the {@code RuleServiceProvider} that this administrator belongs to.  This can be used to access the
+   * {@link edu.wvu.ferl.store.RuleStore RuleStore} and the {@link edu.wvu.ferl.cache.CacheFactory CacheFactory}
+   * associated with this ferl instance.
+   *
+   * @return the service provider
+   */
+  public RuleServiceProvider getRuleServiceProvider() {
+    return serviceProvider;
+  }
 }

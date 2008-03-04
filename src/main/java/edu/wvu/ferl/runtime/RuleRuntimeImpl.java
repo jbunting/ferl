@@ -49,7 +49,7 @@ public class RuleRuntimeImpl implements RuleRuntime {
 
   private RuleServiceProvider serviceProvider;
 
-  protected RuleEvaluator ruleEvaluator = new RuleEvaluator(this);
+  protected RuleEvaluator ruleEvaluator;
 
   /**
    * Creates a new instance of the ferl {@link RuleRuntime}.
@@ -58,6 +58,7 @@ public class RuleRuntimeImpl implements RuleRuntime {
    */
   public RuleRuntimeImpl(RuleServiceProvider serviceProvider) {
     this.serviceProvider = serviceProvider;
+    this.ruleEvaluator = new RuleEvaluator(this);
   }
 
   /**
