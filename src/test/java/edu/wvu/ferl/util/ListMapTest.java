@@ -17,11 +17,6 @@
 
 package edu.wvu.ferl.util;
 
-import edu.wvu.utils.test2.parameterized.Parameterized;
-import edu.wvu.utils.test2.parameterized.ParameterSet;
-import edu.wvu.utils.test2.parameterized.UsesParameters;
-import edu.wvu.utils.test2.parameterized.definition.ParameterSetDefinition;
-
 import java.util.List;
 
 import org.junit.Test;
@@ -30,7 +25,11 @@ import org.junit.runner.RunWith;
 import org.apache.commons.collections15.TransformerUtils;
 
 import static junit.framework.Assert.*;
-import static edu.wvu.utils.test2.parameterized.definition.ParameterSetDefinitionUtils.*;
+
+import com.peachjean.xj4.XJ4Runner;
+import com.peachjean.xj4.parameterized.ParameterSet;
+import com.peachjean.xj4.parameterized.Parameterized;
+import static com.peachjean.xj4.parameterized.ParameterSetUtils.*;
 
 /**
  * A Test case for the {@link ListMap} class.
@@ -38,7 +37,7 @@ import static edu.wvu.utils.test2.parameterized.definition.ParameterSetDefinitio
  * Date: Feb 18, 2008
  * Time: 9:50:30 AM
  */
-@RunWith(Parameterized.class)
+@RunWith(XJ4Runner.class)
 public class ListMapTest {
 
   private ListMap<String, String> listMap;
@@ -48,14 +47,11 @@ public class ListMapTest {
                                                                   {"second", "vSecond"},
                                                                   {"third", "vThird"}};
 
-  @ParameterSet
-  public static final ParameterSetDefinition values = create(existingValues);
+  public static final ParameterSet values = create(existingValues);
 
-  @ParameterSet
-  public static final ParameterSetDefinition indexes = index(values);
+  public static final ParameterSet indexes = index(values);
 
-  @ParameterSet
-  public static final ParameterSetDefinition indexedValues = simpleMerge(indexes, values);
+  public static final ParameterSet indexedValues = simpleMerge(indexes, values);
 
 
   private static final int KEY = 0;
@@ -70,7 +66,7 @@ public class ListMapTest {
   }
 
   @Test
-  @UsesParameters("indexedValues")
+  @Parameterized("indexedValues")
   public void testRemove(int index, String key, String value) {
     assertEquals("Removing " + key + " with index " + index + ".", value, listMap.remove(index));
     assertEquals("Checking size of map.", existingValues.length - 1, listMap.size());
@@ -89,7 +85,7 @@ public class ListMapTest {
   }
 
   @Test
-  @UsesParameters("indexes")
+  @Parameterized("indexes")
   public void testAddInside(int index) {
     listMap.add(index, "new", "vNew");
     // order should now be first, fourth, second, third
@@ -117,7 +113,7 @@ public class ListMapTest {
   }
 
   @Test
-  @UsesParameters("indexes")
+  @Parameterized("indexes")
   public void testSetNormal(int index) {
     listMap.set(index, "new", "vNew");
     // order should now be first, fourth, third

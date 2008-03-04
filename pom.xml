@@ -210,6 +210,28 @@
         https://subversion.systems.wvu.edu/maven/snapshots
       </url>
     </repository>
+    <repository>
+      <id>peachjean-release</id>
+      <name>Local Maven repository of releases</name>
+      <url>http://peachjean.googlecode.com/svn/maven2/releases</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </repository>
+    <repository>
+      <id>peachjean-snapshot</id>
+      <name>Local Maven repository of snapshots</name>
+      <url>http://peachjean.googlecode.com/svn/maven2/snapshots</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+    </repository>
   </repositories>
   <dependencies>
     <dependency>
@@ -267,9 +289,15 @@
       <version>0.3.1</version>
       <scope>test</scope>
     </dependency-->
-    <dependency>
+    <!--dependency>
       <groupId>edu.wvu.commons</groupId>
       <artifactId>test2-utils</artifactId>
+      <version>0.1-SNAPSHOT</version>
+      <scope>test</scope>
+    </dependency-->
+    <dependency>
+      <groupId>com.peachjean.xj4</groupId>
+      <artifactId>xj4</artifactId>
       <version>0.1-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>

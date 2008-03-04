@@ -17,11 +17,6 @@
 
 package edu.wvu.ferl.util;
 
-import edu.wvu.utils.test2.parameterized.Parameterized;
-import edu.wvu.utils.test2.parameterized.ParameterSet;
-import edu.wvu.utils.test2.parameterized.UsesParameters;
-import edu.wvu.utils.test2.jmock.DelegatingImposteriser;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.After;
@@ -31,6 +26,10 @@ import org.apache.commons.collections15.Transformer;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.Mockery;
 import org.jmock.Expectations;
+import org.jmock.lib.legacy.ClassImposteriser;
+import com.peachjean.xj4.XJ4Runner;
+import com.peachjean.xj4.parameterized.ParameterSet;
+import com.peachjean.xj4.parameterized.Parameterized;
 
 /**
  * @author jbunting
@@ -39,12 +38,12 @@ import org.jmock.Expectations;
  * Date: Feb 18, 2008
  * Time: 4:59:00 PM
  */
-@RunWith(Parameterized.class)
+@RunWith(XJ4Runner.class)
 public class ListMapBackedListTest {
 
   private Mockery context = new JUnit4Mockery();
 
-  @ParameterSet
+  @ParameterSet.As
   public static final Object[][] indexes = new Object[][] {{0}, {1}, {1009}};
 
   private ListMap listMap;
@@ -54,7 +53,7 @@ public class ListMapBackedListTest {
 
   @Before
   public void setup() {
-    context.setImposteriser(DelegatingImposteriser.INSTANCE);
+    context.setImposteriser(ClassImposteriser.INSTANCE);
 
     transformer = context.mock(Transformer.class);
     listMap = context.mock(ListMap.class);
@@ -74,7 +73,7 @@ public class ListMapBackedListTest {
     list.size();
   }
 
-  @UsesParameters
+  @Parameterized
   @Test
   public void testGet(final int index) {
     context.checking(new Expectations() {{
@@ -83,7 +82,7 @@ public class ListMapBackedListTest {
     list.get(index);
   }
 
-  @UsesParameters
+  @Parameterized
   @Test
   public void testRemove(final int index) {
     context.checking(new Expectations() {{

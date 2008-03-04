@@ -1,9 +1,20 @@
-package edu.wvu.ferl.store.impl;
+/**
+ * Copyright 2008 West Virginia University
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-import edu.wvu.ferl.store.StoredRule;
-import edu.wvu.utils.test2.parameterized.UsesParameters;
-import edu.wvu.utils.test2.parameterized.ParameterSet;
-import edu.wvu.utils.test2.parameterized.Parameterized;
+package edu.wvu.ferl.store.impl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,11 +22,12 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
-import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JUnit4Mockery;
+import com.peachjean.xj4.XJ4Runner;
+import com.peachjean.xj4.parameterized.ParameterSet;
+import com.peachjean.xj4.parameterized.Parameterized;
 
 /**
  * @author jbunting
@@ -24,9 +36,9 @@ import org.jmock.integration.junit4.JUnit4Mockery;
  * Date: Feb 29, 2008
  * Time: 6:59:54 PM
  */
-@RunWith(Parameterized.class)
+@RunWith(XJ4Runner.class)
 public abstract class AbstractStoredRuleImplTest {
-  @ParameterSet
+  @ParameterSet.As
   public static final Object[][] propertyValues = new Object[][] { { "key1", "value1" },
                                                                    { "key2", "value2" } };
   private static final int KEY = 0;
@@ -92,7 +104,7 @@ public abstract class AbstractStoredRuleImplTest {
   }
 
   @Test
-  @UsesParameters("propertyValues")
+  @Parameterized("propertyValues")
   public void checkPropertyValues(String key, String value) {
     org.junit.Assert.assertEquals("Checking key value pair " + key + ":" + "value.", value, storedRule.getProperties().get(key));
   }
