@@ -33,6 +33,8 @@ import com.peachjean.xj4.parameterized.ParameterSet;
 import com.peachjean.xj4.parameterized.Parameterized;
 import static org.junit.Assert.*;
 import com.peachjean.xj4.XJ4Runner;
+import com.peachjean.xj4.lifecycle.Manage;
+import com.peachjean.xj4.jmock.MockeryLifecycle;
 
 /**
  * @author jbunting
@@ -60,7 +62,9 @@ public abstract class AbstractStoredRuleExecutionSetImplTest {
 
   private static final int KEY = 0;
   private static final int VALUE = 1;
-  protected Mockery context = new JUnit4Mockery();
+
+  @Manage(lifecycle = MockeryLifecycle.class)
+  protected Mockery context;
 
   private StoredRuleExecutionSetImpl storedRuleExecutionSet;
 
@@ -88,11 +92,6 @@ public abstract class AbstractStoredRuleExecutionSetImplTest {
   }
 
   protected abstract StoredRuleExecutionSetImpl createStoredRuleExecutionSetImpl(String uri, String name, String description, List<String> ruleUris, Map<Object, Object> properties, String defaultObjectFilter);
-
-  @After
-  public void jmockCheck() {
-    context.assertIsSatisfied();
-  }
 
   @Test
   public void checkUri() {

@@ -22,10 +22,17 @@ import edu.wvu.ferl.cache.CacheItemValidator;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.jmock.Mockery;
 import org.jmock.Expectations;
+import org.jmock.lib.legacy.ClassImposteriser;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import static org.junit.Assert.*;
+import com.peachjean.xj4.lifecycle.Manage;
+import com.peachjean.xj4.jmock.MockeryLifecycle;
+import com.peachjean.xj4.jmock.UseImposteriser;
+import com.peachjean.xj4.jmock.StaticFieldCreationStrategy;
+import com.peachjean.xj4.XJ4Runner;
 
 /**
  * @author jbunting
@@ -34,9 +41,11 @@ import static org.junit.Assert.*;
  * Date: Feb 28, 2008
  * Time: 5:16:35 PM
  */
+@RunWith(XJ4Runner.class)
 public class DefaultCacheTest {
 
-  private Mockery context = new JUnit4Mockery();
+  @Manage(lifecycle = MockeryLifecycle.class)
+  private Mockery context;
 
   private DefaultCache cache;
   private CacheItemLoader loader;
@@ -51,11 +60,6 @@ public class DefaultCacheTest {
     cache = new DefaultCache(validator,  loader, Object.class, Object.class);
     key = "KEY";
     value = "VALUE";
-  }
-
-  @After
-  public void jmockCheck() {
-    context.assertIsSatisfied();
   }
 
   private void preLoadCache() {

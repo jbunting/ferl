@@ -33,10 +33,16 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Ignore;
+import org.junit.runner.RunWith;
 import org.jmock.Mockery;
 import org.jmock.Expectations;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.jmock.integration.junit4.JUnit4Mockery;
+import com.peachjean.xj4.XJ4Runner;
+import com.peachjean.xj4.jmock.MockeryLifecycle;
+import com.peachjean.xj4.jmock.UseImposteriser;
+import com.peachjean.xj4.jmock.StaticFieldCreationStrategy;
+import com.peachjean.xj4.lifecycle.Manage;
 
 /**
  * @author jbunting
@@ -45,9 +51,12 @@ import org.jmock.integration.junit4.JUnit4Mockery;
  * Date: Mar 3, 2008
  * Time: 4:36:56 PM
  */
+@RunWith(XJ4Runner.class)
 public class RuleServiceProviderTest {
 
-  private Mockery context = new JUnit4Mockery();
+  @Manage(lifecycle = MockeryLifecycle.class)
+  @UseImposteriser(value = ClassImposteriser.class, strategy = StaticFieldCreationStrategy.class, params = "INSTANCE")
+  private Mockery context;
 
   private RuleServiceProvider ruleServiceProvider;
   private CacheFactory cacheFactory;
@@ -59,19 +68,12 @@ public class RuleServiceProviderTest {
   @Before
   public void setup() throws Exception {
 
-    context.setImposteriser(ClassImposteriser.INSTANCE);
-
     ruleServiceProvider = new RuleServiceProvider();
     cacheFactory = context.mock(CacheFactory.class);
     ruleStore = context.mock(RuleStore.class);
     classLoader = context.mock(ClassLoader.class);
     ruleServiceProvider.setClassLoader(classLoader);
     nonExistantClassName = this.getClass().getPackage().getName() + ".NonExistantClass";
-  }
-
-  @After
-  public void jmockCheck() {
-    context.assertIsSatisfied();
   }
 
   @Test

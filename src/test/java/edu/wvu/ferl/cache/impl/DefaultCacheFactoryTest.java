@@ -27,10 +27,14 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.runner.RunWith;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JUnit4Mockery;
 
 import static org.junit.Assert.*;
+import com.peachjean.xj4.XJ4Runner;
+import com.peachjean.xj4.jmock.MockeryLifecycle;
+import com.peachjean.xj4.lifecycle.Manage;
 
 /**
  * @author jbunting
@@ -39,9 +43,11 @@ import static org.junit.Assert.*;
  * Date: Feb 28, 2008
  * Time: 11:57:55 AM
  */
+@RunWith(XJ4Runner.class)
 public class DefaultCacheFactoryTest {
 
-  private Mockery context = new JUnit4Mockery();
+  @Manage(lifecycle = MockeryLifecycle.class)
+  private Mockery context;
 
   private CacheFactory cacheFactory;
 
@@ -50,11 +56,6 @@ public class DefaultCacheFactoryTest {
     cacheFactory = new DefaultCacheFactory();
   }
   
-  @After
-  public void jmockCheck() {
-    context.assertIsSatisfied();
-  }
-
   @Test
   public void testCreateCache() throws Exception {
     CacheItemValidator validator = context.mock(CacheItemValidator.class);

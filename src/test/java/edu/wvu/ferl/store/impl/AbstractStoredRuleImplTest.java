@@ -26,6 +26,8 @@ import org.junit.runner.RunWith;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import com.peachjean.xj4.XJ4Runner;
+import com.peachjean.xj4.jmock.MockeryLifecycle;
+import com.peachjean.xj4.lifecycle.Manage;
 import com.peachjean.xj4.parameterized.ParameterSet;
 import com.peachjean.xj4.parameterized.Parameterized;
 
@@ -43,7 +45,9 @@ public abstract class AbstractStoredRuleImplTest {
                                                                    { "key2", "value2" } };
   private static final int KEY = 0;
   private static final int VALUE = 1;
-  protected Mockery context = new JUnit4Mockery();
+
+  @Manage(lifecycle = MockeryLifecycle.class)
+  protected Mockery context;
 
   private StoredRuleImpl storedRule;
   
@@ -72,11 +76,6 @@ public abstract class AbstractStoredRuleImplTest {
   }
 
   protected abstract StoredRuleImpl createStoredRuleImpl(String uri, String name, String description, String language, String script, Map<Object, Object> properties);
-
-  @After
-  public void jmockCheck() {
-    context.assertIsSatisfied();
-  }
 
   @Test
   public void checkUri() {
