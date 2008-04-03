@@ -330,20 +330,20 @@
   <distributionManagement>
     <snapshotRepository>
       <uniqueVersion>true</uniqueVersion>
-      <id>deploy-wvu-esd</id>
+      <id>wvu-esd-public-snapshots</id>
       <name>Internal WVU Snapshot Deployment Repository</name>
-      <url>sftp://subversion.systems.wvu.edu/svn/maven/snapshots</url>
+      <url>dav:https://maven.development.wvu.edu/public/snapshots</url>
     </snapshotRepository>
     <repository>
       <uniqueVersion>false</uniqueVersion>
-      <id>deploy-wvu-esd</id>
+      <id>wvu-esd-public-releases</id>
       <name>Internal WVU Deployment Repository</name>
-      <url>sftp://subversion.systems.wvu.edu/svn/maven/internal</url>
+      <url>dav:https://maven.development.wvu.edu/public/releases</url>
     </repository>
     <site>
-      <id>deploy-wvu-esd</id>
+      <id>wvu-esd-projects</id>
       <name>Internal ESD Project Sites</name>
-      <url>sftp://subversion.systems.wvu.edu/svn/sites/sei</url>
+      <url>dav:https://projects.development.wvu.edu/ferl/</url>
     </site>
   </distributionManagement>
 </project>
