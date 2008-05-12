@@ -53,10 +53,10 @@
     <developer>
       <id>jbunting</id>
       <name>Jared Bunting</name>
-      <email>jared@jaredbunting.com</email>
-      <url>http://www.jaredbunting.com/</url>
-      <organization>Jared Bunting Software Development</organization>
-      <organizationUrl>http://www.jaredbunting.com/</organizationUrl>
+      <email>jared@peachjean.com</email>
+      <url>http://www.peachjean.com/</url>
+      <organization>Peach Jean Solutions</organization>
+      <organizationUrl>http://www.peachjean.com/</organizationUrl>
       <roles>
         <role>architect</role>
         <role>developer</role>
@@ -175,6 +175,13 @@
         </executions>
       </plugin>
     </plugins>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-webdav</artifactId>
+        <version>1.0-beta-2</version>
+      </extension>
+    </extensions>
   </build>
   <repositories>
     <repository>
