@@ -26,10 +26,10 @@ import org.apache.commons.collections15.TransformerUtils;
 
 import static junit.framework.Assert.*;
 
-import com.peachjean.xj4.XJ4Runner;
-import com.peachjean.xj4.parameterized.ParameterSet;
-import com.peachjean.xj4.parameterized.Parameterized;
-import static com.peachjean.xj4.parameterized.ParameterSetUtils.*;
+import net.peachjean.xj4.XJ4Runner;
+import net.peachjean.xj4.parameterized.ParameterSet;
+import net.peachjean.xj4.parameterized.Parameterized;
+import static net.peachjean.xj4.parameterized.ParameterSetUtils.*;
 
 /**
  * A Test case for the {@link ListMap} class.

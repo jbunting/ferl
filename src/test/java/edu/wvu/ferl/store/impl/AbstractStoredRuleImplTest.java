@@ -25,11 +25,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JUnit4Mockery;
-import com.peachjean.xj4.XJ4Runner;
-import com.peachjean.xj4.jmock.MockeryLifecycle;
-import com.peachjean.xj4.lifecycle.Manage;
-import com.peachjean.xj4.parameterized.ParameterSet;
-import com.peachjean.xj4.parameterized.Parameterized;
+import net.peachjean.xj4.XJ4Runner;
+import net.peachjean.xj4.jmock.MockeryLifecycle;
+import net.peachjean.xj4.lifecycle.Manage;
+import net.peachjean.xj4.parameterized.ParameterSet;
+import net.peachjean.xj4.parameterized.Parameterized;
 
 /**
  * @author jbunting

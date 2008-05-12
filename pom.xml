@@ -303,9 +303,9 @@
       <scope>test</scope>
     </dependency-->
     <dependency>
-      <groupId>com.peachjean.xj4</groupId>
+      <groupId>net.peachjean.xj4</groupId>
       <artifactId>xj4</artifactId>
-      <version>0.1-SNAPSHOT</version>
+      <version>0.3</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

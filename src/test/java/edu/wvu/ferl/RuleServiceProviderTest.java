@@ -38,11 +38,9 @@ import org.jmock.Mockery;
 import org.jmock.Expectations;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.jmock.integration.junit4.JUnit4Mockery;
-import com.peachjean.xj4.XJ4Runner;
-import com.peachjean.xj4.jmock.MockeryLifecycle;
-import com.peachjean.xj4.jmock.UseImposteriser;
-import com.peachjean.xj4.jmock.StaticFieldCreationStrategy;
-import com.peachjean.xj4.lifecycle.Manage;
+import net.peachjean.xj4.XJ4Runner;
+import net.peachjean.xj4.jmock.MockeryLifecycle;
+import net.peachjean.xj4.lifecycle.Manage;
 
 /**
  * @author jbunting
@@ -55,7 +53,6 @@ import com.peachjean.xj4.lifecycle.Manage;
 public class RuleServiceProviderTest {
 
   @Manage(lifecycle = MockeryLifecycle.class)
-  @UseImposteriser(value = ClassImposteriser.class, strategy = StaticFieldCreationStrategy.class, params = "INSTANCE")
   private Mockery context;
 
   private RuleServiceProvider ruleServiceProvider;
@@ -67,6 +64,7 @@ public class RuleServiceProviderTest {
 
   @Before
   public void setup() throws Exception {
+    context.setImposteriser(ClassImposteriser.INSTANCE);
 
     ruleServiceProvider = new RuleServiceProvider();
     cacheFactory = context.mock(CacheFactory.class);

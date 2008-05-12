@@ -28,11 +28,9 @@ import org.jmock.Expectations;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import static org.junit.Assert.*;
-import com.peachjean.xj4.lifecycle.Manage;
-import com.peachjean.xj4.jmock.MockeryLifecycle;
-import com.peachjean.xj4.jmock.UseImposteriser;
-import com.peachjean.xj4.jmock.StaticFieldCreationStrategy;
-import com.peachjean.xj4.XJ4Runner;
+import net.peachjean.xj4.lifecycle.Manage;
+import net.peachjean.xj4.jmock.MockeryLifecycle;
+import net.peachjean.xj4.XJ4Runner;
 
 /**
  * @author jbunting

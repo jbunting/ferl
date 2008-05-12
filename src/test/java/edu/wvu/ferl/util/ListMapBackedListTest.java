@@ -27,13 +27,11 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.Mockery;
 import org.jmock.Expectations;
 import org.jmock.lib.legacy.ClassImposteriser;
-import com.peachjean.xj4.XJ4Runner;
-import com.peachjean.xj4.jmock.MockeryLifecycle;
-import com.peachjean.xj4.jmock.UseImposteriser;
-import com.peachjean.xj4.jmock.StaticFieldCreationStrategy;
-import com.peachjean.xj4.lifecycle.Manage;
-import com.peachjean.xj4.parameterized.ParameterSet;
-import com.peachjean.xj4.parameterized.Parameterized;
+import net.peachjean.xj4.XJ4Runner;
+import net.peachjean.xj4.jmock.MockeryLifecycle;
+import net.peachjean.xj4.lifecycle.Manage;
+import net.peachjean.xj4.parameterized.ParameterSet;
+import net.peachjean.xj4.parameterized.Parameterized;
 
 /**
  * @author jbunting
@@ -46,7 +44,6 @@ import com.peachjean.xj4.parameterized.Parameterized;
 public class ListMapBackedListTest {
 
   @Manage(lifecycle = MockeryLifecycle.class)
-  @UseImposteriser(value = ClassImposteriser.class, strategy = StaticFieldCreationStrategy.class, params = "INSTANCE")
   private Mockery context;
 
   @ParameterSet.As
@@ -59,6 +56,7 @@ public class ListMapBackedListTest {
 
   @Before
   public void setup() {
+    context.setImposteriser(ClassImposteriser.INSTANCE);
     transformer = context.mock(Transformer.class);
     listMap = context.mock(ListMap.class);
     list = new ListMapBackedList(listMap, transformer);
