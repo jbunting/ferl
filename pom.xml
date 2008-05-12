@@ -16,13 +16,12 @@
   ~
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>edu.wvu.ferl</groupId>
   <artifactId>ferl</artifactId>
   <packaging>jar</packaging>
-  <version>0.1-SNAPSHOT</version>
+  <version>0.1</version>
   <name>ferl</name>
   <prerequisites>
     <maven>2.0.7</maven>
@@ -45,9 +44,9 @@
     <url>http://oit.wvu.edu/</url>
   </organization>
   <scm>
-    <connection>scm:svn:http://ferl.googlecode.com/svn/trunk/</connection>
-    <developerConnection>scm:svn:https://ferl.googlecode.com/svn/trunk/</developerConnection>
-    <url>http://code.google.com/p/ferl/source/browse</url>
+    <connection>scm:svn:http://ferl.googlecode.com/svn/tags/ferl-0.1</connection>
+    <developerConnection>scm:svn:https://ferl.googlecode.com/svn/tags/ferl-0.1</developerConnection>
+    <url>http://code.google.com/p/ferl/source/browse/tags/ferl-0.1</url>
   </scm>
   <developers>
     <developer>
